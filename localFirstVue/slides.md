@@ -857,6 +857,195 @@ const todos = useObservable(
 </style>
 
 ---
+layout: center
+---
+
+````md magic-move
+```ts
+// 1. First, let's set up our basic imports and state
+import { db, type Todo } from '@/db/todo'
+import { ref } from 'vue'
+
+export function useTodos() {
+  const newTodoTitle = ref('')
+  const error = ref<string | null>(null)
+  
+  return {
+    newTodoTitle,
+    error,
+  }
+}
+```
+
+```ts
+// 2. Add reactive todos using RxJS and Dexie
+import { db, type Todo } from '@/db/todo'
+import { useObservable } from '@vueuse/rxjs'
+import { liveQuery } from 'dexie'
+import { from } from 'rxjs'
+import { ref } from 'vue'
+
+export function useTodos() {
+  const newTodoTitle = ref('')
+  const error = ref<string | null>(null)
+  
+  const todos = useObservable<Todo[]>(
+    from(liveQuery(() => db.todos.orderBy('createdAt').toArray())),
+  )
+  
+  return {
+    todos,
+    newTodoTitle,
+    error,
+  }
+}
+```
+
+```ts
+// 3. Add computed properties for filtered todos
+import { db, type Todo } from '@/db/todo'
+import { useObservable } from '@vueuse/rxjs'
+import { liveQuery } from 'dexie'
+import { from } from 'rxjs'
+import { computed, ref } from 'vue'
+
+export function useTodos() {
+  const newTodoTitle = ref('')
+  const error = ref<string | null>(null)
+  
+  const todos = useObservable<Todo[]>(
+    from(liveQuery(() => db.todos.orderBy('createdAt').toArray())),
+  )
+  
+  const completedTodos = computed(() =>
+    todos.value?.filter(todo => todo.completed) ?? [],
+  )
+  const pendingTodos = computed(() =>
+    todos.value?.filter(todo => !todo.completed) ?? [],
+  )
+  
+  return {
+    todos,
+    newTodoTitle,
+    error,
+    completedTodos,
+    pendingTodos,
+  }
+}
+```
+
+```ts
+// 4. Add the addTodo function
+export function useTodos() {
+  // ... previous code ...
+  const addTodo = async () => {
+    try {
+      if (!newTodoTitle.value.trim())
+        return
+      await db.todos.add({
+        title: newTodoTitle.value,
+        completed: false,
+        createdAt: new Date(),
+      })
+      newTodoTitle.value = ''
+      error.value = null
+    }
+    catch (err) {
+      error.value = 'Failed to add todo'
+      console.error(err)
+    }
+  }
+  
+  return {
+    todos,
+    newTodoTitle,
+    error,
+    completedTodos,
+    pendingTodos,
+    addTodo,
+  }
+}
+```
+
+```ts
+// 5. Add toggle and delete functionality
+export function useTodos() {
+  // ... previous code ...
+  const toggleTodo = async (todo: Todo) => {
+    try {
+      await db.todos.update(todo.id!, {
+        completed: !todo.completed,
+      })
+      error.value = null
+    }
+    catch (err) {
+      error.value = 'Failed to toggle todo'
+      console.error(err)
+    }
+  }
+
+  const deleteTodo = async (id: string) => {
+    try {
+      await db.todos.delete(id)
+      error.value = null
+    }
+    catch (err) {
+      error.value = 'Failed to delete todo'
+      console.error(err)
+    }
+  }
+  
+  return
+}
+```
+```ts
+// can than be used like
+const {
+  newTodoTitle,
+  completedTodos,
+  pendingTodos,
+  addTodo,
+  toggleTodo,
+  deleteTodo,
+} = useTodos()
+```
+````
+---
+---
+
+```vue
+<script setup lang="ts">
+// imports
+
+const user = useObservable(currentUser)
+const isAuthenticated = computed(() => !!user.value)
+const isLoading = ref(false)
+async function handleLogin() {
+  isLoading.value = true
+  try {
+    await login()
+  }
+  finally {
+    isLoading.value = false
+  }
+}
+</script>
+<template>
+  <div v-if="!isAuthenticated" class="flex flex-col items-center justify-center min-h-screen p-4 bg-background">
+    <Card class="max-w-md w-full">
+      <!-- Login form content -->
+    </Card>
+  </div>
+  <template v-else>
+    <div class="sticky top-0 z-20 bg-card border-b">
+      <!-- User info and logout button -->
+    </div>
+    <slot />
+  </template>
+</template>
+```
+
+---
 ---
 # 🔗 Learn More
 
@@ -880,16 +1069,31 @@ const todos = useObservable(
 
 ---
 ---
-# when to use local first?
+# When to Use Local-First? 🤔
 
-## Local-First Software Fit Guide
+<div class="grid grid-cols-2 gap-4">
 
-| Good Fit ✅ | Bad Fit ❌ |
-|------------|------------|
-| Text editors, documents, spreadsheets 📝 | Banking & payments 💰 |
-| Notes, tasks, calendars 📋 | E-commerce & inventory 📦 |
-| Media editing & creative tools 🎨 | Vehicle & logistics systems 🚗 |
-| Personal data management 👤 | Real-world resource tracking 🌐 |
+<div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
+
+### Great For ✅
+- Personal docs & notes 📝
+- Creative tools & media 🎨
+- Individual data tracking 👤
+- Offline-first apps 📱
+
+</div>
+
+<div class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
+
+### Avoid For ❌
+- Financial systems 💰
+- E-commerce & inventory 📦
+- Real-time operations 🌐
+- Mission-critical apps ⚠️
+
+</div>
+
+</div>
 
 ---
 ---
@@ -897,12 +1101,27 @@ const todos = useObservable(
 
 <div class="text-center">
 
-## Questions?
+## Let's Connect!
 
-Feel free to reach out:
+<div class="flex flex-col items-center gap-4 mt-8">
+  <div class="flex items-center gap-2">
+    <carbon:globe class="text-2xl" />
+    <a href="https://alexop.dev" class="hover:text-primary transition-colors">alexop.dev</a>
+  </div>
+  
+  <div class="flex items-center gap-2">
+    <carbon:logo-twitter class="text-2xl" />
+    <a href="https://twitter.com/alexanderop" class="hover:text-primary transition-colors">@alexanderopalic</a>
+  </div>
+</div>
 
-- 🌐 [alexop.dev](https://alexop.dev)
-- 🐦 [@alexanderop](https://twitter.com/alexanderop)
-- 📧 [alex@alexop.dev](mailto:alex@alexop.dev)
+<div class="mt-12 p-4 bg-card rounded-lg">
+  <h3 class="text-xl font-bold mb-2">Want to Learn More?</h3>
+  <p class="mb-4">Explore the world of local-first development:</p>
+  <a href="https://localfirstweb.dev" class="inline-flex items-center gap-2 text-primary hover:underline">
+    <carbon:arrow-right />
+    localfirstweb.dev
+  </a>
+</div>
 
 </div>
