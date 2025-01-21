@@ -727,6 +727,78 @@ flowchart TD
 ```
 ---
 layout: two-cols
+class: 'gap-12 px-4'
+cols: '2fr 3fr'
+---
+
+# Cloud Setup Steps
+
+<div class="space-y-8">
+
+## 1. Create Database
+```bash
+npx dexie-cloud create
+```
+
+## 2. Whitelist Origins
+```bash
+npx dexie-cloud whitelist http://localhost:3000
+```
+
+## 3. Install Dependencies
+```bash
+npm install dexie@latest dexie-cloud-addon
+```
+
+</div>
+
+::right::
+
+# Database Configuration
+
+```ts {all|1-2|4-6|8-19|21-25}
+import Dexie from "dexie";
+import dexieCloud from "dexie-cloud-addon";
+
+const db = new Dexie('MySyncedDB', {
+  addons: [dexieCloud]
+});
+
+db.version(1).stores({
+  // Local-only table with auto-increment
+  localTodos: '++id, title, completed','created', 
+
+  // Cloud-synced table with global ID
+  cloudTodos: '@id, title, completed', 'created',
+
+  /* 
+   * '++id' = Local auto-increment (1, 2, 3...)
+   * '@id'  = Global UUID for sync (e.g. "7f8d3a...")
+   */
+});
+
+db.cloud.configure({
+  databaseUrl: "https://<yourdatabase>.dexie.cloud",
+  requireAuth: true // Optional: Block DB until authenticated
+});
+```
+
+<style>
+.slidev-code {
+  @apply text-sm leading-6 px-4 py-3;
+}
+
+h1 {
+  @apply mb-6 text-2xl;
+}
+
+h2 {
+  @apply text-xl mb-2 text-primary;
+}
+</style>
+
+---
+layout: two-cols
 class: 'gap-12'
 ---
 
