@@ -36,28 +36,6 @@ mdc: true
 layout: center
 glowSeed: 4
 lang: en
-monacoTypesIgnorePackages:
-  - '@antfu/install-pkg'
-  - '@clack/prompts'
-  - '@typescript-eslint/*'
-  - 'eslint-plugin-*'
-  - '*-eslint-parser'
-  - 'find-up'
-  - 'parse-*'
-  - 'globals'
-  - 'pkg-types'
-  - 'mlly'
-  - 'local-pkg'
-  - 'yargs'
-  - 'fast-glob'
-  - 'debug'
-  - 'globby'
-  - 'estraverse'
-  - 'pathe'
-  - 'acorn'
-  - 'acorn-*'
-  - 'pico*'
-  - 'eslint-visitor-keys'
 icons:
   collections:
     logos:
@@ -84,6 +62,7 @@ icons:
       - email
       - logo-twitter
 ---
+<VueNationLogo></VueNationLogo>
 
 ---
 layout: intro
@@ -141,100 +120,216 @@ class: 'pl-30'
 </div>
 
 <div class="flex flex-wrap gap-2 my-8">
-  <div class="flex items-center gap-2">
-    <div class="i-carbon-user text-2xl text-blue-400" /> alexop.dev
-  </div>
-  <div class="flex items-center gap-2">
-    <div class="i-carbon-logo-github text-2xl text-purple-400" /> alexanderop
-  </div>
-  <div class="flex items-center gap-2">
-    <div class="i-carbon-email text-2xl text-green-400" /> alex.opalic.dev@gmail.com
-  </div>
-  <div class="flex items-center gap-2">
-    <div class="i-carbon-logo-twitter text-2xl text-blue-500" /> @alexanderopalic
-  </div>
+  <ContactItem
+    iconClass="i-carbon-user"
+    text="alexop.dev"
+    color="#60A5FA"
+  />
+  <ContactItem
+    iconClass="i-carbon-logo-github"
+    text="alexanderop"
+    color="#A78BFA"
+  />
+  <ContactItem
+    iconClass="i-carbon-email"
+    text="alex.opalic.dev@gmail.com"
+    color="#4ADE80"
+  />
+  <ContactItem
+    iconClass="i-carbon-logo-twitter"
+    text="@alexanderopalic"
+    color="#3B82F6"
+  />
 </div>
-
+---
+---
+# How do we currently build Apps?
 ---
 layout: center
-class: 'text-center'
 ---
 
-# The Current Way Apps Are Built
-
-```mermaid
+```mermaid {scale: 0.7}
 flowchart LR
-    subgraph Client["Browser"]
-        vue[Vue]
+    subgraph Traditional["Frontend Layer"]
+        direction LR
+        HTML["HTML<br>DOM"]
+        State["JS app<br>state<br>e.g. Pinia"]
+        
+        HTML -->|user input| State
+        State -->|render| HTML
     end
-
-    subgraph Cloud["Cloud"]
-        api[Server]
-        db[(Database)]
-        api --> db
-    end
-
-    vue <--> api
     
-    style Client fill:#2d1b36,stroke:#9c27b0
-    style Cloud fill:#1a1a1a,stroke:#9c27b0
+    style Traditional fill:#2d1b36,stroke:#FF6BED
+    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
+    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
     
-    classDef default fill:#2d1b36,stroke:#9c27b0,color:#ffffff
-    classDef storage fill:#2d1b36,stroke:#9c27b0,color:#ffffff
-    
-    class db storage
+    class State state
+    class HTML default
 ```
 
 ---
 layout: center
-clicks: 4
+---
+
+```mermaid {scale: 0.7}
+flowchart LR
+    subgraph Traditional["Call Api"]
+        direction LR
+        HTML["HTML<br>DOM"]
+        State["JS app<br>state<br>e.g. Pinia"]
+        API["JSON<br>REST API"]
+        
+        HTML -->|user input| State
+        State -->|request| API
+        API -->|response| State
+        State -->|render| HTML
+    end
+    
+    style Traditional fill:#2d1b36,stroke:#FF6BED
+    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
+    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
+    classDef api fill:#344060,stroke:#FF6BED,color:#EAE9F3
+    
+    class State state
+    class API api
+    class HTML default
+```
+
+---
+layout: center
+---
+
+```mermaid {scale: 0.7}
+flowchart LR
+    subgraph Traditional["Database Layer"]
+        direction LR
+        HTML["HTML<br>DOM"]
+        State["JS app<br>state<br>e.g. Pinia"]
+        API["JSON<br>REST API"]
+        Model["model<br>objects"]
+        DB[(database<br>e.g. SQL)]
+        
+        HTML -->|user input| State
+        State -->|RPC request| API
+        API -->|request| Model
+        Model -->|ORM| DB
+        DB -->|response| Model
+        Model -->|response| API
+        API -->|response| State
+        State -->|render| HTML
+    end
+    
+    style Traditional fill:#2d1b36,stroke:#FF6BED
+    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
+    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
+    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
+    classDef api fill:#344060,stroke:#FF6BED,color:#EAE9F3
+    
+    class DB storage
+    class State state
+    class API,Model api
+    class HTML default
+```
+
+---
+layout: center
+---
+
+```mermaid {scale: 0.5}
+flowchart LR
+    subgraph Traditional["Traditional Web App Model"]
+        direction LR
+        HTML["HTML<br>DOM"]
+        State["JS app<br>state<br>e.g. Pinia"]
+        API["JSON<br>REST API"]
+        Model["model<br>objects"]
+        DB[(database<br>e.g. SQL)]
+        Storage["persistent<br>storage"]
+        
+        HTML -->|user input| State
+        State -->|RPC request| API
+        API -->|request| Model
+        Model -->|ORM| DB
+        DB <-->|I/O| Storage
+        
+        Storage -->|disk &<br>network| DB
+        DB -->|response| Model
+        Model -->|response| API
+        API -->|response| State
+        State -->|render| HTML
+    end
+
+    style Traditional fill:#2d1b36,stroke:#FF6BED
+    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
+    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
+    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
+    classDef api fill:#344060,stroke:#FF6BED,color:#EAE9F3
+    
+    class DB,Storage storage
+    class State state
+    class API,Model api
+    class HTML default
+```
+
+---
+layout: center
 ---
 
 # The Problems of the Current Way
 <div class="opacity-80 mb-8">What could go wrong?</div>
 
 <div class="grid grid-cols-2 gap-4 mt-8">
-  <div class="p-6 border rounded-lg transform transition-all duration-500 hover:scale-105" v-click="1">
-    <div class="flex items-center space-x-4">
-      <div class="text-3xl">🔌</div>
-      <div class="font-bold text-xl">Offline Limitations</div>
-    </div>
-    <p class="mt-4">Applications don't work without internet connection</p>
+  <div v-click="1">
+    <SlidingCard
+      icon="🔌"
+      title="Offline Limitations"
+    >
+      Applications don't work without internet connection
+    </SlidingCard>
   </div>
 
-  <div class="p-6 border rounded-lg transform transition-all duration-500 hover:scale-105" v-click="2">
-    <div class="flex items-center space-x-4">
-      <div class="text-3xl">🔒</div>
-      <div class="font-bold text-xl">Data Control</div>
-    </div>
-    <p class="mt-4">User is not in control of their data</p>
+  <div v-click="2">
+    <SlidingCard
+      icon="🔒"
+      title="Data Control"
+    >
+      User is not in control of their data
+    </SlidingCard>
   </div>
 
-  <div class="p-6 border rounded-lg transform transition-all duration-500 hover:scale-105" v-click="3">
-    <div class="flex items-center space-x-4">
-      <div class="text-3xl">⚡️</div>
-      <div class="font-bold text-xl">Performance</div>
-    </div>
-    <p class="mt-4">Can be slow due to network dependencies</p>
+  <div v-click="3">
+    <SlidingCard
+      icon="⚡️"
+      title="Performance"
+    >
+      Can be slow due to network dependencies
+    </SlidingCard>
   </div>
 
-  <div class="p-6 border rounded-lg transform transition-all duration-500 hover:scale-105" v-click="4">
-    <div class="flex items-center space-x-4">
-      <div class="text-3xl">🔧</div>
-      <div class="font-bold text-xl">Complexity</div>
-    </div>
-    <p class="mt-4">Complicated to build and maintain</p>
+  <div v-click="4">
+    <SlidingCard
+      icon="🔧"
+      title="Complexity"
+    >
+      Complicated to build and maintain
+    </SlidingCard>
   </div>
 </div>
 
 <style>
-.slidev-vclick-target {
-  transition: all 500ms ease;
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.slidev-vclick-hidden {
-  transform: translateY(20px);
-  opacity: 0;
+.animate-slide-in {
+  animation: slide-in 0.6s ease-out forwards;
 }
 </style>
 
@@ -242,168 +337,210 @@ clicks: 4
 layout: quote
 ---
 
-<div class="text-xl mt-12">
-  <blockquote>
-    In <span v-mark.underline.blue="1">local-first</span> software, "<span v-mark.underline.red="2">the availability of another computer</span> should never prevent you from working."
-  </blockquote>
-  
-  <div class="text-right mt-4">
-    — Martin Kleppmann
-  </div>
-</div>
+<QuoteCard author="Martin Kleppmann">
+  In <span v-mark.underline.blue="1">local-first</span> software, "<span v-mark.underline.red="2">the availability of another computer</span> should never prevent you from working."
+</QuoteCard>
 
 ---
-layout: default
+layout: iframe-left
+url: https://www.inkandswitch.com/local-first
 ---
-
 # Local-First Principles
 
-<div class="grid grid-cols-3 gap-4 mt-4">
-  <div class="p-4 border rounded-lg">
-    <div class="font-bold text-lg mb-2">⚡️ 1. No Spinners</div>
-    <div class="text-sm">Work at your fingertips, instant local operations</div>
-  </div>
+<ul class="space-y-4">
+  <li v-click="1">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">⚡️</span>
+      <span class="font-bold">1. No Spinners:</span>
+      Instant local operations
+    </div>
+  </li>
 
-  <div class="p-4 border rounded-lg">
-    <div class="font-bold text-lg mb-2">📱 2. Multi-Device</div>
-    <div class="text-sm">Your work isn't trapped on one device</div>
-  </div>
+  <li v-click="2">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">📱</span>
+      <span class="font-bold">2. Multi-Device:</span>
+      Access from any device
+    </div>
+  </li>
 
-  <div class="p-4 border rounded-lg">
-    <div class="font-bold text-lg mb-2">🔌 3. Network Optional</div>
-    <div class="text-sm">Full functionality even when offline</div>
-  </div>
+  <li v-click="3">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">🔌</span>
+      <span class="font-bold">3. Network Optional:</span>
+      Works offline
+    </div>
+  </li>
 
-  <div class="p-4 border rounded-lg">
-    <div class="font-bold text-lg mb-2">👥 4. Collaboration</div>
-    <div class="text-sm">Seamless real-time collaboration</div>
-  </div>
+  <li v-click="4">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">👥</span>
+      <span class="font-bold">4. Collaboration:</span>
+      Real-time teamwork
+    </div>
+  </li>
 
-  <div class="p-4 border rounded-lg">
-    <div class="font-bold text-lg mb-2">⏳ 5. Long Now</div>
-    <div class="text-sm">Data remains accessible for years to come</div>
-  </div>
+  <li v-click="5">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">⏳</span>
+      <span class="font-bold">5. Long Now:</span>
+      Long-term data access
+    </div>
+  </li>
 
-  <div class="p-4 border rounded-lg">
-    <div class="font-bold text-lg mb-2">🔒 6. Privacy & Security</div>
-    <div class="text-sm">Private and secure by default</div>
-  </div>
+  <li v-click="6">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">🔒</span>
+      <span class="font-bold">6. Privacy & Security:</span>
+      Built-in protection
+    </div>
+  </li>
+
+  <li v-click="7">
+    <div class="flex items-center gap-2">
+      <span class="text-xl">🎮</span>
+      <span class="font-bold">7. User Control:</span>
+      Full data ownership
+    </div>
+  </li>
+</ul>
+
+<div v-click="8" class="mt-8 text-sm opacity-70 flex items-center gap-2">
+  <span class="i-carbon-link text-lg" />
+  Source: <a href="https://www.inkandswitch.com/local-first/" target="_blank" class="text-primary hover:underline">inkandswitch.com/local-first</a>
 </div>
 
-<div class="mt-4">
-  <div class="p-4 border rounded-lg">
-    <div class="font-bold text-lg mb-2">🎮 7. User Control</div>
-    <div class="text-sm">Retain ultimate ownership of your data</div>
-  </div>
-</div>
-
-<div class="absolute bottom-4 right-4 text-sm opacity-50">
-  Source: "Local-first software" by Martin Kleppmann et al.
-</div>
 
 ---
 layout: center
 ---
 
-<div class="progress-track" :class="{ 'all-complete': $clicks === 3 }">
-  <div class="progress-item" v-click="1">
-    <div class="progress-line"></div>
-    <div class="stage">PWA Ready</div>
-    <div class="percentage">33%</div>
-    <div class="description">Install PWA dependencies, configure manifest & service worker</div>
-  </div>
-  
-  <div class="progress-item" v-click="2">
-    <div class="progress-line"></div>
-    <div class="stage">Storage Ready</div>
-    <div class="percentage">66%</div>
-    <div class="description">Implement client-side storage for reliable data persistence</div>
-  </div>
-  
-  <div class="progress-item" v-click="3">
-    <div class="progress-line"></div>
-    <div class="stage">Local-First Ready</div>
-    <div class="percentage">100%</div>
-    <div class="description">Implement sync engine and offline-first functionality</div>
-  </div>
-</div>
+```mermaid {scale: 0.5}
+flowchart LR
+    subgraph LocalFirst["Local-First Model"]
+        direction LR
+        HTML2["HTML<br>DOM"]
+        State2["JS app<br>state<br>sync engine"]
+        Storage2["storage<br>& sync"]
+        
+        HTML2 -->|user input| State2
+        State2 -->|I/O| Storage2
+        Storage2 -->|disk &<br>network| State2
+        State2 -->|render| HTML2
+    end
+    
+    style LocalFirst fill:#2d1b36,stroke:#FF6BED
+    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
+    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
+    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
+    
+    class Storage2 storage
+    class State2 state
+    class HTML2 default
+```
 
-<style>
-.progress-track {
-  position: relative;
-  padding-left: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 8rem;
-}
+---
+layout: center
+class: 'text-center'
+---
 
-.progress-track::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 4px;
-  background: rgba(255, 255, 255, 0.1);
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
+# Traditional vs Local-First Architecture
 
-.progress-track.all-complete::before {
-  opacity: 0;
-}
+<div class="mb-4 text-xl opacity-70">From Complex to Simple</div>
 
-.progress-item {
-  display: flex;
-  align-items: center;
-  gap: 3rem;
-  opacity: 0.5;
-  transition: opacity 0.5s ease;
-}
+```mermaid
+flowchart LR
+    subgraph Traditional["Traditional Web App Model"]
+        direction LR
+        HTML["HTML<br>DOM"]
+        State["JS app<br>state<br>e.g. Pinia"]
+        API["JSON<br>REST API"]
+        Model["model<br>objects"]
+        DB[(database<br>e.g. SQL)]
+        Storage["persistent<br>storage"]
+        
+        HTML -->|user input| State
+        State -->|request| API
+        API -->|request| Model
+        Model -->|ORM| DB
+        DB <-->|I/O| Storage
+        
+        Storage -->|disk &<br>network| DB
+        DB -->|response| Model
+        Model -->|response| API
+        API -->|response| State
+        State -->|render| HTML
+    end
 
-.progress-item.slidev-vclick-current {
-  opacity: 1;
-}
+    style Traditional fill:#2d1b36,stroke:#FF6BED
+    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
+    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
+    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
+    classDef api fill:#344060,stroke:#FF6BED,color:#EAE9F3
+    
+    class DB,Storage storage
+    class State state
+    class API,Model api
+    class HTML default
+```
 
-.progress-line {
-  position: absolute;
-  left: 0;
-  width: 4px;
-  height: 8rem;
-  background: var(--slidev-theme-primary);
-  transform: scaleY(0);
-  transform-origin: top;
-  transition: transform 0.5s ease;
-}
+<div class="my-8 text-xl opacity-70">To</div>
 
-.progress-item.slidev-vclick-current .progress-line,
-.progress-item.slidev-vclick-prior .progress-line {
-  transform: scaleY(1);
-}
+```mermaid
+flowchart LR
+    subgraph LocalFirst["Local-First Model"]
+        direction LR
+        HTML2["HTML<br>DOM"]
+        State2["JS app<br>state<br>sync engine"]
+        Storage2["storage<br>& sync"]
+        
+        HTML2 -->|user input| State2
+        State2 -->|I/O| Storage2
+        Storage2 -->|disk &<br>network| State2
+        State2 -->|render| HTML2
+    end
+    
+    style LocalFirst fill:#2d1b36,stroke:#FF6BED
+    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
+    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
+    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
+    
+    class Storage2 storage
+    class State2 state
+    class HTML2 default
+```
 
-.stage {
-  font-size: 2.5rem;
-  font-weight: 500;
-  min-width: 20rem;
-}
+---
+---
+# How to do that with Vue?
+---
+layout: center
+clicks: 3
+---
 
-.percentage {
-  font-size: 2.5rem;
-  font-weight: bold;
-  color: var(--slidev-theme-primary);
-}
-
-.description {
-  font-size: 1.2rem;
-  opacity: 0.8;
-  max-width: 25rem;
-}
-
-.slidev-vclick-hidden {
-  transform: translateY(10px);
-  opacity: 0;
-}
-</style>
+<ProgressTracker
+  :items="[
+    {
+      stage: 'PWA Ready',
+      percentage: '33%',
+      description: 'Install PWA dependencies, configure manifest & service worker',
+      clickIndex: 1
+    },
+    {
+      stage: 'Storage Ready',
+      percentage: '66%',
+      description: 'Implement client-side storage for reliable data persistence',
+      clickIndex: 2
+    },
+    {
+      stage: 'Local-First Ready',
+      percentage: '100%',
+      description: 'Implement sync engine and offline-first functionality',
+      clickIndex: 3
+    }
+  ]"
+  :is-complete="$clicks === 3"
+/>
 
 ---
 layout: default
@@ -416,297 +553,141 @@ layout: default
 </div>
 
 <div class="grid grid-cols-2 gap-8">
-  <a href="https://alexop.dev/posts/create-pwa-vue3-vite-4-steps/" target="_blank" class="p-6 border rounded-lg hover:border-primary transition-colors">
-    <div class="flex items-center space-x-4 mb-4">
-      <div class="text-3xl">📖</div>
-      <h3 class="text-xl font-bold">PWA Implementation</h3>
-    </div>
-    <p class="opacity-80">Complete guide to creating a PWA with Vue 3 + Vite</p>
-  </a>
+  <GuideCard
+    href="https://alexop.dev/posts/create-pwa-vue3-vite-4-steps/"
+    icon="📖"
+    title="PWA Implementation"
+  >
+    Complete guide to creating a PWA with Vue 3 + Vite
+  </GuideCard>
 
-  <a href="https://alexop.dev/posts/sqlite-vue3-offline-first-web-apps-guide/" target="_blank" class="p-6 border rounded-lg hover:border-primary transition-colors">
-    <div class="flex items-center space-x-4 mb-4">
-      <div class="text-3xl">💾</div>
-      <h3 class="text-xl font-bold">SQLite Integration</h3>
-    </div>
-    <p class="opacity-80">Step-by-step SQLite setup for offline-first apps</p>
-  </a>
+  <GuideCard
+    href="https://alexop.dev/posts/sqlite-vue3-offline-first-web-apps-guide/"
+    icon="💾"
+    title="SQLite Integration"
+  >
+    Step-by-step SQLite setup for offline-first apps
+  </GuideCard>
 </div>
+---
+---
+```mermaid
+---
+title: Local-First Architecture with Central Server
+---
+flowchart LR
+    subgraph Client1["Client Device"]
+        UI1["UI"] --> DB1["Local Data"]
+    end
+
+    subgraph Client2["Client Device"]
+        UI2["UI"] --> DB2["Local Data"]
+    end
+
+    subgraph Server["Central Server"]
+        SDB["Server Data"]
+        Sync["Sync Service"]
+    end
+
+    DB1 <--> Sync
+    DB2 <--> Sync
+    Sync <--> SDB
+```
+
+Key decisions:
+- How much data to store locally (full vs. partial dataset)
+- How to handle multi-user conflict resolution
 
 ---
-layout: center
+layout: image
+image: /images/linear.png
+backgroundSize: contain
+---
+---
+layout: iframe-left
+url: https://dexie.org/
 ---
 
 # Dexie.js
 
 <div class="mt-8 space-y-8">
-  <div class="flex items-start space-x-6">
-    <div class="p-4 border rounded-lg">
-      <div class="text-3xl">🔧</div>
-    </div>
-    <div>
-      <h3 class="text-xl font-bold">Enhanced IndexedDB Usage</h3>
-      <div class="text-gray-600">Provides a friendly and intuitive way to work with IndexedDB</div>
-    </div>
+  <div v-click="1">
+    <FeatureCard
+      icon="🔧"
+      title="Enhanced IndexedDB Usage"
+    >
+      Provides a friendly and intuitive way to work with IndexedDB
+    </FeatureCard>
   </div>
 
-  <div class="flex items-start space-x-6">
-    <div class="p-4 border rounded-lg">
-      <div class="text-3xl">☁️</div>
-    </div>
-    <div>
-      <h3 class="text-xl font-bold">Built-in Cloud Solutions</h3>
-      <div class="text-gray-600">Includes ready-to-use sync engine, authentication, and cloud storage options</div>
-    </div>
+  <div v-click="2">
+    <FeatureCard
+      icon="☁️"
+      title="Built-in Cloud Solutions"
+    >
+      Includes ready-to-use sync engine, authentication, and cloud storage options
+    </FeatureCard>
   </div>
 
-  <div class="flex items-start space-x-6">
-    <div class="p-4 border rounded-lg">
-      <div class="text-3xl">🔄</div>
-    </div>
-    <div>
-      <h3 class="text-xl font-bold">Flexible Server Options</h3>
-      <div class="text-gray-600">Freedom to use your own server infrastructure instead of their cloud services</div>
-    </div>
+  <div v-click="3">
+    <FeatureCard
+      icon="🔄"
+      title="Flexible Server Options"
+    >
+      Freedom to use your own server infrastructure instead of their cloud services
+    </FeatureCard>
   </div>
 </div>
+
+---
+layout: image-left
+image: /images/todoApp.png
+backgroundSize: contain
+---
+
+
+<div class="text-lg opacity-80 flex items-center justify-center h-full">Setting Up Dexie.js with Cloud Sync</div>
 
 ---
 layout: center
 ---
 
-# Understanding Dexie.js Architecture
+# Project Structure
 
-```mermaid {scale: 0.5}
-flowchart LR
-    subgraph Client["Client"]
-        App["Application"]
-        Dexie["Dexie.js"]
-        IDB["IndexedDB"]
-        
-        App --> Dexie
-        Dexie --> IDB
-        
-        subgraph DexieSync["Dexie Sync"]
-            Rev["Revision Tracking"]
-            Queue["Sync Queue"]
-            Rev --> Queue
-        end
-    end
-
-    subgraph Cloud["Dexie Cloud"]
-        Auth["Auth Service"]
-        Store["Data Store"]
-        Repl["Replication Log"]
-        
-        Auth --> Store
-        Store --> Repl
-    end
-
-    Dexie <--> Rev
-    Queue <--> Auth
-    IDB -.-> Queue
-    Queue -.-> Store
+```bash {all|1-5|6-7|8-9|10-11}
+src/
+├── components/
+│   ├── Ui/           # UI components using shadcn
+│   ├── TodoList.vue  # Todo list component
+│   └── AuthGuard.vue # Auth wrapper component
+├── composables/
+│   └── useTodos.ts   # Todo management logic
+├── pages/
+│   └── index.vue     # Main page with AuthGuard and TodoList
+└── db/
+    └── todo.ts       # Dexie configuration
 ```
 
----
-layout: two-cols
----
-
-# Setting Up Dexie Cloud
-
-```bash
-# 1. Create cloud database
-npx dexie-cloud create
-
-# 2. Whitelist your app origin
-npx dexie-cloud whitelist http://localhost:3000
-
-# 3. Install dependencies
-npm install dexie@latest dexie-cloud-addon
-```
-
-::right::
-
-<div class="ml-4 mt-12">
+<div class="mt-8">
 <div v-click="1">
-- Creates your database in the cloud
-- Requires email verification
-- Stores URL in dexie-cloud.json
+1. Components handle the UI and user interactions with shadcn integration
 </div>
 
-<div v-click="2" class="mt-4">
-- Add your app's origin
-- Required for security
-- Can add multiple origins
+<div v-click="2">
+2. Composables contain reusable business logic for todo management
 </div>
 
-<div v-click="3" class="mt-4">
-- Latest Dexie version
-- Cloud sync capabilities
-- Free tier available
-</div>
+<div v-click="3">
+3. Main page combines AuthGuard for authentication and TodoList for task management
 </div>
 
+<div v-click="4">
+4. Database setup and configuration for Dexie.js
+</div>
+</div>
 ---
-layout: center
 ---
-
-# Setting Up Dexie.js with Cloud Sync
-
-<div class="text-lg opacity-80 mb-8">Let's break down the implementation step by step</div>
-
----
-layout: two-cols
----
-
-# 1. Imports & Types
-
-```ts {all|1-2|4-9}
-import Dexie, { type Table } from 'dexie'
-import dexieCloud from 'dexie-cloud-addon'
-
-export interface Todo {
-  id?: string
-  title: string
-  completed: boolean
-  createdAt: Date
-}
-```
-
-::right::
-
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Import Dexie core and types
-- Add cloud sync capabilities
-</div>
-
-<div v-click="2" class="mt-8">
-- Define Todo interface
-- Properties for task management
-- Unique ID for sync
-</div>
-</div>
-
----
-layout: two-cols
----
-
-# 2. Database Setup
-
-```ts {all|1,2,4|6-10}
-export class TodoDB extends Dexie {
-  todos!: Table<Todo>
-
-  constructor() {
-    super('TodoDB', { addons: [dexieCloud] })
-    
-    this.version(1).stores({
-      todos: '@id, title, completed, createdAt',
-    })
-  }
-}
-```
-
-::right::
-
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Extend Dexie class
-- Define todos table type
-</div>
-
-<div v-click="2" class="mt-4">
-- Initialize with cloud addon
-</div>
-
-<div v-click="3" class="mt-4">
-- Define schema version
-- `@id` for cloud sync
-- Index searchable fields
-</div>
-</div>
-
----
-layout: two-cols
----
-
-# 3. Cloud Configuration
-
-```ts {all|1-7|9-10|12-16}
-async configureSync(databaseUrl: string) {
-  await this.cloud.configure({
-    databaseUrl,
-    requireAuth: true,
-    tryUseServiceWorker: true,
-  })
-}
-
-export const db = new TodoDB()
-const url = import.meta.env.VITE_DEXIE_CLOUD_URL
-
-if (!url) {
-  throw new Error(
-    'VITE_DEXIE_CLOUD_URL environment variable ' +
-    'is not defined'
-  )
-}
-```
-
-::right::
-
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Configure cloud sync
-- Enable authentication
-- Use service worker for offline
-</div>
-
-<div v-click="2" class="mt-4">
-- Create database instance
-- Get cloud URL from env
-</div>
-
-<div v-click="3" class="mt-4">
-- Validate configuration
-- Fail fast if missing URL
-</div>
-</div>
-
----
-layout: two-cols
----
-
-# 4. Auth Exports
-
-```ts {all}
-db.configureSync(url).catch(console.error)
-
-export const currentUser = db.cloud.currentUser
-export const login = () => db.cloud.login()
-export const logout = () => db.cloud.logout()
-```
-
-::right::
-
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Initialize cloud sync
-- Export auth utilities:
-  - Current user state
-  - Login function
-  - Logout function
-</div>
-</div>
-
----
-layout: center
----
-
-# Building a Todo App with Dexie.js
-
-```mermaid {scale: 0.8}
+```mermaid
 flowchart TD
     subgraph VueApp["Vue Application"]
         App["App.vue"]
@@ -734,353 +715,122 @@ flowchart TD
         SyncEngine <-.-> Server
         Server <-.-> ServerDB
     end
+
+    style VueApp fill:#2d1b36,stroke:#FF6BED
+    style DexieLayer fill:#344060,stroke:#AB4B99
+    style Backend fill:#1a1f2c,stroke:#8A337B
+    
+    classDef default fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
+    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
+    
+    class Server,ServerDB storage
 ```
-
----
-layout: center
----
-
-# Building the Todo Composable
-
-<div class="text-lg opacity-80 mb-8">Let's explore how to build reactive todo management with Vue</div>
-
 ---
 layout: two-cols
+class: 'gap-12'
 ---
 
-# 1. Setup & Imports
+# Why RxJS with Vue?
 
-```ts {all|1|2-3|4-5}
-import { db, type Todo } from '@/db/todo'
-import { useObservable } from '@vueuse/rxjs'
-import { liveQuery } from 'dexie'
-import { from } from 'rxjs'
-import { computed, ref } from 'vue'
+<div class="space-y-4">
+  <div v-click="1">
+    <h3 class="text-xl text-primary mb-2">🔄 Reactive Data Streams</h3>
+    <p class="opacity-80">Perfect for handling real-time data and complex state changes</p>
+  </div>
 
-export function useTodos() {
-  const newTodoTitle = ref('')
-  const error = ref<string | null>(null)
-}
-```
+  <div v-click="2">
+    <h3 class="text-xl text-primary mb-2">🔗 Bridge to IndexedDB</h3>
+    <p class="opacity-80">Seamlessly connect Dexie's live queries with Vue's reactivity</p>
+  </div>
+
+  <div v-click="3">
+    <h3 class="text-xl text-primary mb-2">⚡️ VueUse Integration</h3>
+    <p class="opacity-80">useObservable hook makes RxJS feel native to Vue</p>
+  </div>
+</div>
 
 ::right::
 
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Import database and types
-</div>
+```ts {all|2-3|5-8|10-14|all}
+// Without VueUse
+const todos$ = from(liveQuery(() => 
+  db.todos.toArray()))
 
-<div v-click="2" class="mt-4">
-- RxJS integration for Vue
-- Dexie live queries
-</div>
+// Manual subscription
+todos$.subscribe(todos => {
+  // Update local state
+  this.todos = todos
+})
 
-<div v-click="3" class="mt-4">
-- Vue Composition API
-- Reactive state management
-</div>
-</div>
-
----
-layout: two-cols
----
-
-# 2. Reactive Queries
-
-```ts {all|2-4|6-8|10-12}
-export function useTodos() {
-  const todos = useObservable<Todo[]>(
-    from(liveQuery(() => db.todos.orderBy('createdAt').toArray())),
-  )
-
-  const completedTodos = computed(() =>
-    todos.value?.filter(todo => todo.completed) ?? [],
-  )
-
-  const pendingTodos = computed(() =>
-    todos.value?.filter(todo => !todo.completed) ?? [],
-  )
-}
+// With VueUse - clean & reactive!
+const todos = useObservable(
+  from(liveQuery(() => 
+    db.todos.toArray()))
+)
 ```
 
-::right::
-
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Live query for todos
-- Auto-updates on changes
-- Ordered by creation date
-</div>
-
-<div v-click="2" class="mt-4">
-- Computed completed todos
-- Filtered reactively
-</div>
-
-<div v-click="3" class="mt-4">
-- Computed pending todos
-- Automatic updates
-</div>
-</div>
-
----
-layout: two-cols
----
-
-# 3. Adding Todos
-
-```ts {all|1-3|5-11|13-17}
-export function useTodos() {
-  const newTodoTitle = ref('')
-  const error = ref<string | null>(null)
-
-  const addTodo = async () => {
-    try {
-      if (!newTodoTitle.value.trim())
-        return
-
-      await db.todos.add({
-        title: newTodoTitle.value,
-        completed: false,
-        createdAt: new Date(),
-      })
-
-      newTodoTitle.value = ''
-      error.value = null
-    }
-    catch (err) {
-      error.value = 'Failed to add todo'
-    }
-  }
-}
-```
-
-::right::
-
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Reactive state for input
-- Error handling state
-</div>
-
-<div v-click="2" class="mt-4">
-- Validate input
-- Add new todo to database
-- Set initial properties
-</div>
-
-<div v-click="3" class="mt-4">
-- Reset input
-- Handle errors gracefully
-</div>
-</div>
-
----
-layout: two-cols
----
-
-# 4. Managing Todos
-
-```ts {all|1-9|11-19}
-const toggleTodo = async (todo: Todo) => {
-  try {
-    await db.todos.update(todo.id!, {
-      completed: !todo.completed,
-    })
-    error.value = null
-  }
-  catch (err) {
-    error.value = 'Failed to toggle todo'
-  }
-}
-
-const deleteTodo = async (id: string) => {
-  try {
-    await db.todos.delete(id)
-    error.value = null
-  }
-  catch (err) {
-    error.value = 'Failed to delete todo'
-  }
-}
-```
-
-::right::
-
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Toggle completion status
-- Update in database
-- Error handling
-</div>
-
-<div v-click="2" class="mt-4">
-- Delete todos by ID
-- Clean error handling
-- Automatic UI updates
-</div>
-</div>
-
----
-layout: center
----
-
-# Putting It All Together
-
-```ts
-return {
-  todos,          // Live query of all todos
-  newTodoTitle,   // Input binding
-  error,          // Error state
-  completedTodos, // Filtered completed
-  pendingTodos,     // Filtered pending
-  addTodo,         // Create new
-  toggleTodo,      // Toggle status
-  deleteTodo,      // Remove todo
-}
-```
-
-<div class="mt-8 text-lg opacity-80">
-A clean, reactive, and type-safe todo management system
-</div>
-
----
-layout: two-cols
----
-
-# Using the Composable
-
-```vue {all|2-3|5-12|14-27|29-39}
-<script setup lang="ts">
-import { useTodos } from '@/composables/useTodos'
-import { onMounted } from 'vue'
-
-const {
-  todos,
-  newTodoTitle,
-  error,
-  completedTodos,
-  pendingTodos,
-  addTodo,
-  toggleTodo,
-  deleteTodo,
-} = useTodos()
-
-const handleSubmit = async (e: Event) => {
-  e.preventDefault()
-  await addTodo()
-}
-
-const handleToggle = async (id: string) => {
-  const todo = todos.value?.find(t => t.id === id)
-  if (todo) {
-    await toggleTodo(todo)
-  }
-}
-
-const handleDelete = async (id: string) => {
-  await deleteTodo(id)
-}
-</script>
-
-<template>
-  <form @submit="handleSubmit" class="mb-4">
-    <input
-      v-model="newTodoTitle"
-      placeholder="Add new todo..."
-      class="p-2 border rounded"
-    />
-    <button type="submit">Add</button>
-  </form>
-
-  <div v-if="error" class="text-red-500">{{ error }}</div>
-</template>
-```
-
-::right::
-
-<div class="ml-4 mt-12">
-<div v-click="1">
-- Import and setup composable
-</div>
-
-<div v-click="2" class="mt-4">
-- Destructure needed functions
-- Access reactive state
-</div>
-
-<div v-click="3" class="mt-4">
-- Handle form submission
-- Manage todo actions
-- Error handling
-</div>
-
-<div v-click="4" class="mt-4">
-- Create input form
-- Display error messages
-- Reactive data binding
-</div>
+<div class="mt-8" v-click="4">
+<div class="text-xl text-primary mb-2">🎯 Key Benefits</div>
+<ul class="space-y-2 opacity-80">
+  <li>• Automatic subscription management</li>
+  <li>• Native Vue reactivity</li>
+  <li>• Cleaner code with less boilerplate</li>
+</ul>
 </div>
 
 <style>
-.slidev-icon {
-  display: inline-block;
-  width: 1.2em;
-  height: 1.2em;
-}
-
-[class*='i-'] {
-  display: inline-block;
-  width: 1.2em;
-  height: 1.2em;
+.slidev-code {
+  @apply text-sm leading-6 px-4 py-3 mt-4;
 }
 </style>
 
 ---
-layout: center
 ---
+# 🔗 Learn More
 
-# Local-First Software Fit Guide
+<div class="grid grid-cols-2 gap-4">
 
-| ✅ Good Fit | ❌ Bad Fit |
+<div class="p-4 border rounded hover:shadow-lg transition-shadow">
+
+## 📦 Source Code
+[github.com/alexanderop/vue-dexie](https://github.com/alexanderop/vue-dexie)
+
+</div>
+
+<div class="p-4 border rounded hover:shadow-lg transition-shadow">
+
+## 📝 Blog Post
+[Building Local-First Apps with Vue & Dexie](https://alexop.dev/posts/building-local-first-apps-vue-dexie/)
+
+</div>
+
+</div>
+
+---
+---
+# when to use local first?
+
+## Local-First Software Fit Guide
+
+| Good Fit ✅ | Bad Fit ❌ |
 |------------|------------|
-| 📝 **File Editing**<br>text editors, word processors, spreadsheets, slides, graphics, video, music, CAD | 💰 **Money**<br>banking, payments, ad tracking |
-| 📋 **Productivity**<br>notes, tasks, issues, calendar, time tracking, messaging | 📦 **Physical Resources**<br>e-commerce, inventory |
-| | 🚗 **Vehicles**<br>car sharing, freight, logistics |
+| Text editors, documents, spreadsheets 📝 | Banking & payments 💰 |
+| Notes, tasks, calendars 📋 | E-commerce & inventory 📦 |
+| Media editing & creative tools 🎨 | Vehicle & logistics systems 🚗 |
+| Personal data management 👤 | Real-world resource tracking 🌐 |
 
 ---
-layout: center
-class: text-center
 ---
+# Thank You! 🙏
 
-# Build Better Apps with Local-First Development
-<div class="text-3xl text-primary font-bold mb-12">
-Thank you for your attention!
+<div class="text-center">
+
+## Questions?
+
+Feel free to reach out:
+
+- 🌐 [alexop.dev](https://alexop.dev)
+- 🐦 [@alexanderop](https://twitter.com/alexanderop)
+- 📧 [alex@alexop.dev](mailto:alex@alexop.dev)
+
 </div>
-
-<div class="grid grid-cols-1 gap-6 max-w-3xl mx-auto text-left">
-  <a href="https://alexop.dev/posts/what-is-local-first-web-development/" target="_blank" class="p-6 border rounded-lg hover:border-primary transition-colors">
-    <div class="flex items-center space-x-4 mb-4">
-      <div class="text-3xl">📝</div>
-      <h3 class="text-xl font-bold">Complete Guide to Local-First</h3>
-    </div>
-    <p class="opacity-80 mb-2">Deep dive into Local-First Web Development</p>
-    <div class="text-sm text-primary">https://alexop.dev/posts/what-is-local-first-web-development/</div>
-  </a>
-
-  <a href="https://localfirstweb.dev/" target="_blank" class="p-6 border rounded-lg hover:border-primary transition-colors">
-    <div class="flex items-center space-x-4 mb-4">
-      <div class="text-3xl">🌐</div>
-      <h3 class="text-xl font-bold">Local-First Web Community</h3>
-    </div>
-    <p class="opacity-80 mb-2">Join the community and explore more resources</p>
-    <div class="text-sm text-primary">https://localfirstweb.dev/</div>
-  </a>
-</div>
-
-<style>
-a {
-  text-decoration: none;
-  color: inherit;
-}
-</style>
