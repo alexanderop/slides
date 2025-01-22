@@ -495,7 +495,7 @@ layout: center
 
 # Project Structure
 
-```bash {all|1-5|6-7|8-9|10-11}
+```bash {all|1-5|6-7|8-9|10-11|12}
 src/
 ├── components/
 │   ├── Ui/           # UI components using shadcn
@@ -504,9 +504,10 @@ src/
 ├── composables/
 │   └── useTodos.ts   # Todo management logic
 ├── pages/
-│   └── index.vue     # Main page with AuthGuard and TodoList
+│   └── index.vue     # Main page with TodoList
 └── db/
     └── todo.ts       # Dexie configuration
+├── App.vue           # Is using AuthGuard.vue
 ```
 
 <div class="mt-8">
@@ -524,6 +525,9 @@ src/
 
 <div v-click="4">
 4. Database setup and configuration for Dexie.js
+</div>
+<div v-click="5">
+5. App.vue will use AuthGuard to make routes save
 </div>
 </div>
 ---
@@ -643,7 +647,7 @@ layout: two-cols
 class: 'gap-12'
 ---
 
-# Why RxJS with Vue?
+# How to use liveQuery?
 
 <div class="space-y-4">
   <div v-click="1">
@@ -658,7 +662,7 @@ class: 'gap-12'
 
   <div v-click="3">
     <h3 class="text-xl text-primary mb-2">⚡️ VueUse Integration</h3>
-    <p class="opacity-80">useObservable hook makes RxJS feel native to Vue</p>
+    <p class="opacity-80">useObservable composable makes RxJS feel native to Vue</p>
   </div>
 </div>
 
@@ -682,15 +686,6 @@ const todos = useObservable(
     db.todos.toArray()))
 )
 ```
-
-<div class="mt-8" v-click="4">
-<div class="text-xl text-primary mb-2">🎯 Key Benefits</div>
-<ul class="space-y-2 opacity-80">
-  <li>• Automatic subscription management</li>
-  <li>• Native Vue reactivity</li>
-  <li>• Cleaner code with less boilerplate</li>
-</ul>
-</div>
 
 <style>
 .slidev-code {
@@ -855,13 +850,30 @@ const {
 ---
 ---
 
+````md magic-move
 ```vue
 <script setup lang="ts">
-// imports
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { currentUser, login, logout } from '@/db/todo'
+import { Icon } from '@iconify/vue'
+import { useObservable } from '@vueuse/rxjs'
+import { computed, ref } from 'vue'
+```
+
+```vue
+<script setup lang="ts">
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { currentUser, login, logout } from '@/db/todo'
+import { Icon } from '@iconify/vue'
+import { useObservable } from '@vueuse/rxjs'
+import { computed, ref } from 'vue'
 
 const user = useObservable(currentUser)
 const isAuthenticated = computed(() => !!user.value)
 const isLoading = ref(false)
+
 async function handleLogin() {
   isLoading.value = true
   try {
@@ -872,6 +884,25 @@ async function handleLogin() {
   }
 }
 </script>
+```
+
+```vue
+<script setup lang="ts">
+const user = useObservable(currentUser)
+const isAuthenticated = computed(() => !!user.value)
+const isLoading = ref(false)
+
+async function handleLogin() {
+  isLoading.value = true
+  try {
+    await login()
+  }
+  finally {
+    isLoading.value = false
+  }
+}
+</script>
+
 <template>
   <div v-if="!isAuthenticated" class="flex flex-col items-center justify-center min-h-screen p-4 bg-background">
     <Card class="max-w-md w-full">
@@ -886,6 +917,22 @@ async function handleLogin() {
   </template>
 </template>
 ```
+```vue
+<script setup lang="ts">
+import AuthGuard from '@/components/AuthGuard.vue'
+</script>
+
+<template>
+  <AuthGuard>
+    <div class="min-h-screen bg-background text-foreground">
+      <div class="safe-area-top bg-background" />
+      <RouterView />
+      <div class="safe-area-bottom bg-background" />
+    </div>
+  </AuthGuard>
+</template>
+```
+````
 
 ---
 ---
