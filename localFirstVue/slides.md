@@ -108,7 +108,7 @@ class: 'pl-30'
 <div class="text-xl opacity-80 mb-4 flex items-center gap-2">
   <div class="opacity-50">Senior Full Stack Developer</div>
   <div>at</div>
-  <div class="opacity-80">Otto Payments</div>
+  <div class="opacity-80">Otto Payments 🦞</div>
 </div>
 
 <div class="text-lg opacity-70 mb-8">
@@ -148,127 +148,18 @@ class: 'pl-30'
 layout: center
 ---
 
-```mermaid {scale: 0.7}
-flowchart LR
-    subgraph Traditional["Frontend Layer"]
-        direction LR
-        HTML["HTML<br>DOM"]
-        State["JS app<br>state<br>e.g. Pinia"]
-        
-        HTML -->|user input| State
-        State -->|render| HTML
-    end
-    
-    style Traditional fill:#2d1b36,stroke:#FF6BED
-    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
-    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
-    
-    class State state
-    class HTML default
-```
-
+```mermaid
 ---
-layout: center
+title: Traditional Web Application
 ---
-
-```mermaid {scale: 0.7}
-flowchart LR
-    subgraph Traditional["Call Api"]
-        direction LR
-        HTML["HTML<br>DOM"]
-        State["JS app<br>state<br>e.g. Pinia"]
-        API["JSON<br>REST API"]
-        
-        HTML -->|user input| State
-        State -->|request| API
-        API -->|response| State
-        State -->|render| HTML
-    end
+graph LR
+    F[Frontend] 
+    B[Backend]
+    D((Data))
     
-    style Traditional fill:#2d1b36,stroke:#FF6BED
-    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
-    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
-    classDef api fill:#344060,stroke:#FF6BED,color:#EAE9F3
-    
-    class State state
-    class API api
-    class HTML default
-```
-
----
-layout: center
----
-
-```mermaid {scale: 0.7}
-flowchart LR
-    subgraph Traditional["Database Layer"]
-        direction LR
-        HTML["HTML<br>DOM"]
-        State["JS app<br>state<br>e.g. Pinia"]
-        API["JSON<br>REST API"]
-        Model["model<br>objects"]
-        DB[(database<br>e.g. SQL)]
-        
-        HTML -->|user input| State
-        State -->|RPC request| API
-        API -->|request| Model
-        Model -->|ORM| DB
-        DB -->|response| Model
-        Model -->|response| API
-        API -->|response| State
-        State -->|render| HTML
-    end
-    
-    style Traditional fill:#2d1b36,stroke:#FF6BED
-    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
-    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
-    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
-    classDef api fill:#344060,stroke:#FF6BED,color:#EAE9F3
-    
-    class DB storage
-    class State state
-    class API,Model api
-    class HTML default
-```
-
----
-layout: center
----
-
-```mermaid {scale: 0.5}
-flowchart LR
-    subgraph Traditional["Traditional Web App Model"]
-        direction LR
-        HTML["HTML<br>DOM"]
-        State["JS app<br>state<br>e.g. Pinia"]
-        API["JSON<br>REST API"]
-        Model["model<br>objects"]
-        DB[(database<br>e.g. SQL)]
-        Storage["persistent<br>storage"]
-        
-        HTML -->|user input| State
-        State -->|RPC request| API
-        API -->|request| Model
-        Model -->|ORM| DB
-        DB <-->|I/O| Storage
-        
-        Storage -->|disk &<br>network| DB
-        DB -->|response| Model
-        Model -->|response| API
-        API -->|response| State
-        State -->|render| HTML
-    end
-
-    style Traditional fill:#2d1b36,stroke:#FF6BED
-    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
-    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
-    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
-    classDef api fill:#344060,stroke:#FF6BED,color:#EAE9F3
-    
-    class DB,Storage storage
-    class State state
-    class API,Model api
-    class HTML default
+    F -->|save| B
+    F -->|get| B
+    B -->|store| D
 ```
 
 ---
@@ -415,28 +306,17 @@ url: https://www.inkandswitch.com/local-first
 layout: center
 ---
 
-```mermaid {scale: 0.5}
-flowchart LR
-    subgraph LocalFirst["Local-First Model"]
-        direction LR
-        HTML2["HTML<br>DOM"]
-        State2["JS app<br>state<br>sync engine"]
-        Storage2["storage<br>& sync"]
-        
-        HTML2 -->|user input| State2
-        State2 -->|I/O| Storage2
-        Storage2 -->|disk &<br>network| State2
-        State2 -->|render| HTML2
-    end
+```mermaid
+---
+title: Local first
+---
+graph LR
+    F[Frontend]
+    L((Local Data))
+    B[Backend/Data]
     
-    style LocalFirst fill:#2d1b36,stroke:#FF6BED
-    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
-    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
-    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
-    
-    class Storage2 storage
-    class State2 state
-    class HTML2 default
+    F -->|read/save| L
+    L <-->|sync| B
 ```
 
 ---
@@ -449,69 +329,30 @@ class: 'text-center'
 <div class="mb-4 text-xl opacity-70">From Complex to Simple</div>
 
 ```mermaid
-flowchart LR
-    subgraph Traditional["Traditional Web App Model"]
-        direction LR
-        HTML["HTML<br>DOM"]
-        State["JS app<br>state<br>e.g. Pinia"]
-        API["JSON<br>REST API"]
-        Model["model<br>objects"]
-        DB[(database<br>e.g. SQL)]
-        Storage["persistent<br>storage"]
-        
-        HTML -->|user input| State
-        State -->|request| API
-        API -->|request| Model
-        Model -->|ORM| DB
-        DB <-->|I/O| Storage
-        
-        Storage -->|disk &<br>network| DB
-        DB -->|response| Model
-        Model -->|response| API
-        API -->|response| State
-        State -->|render| HTML
-    end
-
-    style Traditional fill:#2d1b36,stroke:#FF6BED
-    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
-    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
-    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
-    classDef api fill:#344060,stroke:#FF6BED,color:#EAE9F3
+graph LR
+    F[Frontend] 
+    B[Backend]
+    D((Data))
     
-    class DB,Storage storage
-    class State state
-    class API,Model api
-    class HTML default
+    F -->|save| B
+    F -->|get| B
+    B -->|store| D
 ```
 
 <div class="my-8 text-xl opacity-70">To</div>
 
 ```mermaid
-flowchart LR
-    subgraph LocalFirst["Local-First Model"]
-        direction LR
-        HTML2["HTML<br>DOM"]
-        State2["JS app<br>state<br>sync engine"]
-        Storage2["storage<br>& sync"]
-        
-        HTML2 -->|user input| State2
-        State2 -->|I/O| Storage2
-        Storage2 -->|disk &<br>network| State2
-        State2 -->|render| HTML2
-    end
+graph LR
+    F[Frontend]
+    L((Local Data))
+    B[Backend/Data]
     
-    style LocalFirst fill:#2d1b36,stroke:#FF6BED
-    classDef default fill:#344060,stroke:#AB4B99,color:#EAE9F3
-    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
-    classDef state fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
-    
-    class Storage2 storage
-    class State2 state
-    class HTML2 default
+    F -->|read/save| L
+    L <-->|sync| B
 ```
+---
+---
 
----
----
 # How to do that with Vue?
 ---
 layout: center
@@ -823,7 +664,7 @@ class: 'gap-12'
 
 ::right::
 
-```ts {all|2-3|5-8|10-14|all}
+```ts {all|2-3|5-8|9-15|all}
 // Without VueUse
 const todos$ = from(liveQuery(() => 
   db.todos.toArray()))
@@ -835,6 +676,7 @@ todos$.subscribe(todos => {
 })
 
 // With VueUse - clean & reactive!
+import { useObservable } from '@vueuse/rxjs'
 const todos = useObservable(
   from(liveQuery(() => 
     db.todos.toArray()))
