@@ -136,7 +136,7 @@ class: 'pl-30'
     color="#4ADE80"
   />
   <ContactItem
-    iconClass="i-carbon-logo-twitter"
+    iconClass="i-carbon-logo-x"
     text="@alexanderopalic"
     color="#3B82F6"
   />
@@ -148,18 +148,22 @@ class: 'pl-30'
 layout: center
 ---
 
-```mermaid
+```mermaid{scale: 1.2}
 ---
 title: Traditional Web Application
 ---
 graph LR
-    F[Frontend] 
-    B[Backend]
-    D((Data))
+    F[Frontend]:::client
+    B[Backend]:::server
+    D[(Database)]:::db
     
-    F -->|save| B
-    F -->|get| B
-    B -->|store| D
+    F -->|HTTP POST| B
+    F -->|HTTP GET| B
+    B -->|CRUD Operations| D
+
+    classDef client fill:#212733,stroke:#FF6BED,stroke-width:2px
+    classDef server fill:#344060,stroke:#AB4B99,stroke-width:2px
+    classDef db fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
 ```
 
 ---
@@ -306,17 +310,21 @@ url: https://www.inkandswitch.com/local-first
 layout: center
 ---
 
-```mermaid
+```mermaid{scale: 1.2}
 ---
 title: Local first
 ---
 graph LR
-    F[Frontend]
-    L((Local Data))
-    B[Backend/Data]
+    F[Frontend]:::client
+    L[(Local Data)]:::local
+    B[Backend/Data]:::server
     
     F -->|read/save| L
     L <-->|sync| B
+
+    classDef client fill:#212733,stroke:#FF6BED,stroke-width:2px
+    classDef local fill:#344060,stroke:#AB4B99,stroke-width:2px
+    classDef server fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
 ```
 
 ---
@@ -417,22 +425,31 @@ layout: default
 title: Local-First Architecture with Central Server
 ---
 flowchart LR
-    subgraph Client1["Client Device"]
-        UI1["UI"] --> DB1["Local Data"]
+    subgraph client1[Client Device]
+        UI1[UI]:::client --> DB1[Local Data]:::local
     end
 
-    subgraph Client2["Client Device"]
-        UI2["UI"] --> DB2["Local Data"]
+    subgraph client2[Client Device]
+        UI2[UI]:::client --> DB2[Local Data]:::local
     end
 
-    subgraph Server["Central Server"]
-        SDB["Server Data"]
-        Sync["Sync Service"]
+    subgraph server[Central Server]
+        SDB[Server Data]:::server
+        Sync[Sync Service]:::sync
     end
 
     DB1 <--> Sync
     DB2 <--> Sync
     Sync <--> SDB
+
+    classDef client fill:#212733,stroke:#FF6BED,stroke-width:2px
+    classDef local fill:#344060,stroke:#AB4B99,stroke-width:2px
+    classDef server fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
+    classDef sync fill:#212733,stroke:#EAEDF3,stroke-width:2px
+    
+    style client1 fill:none,stroke:#FF6BED,stroke-width:2px
+    style client2 fill:none,stroke:#FF6BED,stroke-width:2px
+    style server fill:none,stroke:#AB4B99,stroke-width:2px
 ```
 
 Key decisions:
@@ -999,7 +1016,7 @@ import AuthGuard from '@/components/AuthGuard.vue'
   </div>
   
   <div class="flex items-center gap-2">
-    <carbon:logo-twitter class="text-2xl" />
+    <carbon:logo-x class="text-2xl" />
     <a href="https://twitter.com/alexanderop" class="hover:text-primary transition-colors">@alexanderopalic</a>
   </div>
 </div>
