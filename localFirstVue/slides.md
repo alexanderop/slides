@@ -338,25 +338,33 @@ class: 'text-center'
 
 ```mermaid
 graph LR
-    F[Frontend] 
-    B[Backend]
-    D((Data))
+    F[Frontend]:::client
+    B[Backend]:::server
+    D[(Database)]:::db
     
-    F -->|save| B
-    F -->|get| B
-    B -->|store| D
+    F -->|HTTP POST| B
+    F -->|HTTP GET| B
+    B -->|CRUD Operations| D
+
+    classDef client fill:#212733,stroke:#FF6BED,stroke-width:2px
+    classDef server fill:#344060,stroke:#AB4B99,stroke-width:2px
+    classDef db fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
 ```
 
 <div class="my-8 text-xl opacity-70">To</div>
 
 ```mermaid
 graph LR
-    F[Frontend]
-    L((Local Data))
-    B[Backend/Data]
+    F[Frontend]:::client
+    L[(Local Data)]:::local
+    B[Backend/Data]:::server
     
     F -->|read/save| L
     L <-->|sync| B
+
+    classDef client fill:#212733,stroke:#FF6BED,stroke-width:2px
+    classDef local fill:#344060,stroke:#AB4B99,stroke-width:2px
+    classDef server fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
 ```
 ---
 ---
@@ -453,14 +461,55 @@ flowchart LR
 ```
 
 Key decisions:
+<div v-click>
 - How much data to store locally (full vs. partial dataset)
+</div>
+<div v-click>
 - How to handle multi-user conflict resolution
+</div>
 
 ---
 layout: image
 image: /images/linear.png
 backgroundSize: contain
 ---
+---
+layout: center
+---
+
+```mermaid {scale:0.5}
+mindmap
+  root((Sync Engines))
+    SQL-Based
+      ElectricSQL
+        PostgreSQL + SQLite
+        Active-Active Sync
+      PowerSync
+        Offline-First SQLite
+    NoSQL-Based
+      PouchDB
+        CouchDB Compatible
+        Master-Master Sync
+      RxDB
+        Multi-Backend
+        Real-time Sync
+    CRDT-Based
+      Replicache
+        Optimistic Updates
+      Automerge
+        Network-Agnostic
+      Zero
+        CRDT + Operational Transform
+        Progressive Sync
+      Yjs
+        Real-Time Collaboration
+    Specialized
+      WatermelonDB
+        Observable + Lazy
+      Triplit
+        Schema + Validation
+```
+
 ---
 layout: iframe-left
 url: https://dexie.org/
@@ -548,46 +597,6 @@ src/
 </div>
 </div>
 ---
----
-```mermaid
-flowchart TD
-    subgraph VueApp["Vue Application"]
-        App["App.vue"]
-        TodoList["TodoList.vue<br>Component"]
-        UseTodo["useTodo.ts<br>Composable"]
-        Database["database.ts<br>Dexie Configuration"]
-        
-        App --> TodoList
-        TodoList --> UseTodo
-        UseTodo --> Database
-    end
-    
-    subgraph DexieLayer["Dexie.js Layer"]
-        IndexedDB["IndexedDB"]
-        SyncEngine["Dexie Sync Engine"]
-        
-        Database --> IndexedDB
-        Database --> SyncEngine
-    end
-    
-    subgraph Backend["Backend Services"]
-        Server["Server"]
-        ServerDB["Server Database"]
-        
-        SyncEngine <-.-> Server
-        Server <-.-> ServerDB
-    end
-
-    style VueApp fill:#2d1b36,stroke:#FF6BED
-    style DexieLayer fill:#344060,stroke:#AB4B99
-    style Backend fill:#1a1f2c,stroke:#8A337B
-    
-    classDef default fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
-    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
-    
-    class Server,ServerDB storage
-```
----
 layout: two-cols
 class: 'gap-12 px-4'
 cols: '2fr 3fr'
@@ -598,18 +607,29 @@ cols: '2fr 3fr'
 <div class="space-y-8">
 
 ## 1. Create Database
-```bash
-npx dexie-cloud create
+```bash {all|1|2|3|4-8|9-10|all}
+$ npx dexie-cloud create
+Enter your email address: youremail@company.com
+Enter OTP: YourOTP
+Creating database...
+Successfully created new database!
+
+We created two new local files for you:
+=======================================
+dexie-cloud.json - URL to database
+dexie-cloud.key - contains client ID and secret
 ```
 
 ## 2. Whitelist Origins
-```bash
-npx dexie-cloud whitelist http://localhost:3000
+```bash {all|1|2|all}
+// for local development
+$ npx dexie-cloud whitelist http://localhost:3000
 ```
 
 ## 3. Install Dependencies
-```bash
-npm install dexie@latest dexie-cloud-addon
+```bash {all|1|2|all}
+// add cloud sync
+$ npm install dexie@latest dexie-cloud-addon
 ```
 
 </div>
@@ -641,7 +661,7 @@ db.version(1).stores({
 
 db.cloud.configure({
   databaseUrl: "https://<yourdatabase>.dexie.cloud",
-  requireAuth: true // Optional: Block DB until authenticated
+  requireAuth: true 
 });
 ```
 
@@ -656,57 +676,6 @@ h1 {
 
 h2 {
   @apply text-xl mb-2 text-primary;
-}
-</style>
-
----
-layout: two-cols
-class: 'gap-12'
----
-
-# How to use liveQuery?
-
-<div class="space-y-4">
-  <div v-click="1">
-    <h3 class="text-xl text-primary mb-2">🔄 Reactive Data Streams</h3>
-    <p class="opacity-80">Perfect for handling real-time data and complex state changes</p>
-  </div>
-
-  <div v-click="2">
-    <h3 class="text-xl text-primary mb-2">🔗 Bridge to IndexedDB</h3>
-    <p class="opacity-80">Seamlessly connect Dexie's live queries with Vue's reactivity</p>
-  </div>
-
-  <div v-click="3">
-    <h3 class="text-xl text-primary mb-2">⚡️ VueUse Integration</h3>
-    <p class="opacity-80">useObservable composable makes RxJS feel native to Vue</p>
-  </div>
-</div>
-
-::right::
-
-```ts {all|2-3|5-8|9-15|all}
-// Without VueUse
-const todos$ = from(liveQuery(() => 
-  db.todos.toArray()))
-
-// Manual subscription
-todos$.subscribe(todos => {
-  // Update local state
-  this.todos = todos
-})
-
-// With VueUse - clean & reactive!
-import { useObservable } from '@vueuse/rxjs'
-const todos = useObservable(
-  from(liveQuery(() => 
-    db.todos.toArray()))
-)
-```
-
-<style>
-.slidev-code {
-  @apply text-sm leading-6 px-4 py-3 mt-4;
 }
 </style>
 
@@ -950,6 +919,46 @@ import AuthGuard from '@/components/AuthGuard.vue'
 </template>
 ```
 ````
+---
+---
+```mermaid
+flowchart TD
+    subgraph VueApp["Vue Application"]
+        App["App.vue"]
+        TodoList["TodoList.vue<br>Component"]
+        UseTodo["useTodo.ts<br>Composable"]
+        Database["database.ts<br>Dexie Configuration"]
+        
+        App --> TodoList
+        TodoList --> UseTodo
+        UseTodo --> Database
+    end
+    
+    subgraph DexieLayer["Dexie.js Layer"]
+        IndexedDB["IndexedDB"]
+        SyncEngine["Dexie Sync Engine"]
+        
+        Database --> IndexedDB
+        Database --> SyncEngine
+    end
+    
+    subgraph Backend["Backend Services"]
+        Server["Server"]
+        ServerDB["Server Database"]
+        
+        SyncEngine <-.-> Server
+        Server <-.-> ServerDB
+    end
+
+    style VueApp fill:#2d1b36,stroke:#FF6BED
+    style DexieLayer fill:#344060,stroke:#AB4B99
+    style Backend fill:#1a1f2c,stroke:#8A337B
+    
+    classDef default fill:#8A337B,stroke:#AB4B99,color:#EAE9F3
+    classDef storage fill:#1a1f2c,stroke:#AB4B99,color:#EAE9F3
+    
+    class Server,ServerDB storage
+```
 
 ---
 ---
@@ -975,39 +984,83 @@ import AuthGuard from '@/components/AuthGuard.vue'
 
 ---
 ---
-# When to Use Local-First? 🤔
+# When to Use Local-First?
 
 <div class="grid grid-cols-2 gap-4">
+  <div class="p-4 border rounded" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <h3 class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">✅ Great for Local-First</h3>
+    <ul class="space-y-4" style="color: rgb(234, 237, 243);">
+      <li class="flex items-center gap-2">
+        <span class="i-carbon-notebook text-xl" style="color: rgb(255, 107, 237);" />
+        <div>
+          <div class="font-bold">Personal Data Management</div>
+          <div class="text-sm opacity-70">Notes, todos, budgets, habits, workouts</div>
+        </div>
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="i-carbon-application text-xl" style="color: rgb(255, 107, 237);" />
+        <div>
+          <div class="font-bold">Offline-First Workflows</div>
+          <div class="text-sm opacity-70">Code editors, writing, photo editing</div>
+        </div>
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="i-carbon-password text-xl" style="color: rgb(255, 107, 237);" />
+        <div>
+          <div class="font-bold">Privacy-Sensitive Data</div>
+          <div class="text-sm opacity-70">Password managers, journals, health tracking</div>
+        </div>
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="i-carbon-cloud text-xl" style="color: rgb(255, 107, 237);" />
+        <div>
+          <div class="font-bold">Multi-Device Sync</div>
+          <div class="text-sm opacity-70">Calendars, contacts, bookmarks</div>
+        </div>
+      </li>
+    </ul>
+  </div>
 
-<div class="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800">
-
-### Great For ✅
-- Personal docs & notes 📝
-- Creative tools & media 🎨
-- Individual data tracking 👤
-- Offline-first apps 📱
-
-</div>
-
-<div class="p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-
-### Avoid For ❌
-- Financial systems 💰
-- E-commerce & inventory 📦
-- Real-time operations 🌐
-- Mission-critical apps ⚠️
-
-</div>
-
+  <div class="p-4 border rounded" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <h3 class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">❌ Not Ideal for Local-First</h3>
+    <ul class="space-y-4" style="color: rgb(234, 237, 243);">
+      <li class="flex items-center gap-2">
+        <span class="i-carbon-collaborate text-xl" style="color: rgb(255, 107, 237);" />
+        <div>
+          <div class="font-bold">Real-Time Collaboration</div>
+          <div class="text-sm opacity-70">Games, chat, whiteboards</div>
+        </div>
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="i-carbon-chart-line text-xl" style="color: rgb(255, 107, 237);" />
+        <div>
+          <div class="font-bold">Live Data Dependencies</div>
+          <div class="text-sm opacity-70">Stocks, weather, sports scores</div>
+        </div>
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="i-carbon-shopping-cart text-xl" style="color: rgb(255, 107, 237);" />
+        <div>
+          <div class="font-bold">E-commerce & Social</div>
+          <div class="text-sm opacity-70">Shopping, social media, forums</div>
+        </div>
+      </li>
+      <li class="flex items-center gap-2">
+        <span class="i-carbon-currency text-xl" style="color: rgb(255, 107, 237);" />
+        <div>
+          <div class="font-bold">Financial & Dynamic</div>
+          <div class="text-sm opacity-70">Banking, payments, streaming</div>
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>
 
 ---
 ---
-# Thank You! 🙏
 
 <div class="text-center">
-
-## Let's Connect!
+Thank You! 🙏
 
 <div class="flex flex-col items-center gap-4 mt-8">
   <div class="flex items-center gap-2">
