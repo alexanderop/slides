@@ -526,11 +526,6 @@ layout: center
         <div class="font-bold">Yjs</div>
         <div class="text-sm opacity-70">Real-Time Collaboration</div>
       </li>
-      <li>
-        <div class="font-bold">Zero</div>
-        <div class="text-sm opacity-70">CRDT + OT</div>
-        <div class="text-sm opacity-70">Progressive Sync</div>
-      </li>
     </ul>
   </div>
 
@@ -544,6 +539,10 @@ layout: center
       <li>
         <div class="font-bold">Triplit</div>
         <div class="text-sm opacity-70">Schema + Validation</div>
+      </li>
+        <li>
+        <div class="font-bold">Zero</div>
+        <div class="text-sm opacity-70">Query Driven Sync</div>
       </li>
     </ul>
   </div>
