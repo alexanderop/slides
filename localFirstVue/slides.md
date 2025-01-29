@@ -857,6 +857,92 @@ const {
 ````
 ---
 ---
+
+````md magic-move
+```vue
+<script setup lang="ts">
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { currentUser, login, logout } from '@/db/todo'
+import { Icon } from '@iconify/vue'
+import { useObservable } from '@vueuse/rxjs'
+import { computed, ref } from 'vue'
+```
+
+```vue
+<script setup lang="ts">
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
+import { currentUser, login, logout } from '@/db/todo'
+import { Icon } from '@iconify/vue'
+import { useObservable } from '@vueuse/rxjs'
+import { computed, ref } from 'vue'
+
+const user = useObservable(currentUser)
+const isAuthenticated = computed(() => !!user.value)
+const isLoading = ref(false)
+
+async function handleLogin() {
+  isLoading.value = true
+  try {
+    await login()
+  }
+  finally {
+    isLoading.value = false
+  }
+}
+</script>
+```
+
+```vue
+<script setup lang="ts">
+const user = useObservable(currentUser)
+const isAuthenticated = computed(() => !!user.value)
+const isLoading = ref(false)
+
+async function handleLogin() {
+  isLoading.value = true
+  try {
+    await login()
+  }
+  finally {
+    isLoading.value = false
+  }
+}
+</script>
+
+<template>
+  <div v-if="!isAuthenticated" class="flex flex-col items-center justify-center min-h-screen p-4 bg-background">
+    <Card class="max-w-md w-full">
+      <!-- Login form content -->
+    </Card>
+  </div>
+  <template v-else>
+    <div class="sticky top-0 z-20 bg-card border-b">
+      <!-- User info and logout button -->
+    </div>
+    <slot />
+  </template>
+</template>
+```
+```vue
+<script setup lang="ts">
+import AuthGuard from '@/components/AuthGuard.vue'
+</script>
+
+<template>
+  <AuthGuard>
+    <div class="min-h-screen bg-background text-foreground">
+      <div class="safe-area-top bg-background" />
+      <RouterView />
+      <div class="safe-area-bottom bg-background" />
+    </div>
+  </AuthGuard>
+</template>
+```
+````
+---
+---
 ```mermaid
 flowchart TD
     subgraph VueApp["Vue Application"]
