@@ -477,38 +477,77 @@ backgroundSize: contain
 layout: center
 ---
 
-```mermaid {scale:0.5}
-mindmap
-  root((Sync Engines))
-    SQL-Based
-      ElectricSQL
-        PostgreSQL + SQLite
-        Active-Active Sync
-      PowerSync
-        Offline-First SQLite
-    NoSQL-Based
-      PouchDB
-        CouchDB Compatible
-        Master-Master Sync
-      RxDB
-        Multi-Backend
-        Real-time Sync
-    CRDT-Based
-      Replicache
-        Optimistic Updates
-      Automerge
-        Network-Agnostic
-      Zero
-        CRDT + Operational Transform
-        Progressive Sync
-      Yjs
-        Real-Time Collaboration
-    Specialized
-      WatermelonDB
-        Observable + Lazy
-      Triplit
-        Schema + Validation
-```
+# Sync Engine Overview
+
+<div class="grid grid-cols-4 gap-4">
+  <div class="p-4 bg-[#344060] rounded-lg border border-[#AB4B99]">
+    <h3 class="text-xl font-bold text-primary mb-4">SQL-Based</h3>
+    <ul class="space-y-2">
+      <li>
+        <div class="font-bold">ElectricSQL</div>
+        <div class="text-sm opacity-70">PostgreSQL + SQLite</div>
+        <div class="text-sm opacity-70">Active-Active Sync</div>
+      </li>
+      <li>
+        <div class="font-bold">PowerSync</div>
+        <div class="text-sm opacity-70">Offline-First SQLite</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="p-4 bg-[#344060] rounded-lg border border-[#AB4B99]">
+    <h3 class="text-xl font-bold text-primary mb-4">NoSQL-Based</h3>
+    <ul class="space-y-2">
+      <li>
+        <div class="font-bold">PouchDB</div>
+        <div class="text-sm opacity-70">CouchDB Compatible</div>
+        <div class="text-sm opacity-70">Master-Master Sync</div>
+      </li>
+      <li>
+        <div class="font-bold">RxDB</div>
+        <div class="text-sm opacity-70">Multi-Backend</div>
+        <div class="text-sm opacity-70">Real-time Sync</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="p-4 bg-[#344060] rounded-lg border border-[#AB4B99]">
+    <h3 class="text-xl font-bold text-primary mb-4">CRDT-Based</h3>
+    <ul class="space-y-2">
+      <li>
+        <div class="font-bold">Replicache</div>
+        <div class="text-sm opacity-70">Optimistic Updates</div>
+      </li>
+      <li>
+        <div class="font-bold">Automerge</div>
+        <div class="text-sm opacity-70">Network-Agnostic</div>
+      </li>
+      <li>
+        <div class="font-bold">Yjs</div>
+        <div class="text-sm opacity-70">Real-Time Collaboration</div>
+      </li>
+      <li>
+        <div class="font-bold">Zero</div>
+        <div class="text-sm opacity-70">CRDT + OT</div>
+        <div class="text-sm opacity-70">Progressive Sync</div>
+      </li>
+    </ul>
+  </div>
+
+  <div class="p-4 bg-[#344060] rounded-lg border border-[#AB4B99]">
+    <h3 class="text-xl font-bold text-primary mb-4">Specialized</h3>
+    <ul class="space-y-2">
+      <li>
+        <div class="font-bold">WatermelonDB</div>
+        <div class="text-sm opacity-70">Observable + Lazy</div>
+      </li>
+      <li>
+        <div class="font-bold">Triplit</div>
+        <div class="text-sm opacity-70">Schema + Validation</div>
+      </li>
+    </ul>
+  </div>
+</div>
 
 ---
 layout: iframe-left
@@ -597,9 +636,6 @@ src/
 </div>
 </div>
 ---
-layout: two-cols
-class: 'gap-12 px-4'
-cols: '2fr 3fr'
 ---
 
 # Cloud Setup Steps
@@ -607,7 +643,7 @@ cols: '2fr 3fr'
 <div class="space-y-8">
 
 ## 1. Create Database
-```bash {all|1|2|3|4-8|9-10|all}
+```bash {all|1|2|3|4-8|9-10|0}
 $ npx dexie-cloud create
 Enter your email address: youremail@company.com
 Enter OTP: YourOTP
@@ -621,21 +657,21 @@ dexie-cloud.key - contains client ID and secret
 ```
 
 ## 2. Whitelist Origins
-```bash {all|1|2|all}
+```bash {all|1|2|0}
 // for local development
 $ npx dexie-cloud whitelist http://localhost:3000
 ```
 
 ## 3. Install Dependencies
-```bash {all|1|2|all}
+```bash {all|1|2|0}
 // add cloud sync
 $ npm install dexie@latest dexie-cloud-addon
 ```
 
 </div>
 
-::right::
-
+---
+---
 # Database Configuration
 
 ```ts {all|1-2|4-6|8-19|21-25}
@@ -665,19 +701,6 @@ db.cloud.configure({
 });
 ```
 
-<style>
-.slidev-code {
-  @apply text-sm leading-6 px-4 py-3;
-}
-
-h1 {
-  @apply mb-6 text-2xl;
-}
-
-h2 {
-  @apply text-xl mb-2 text-primary;
-}
-</style>
 
 ---
 layout: center
@@ -831,92 +854,6 @@ const {
   toggleTodo,
   deleteTodo,
 } = useTodos()
-```
-````
----
----
-
-````md magic-move
-```vue
-<script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { currentUser, login, logout } from '@/db/todo'
-import { Icon } from '@iconify/vue'
-import { useObservable } from '@vueuse/rxjs'
-import { computed, ref } from 'vue'
-```
-
-```vue
-<script setup lang="ts">
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
-import { currentUser, login, logout } from '@/db/todo'
-import { Icon } from '@iconify/vue'
-import { useObservable } from '@vueuse/rxjs'
-import { computed, ref } from 'vue'
-
-const user = useObservable(currentUser)
-const isAuthenticated = computed(() => !!user.value)
-const isLoading = ref(false)
-
-async function handleLogin() {
-  isLoading.value = true
-  try {
-    await login()
-  }
-  finally {
-    isLoading.value = false
-  }
-}
-</script>
-```
-
-```vue
-<script setup lang="ts">
-const user = useObservable(currentUser)
-const isAuthenticated = computed(() => !!user.value)
-const isLoading = ref(false)
-
-async function handleLogin() {
-  isLoading.value = true
-  try {
-    await login()
-  }
-  finally {
-    isLoading.value = false
-  }
-}
-</script>
-
-<template>
-  <div v-if="!isAuthenticated" class="flex flex-col items-center justify-center min-h-screen p-4 bg-background">
-    <Card class="max-w-md w-full">
-      <!-- Login form content -->
-    </Card>
-  </div>
-  <template v-else>
-    <div class="sticky top-0 z-20 bg-card border-b">
-      <!-- User info and logout button -->
-    </div>
-    <slot />
-  </template>
-</template>
-```
-```vue
-<script setup lang="ts">
-import AuthGuard from '@/components/AuthGuard.vue'
-</script>
-
-<template>
-  <AuthGuard>
-    <div class="min-h-screen bg-background text-foreground">
-      <div class="safe-area-top bg-background" />
-      <RouterView />
-      <div class="safe-area-bottom bg-background" />
-    </div>
-  </AuthGuard>
-</template>
 ```
 ````
 ---
