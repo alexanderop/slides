@@ -477,74 +477,33 @@ backgroundSize: contain
 layout: center
 ---
 
-# Sync Engine Overview
-
-<div class="grid grid-cols-4 gap-4">
-  <div class="p-4 bg-[#344060] rounded-lg border border-[#AB4B99]">
-    <h3 class="text-xl font-bold text-primary mb-4">SQL-Based</h3>
-    <ul class="space-y-2">
-      <li>
-        <div class="font-bold">ElectricSQL</div>
-        <div class="text-sm opacity-70">PostgreSQL + SQLite</div>
-        <div class="text-sm opacity-70">Active-Active Sync</div>
-      </li>
-      <li>
-        <div class="font-bold">PowerSync</div>
-        <div class="text-sm opacity-70">Offline-First SQLite</div>
-      </li>
-    </ul>
-  </div>
-
-  <div class="p-4 bg-[#344060] rounded-lg border border-[#AB4B99]">
-    <h3 class="text-xl font-bold text-primary mb-4">NoSQL-Based</h3>
-    <ul class="space-y-2">
-      <li>
-        <div class="font-bold">PouchDB</div>
-        <div class="text-sm opacity-70">CouchDB Compatible</div>
-        <div class="text-sm opacity-70">Master-Master Sync</div>
-      </li>
-      <li>
-        <div class="font-bold">RxDB</div>
-        <div class="text-sm opacity-70">Multi-Backend</div>
-        <div class="text-sm opacity-70">Real-time Sync</div>
-      </li>
-    </ul>
-  </div>
-
-  <div class="p-4 bg-[#344060] rounded-lg border border-[#AB4B99]">
-    <h3 class="text-xl font-bold text-primary mb-4">CRDT-Based</h3>
-    <ul class="space-y-2">
-      <li>
-        <div class="font-bold">Replicache</div>
-        <div class="text-sm opacity-70">Optimistic Updates</div>
-      </li>
-      <li>
-        <div class="font-bold">Automerge</div>
-        <div class="text-sm opacity-70">Network-Agnostic</div>
-      </li>
-      <li>
-        <div class="font-bold">Yjs</div>
-        <div class="text-sm opacity-70">Real-Time Collaboration</div>
-      </li>
-    </ul>
-  </div>
-
-  <div class="p-4 bg-[#344060] rounded-lg border border-[#AB4B99]">
-    <h3 class="text-xl font-bold text-primary mb-4">Specialized</h3>
-    <ul class="space-y-2">
-      <li>
-        <div class="font-bold">WatermelonDB</div>
-        <div class="text-sm opacity-70">Observable + Lazy</div>
-      </li>
-      <li>
-        <div class="font-bold">Triplit</div>
-        <div class="text-sm opacity-70">Schema + Validation</div>
-      </li>
-        <li>
-        <div class="font-bold">Zero</div>
-        <div class="text-sm opacity-70">Query Driven Sync</div>
-      </li>
-    </ul>
+<div class="grid grid-cols-6 gap-4">
+  <div v-for="engine in [
+    { name: 'Dexie.js', logo: 'https://dexie.org/assets/images/dexie-icon-64x64.png' },
+    { name: 'ElectricSQL', logo: 'https://raw.githubusercontent.com/electric-sql/meta/main/identity/ElectricSQL-icon-light-trans.svg' },
+    { name: 'PouchDB', logo: 'https://pouchdb.com/static/favicon.ico' },
+    { name: 'RxDB', logo: 'https://rxdb.info/files/logo/logo.svg' },
+    { name: 'WatermelonDB', logo: 'https://raw.githubusercontent.com/Nozbe/WatermelonDB/master/assets/icon128x128.png' },
+    { name: 'Triplit', logo: 'https://triplit.dev/favicon.ico' },
+    { name: 'Automerge', logo: 'https://automerge.org/img/favicon.ico' },
+    { name: 'Yjs', logo: 'https://yjs.dev/images/logo/yjs.svg' },
+    { name: 'Replicache', logo: 'https://replicache.dev/icons/favicon-32x32.png' },
+    { name: 'PowerSync', logo: 'https://journeyapps.com/assets/images/powersync-logo-icon.png' },
+    { name: 'Zero', logo: 'https://pbs.twimg.com/profile_images/1868725523267878912/BlAYEcqM_400x400.jpg' },
+    { name: 'DXOS', logo: 'https://docs.dxos.org/images/logotype/dxos-hero-white.svg' },
+    { name: 'Fireproof', logo: 'https://fireproof.storage/static/img/flame.svg' },
+    { name: 'Gun', logo: 'https://gun.eco/icons/icon-48x48.png' },
+    { name: 'Instant', logo: 'https://www.instantdb.com/img/icon/apple-touch-icon-152x152.png' },
+    { name: 'Liveblocks', logo: 'https://liveblocks.io/favicon.svg' },
+    { name: 'Loro', logo: 'https://loro.dev/favicon.ico' },
+    { name: 'TinyBase', logo: 'https://tinybase.org/favicon.svg' }
+  ]" :key="engine.name" class="flex flex-col items-center p-4 bg-[#344060] rounded-lg border border-[#AB4B99] hover:bg-opacity-80 transition-all">
+    <img 
+      :src="engine.logo" 
+      :alt="engine.name + ' logo'" 
+      class="w-12 h-12 object-contain mb-2"
+    />
+    <div class="text-center font-bold">{{ engine.name }}</div>
   </div>
 </div>
 
