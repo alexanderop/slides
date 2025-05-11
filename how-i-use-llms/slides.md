@@ -127,24 +127,31 @@ layout: center
 
 
 ---
-
-# Model Types & When I Use Them
-
-| Type                     | What it's good at                               | Example models                 |
-| ------------------------ | ----------------------------------------------- | ------------------------------ |
-| **Everyday Tasks**       | Brainstorming, emails, creative content         | GPT-4o, GPT-4.5               |
-| **Technical Tasks**      | Coding, math, scientific reasoning              | o4-mini, o4-mini-high         |
-| **Complex Analysis**     | Multi-step tasks, strategic planning            | o3, o1-pro                    |
-| **Quick Refactoring**    | Simple code changes, syntax fixes               | Gemini 2.0 Flash              |
-
-<small>Note: The best models for each task type change frequently. In the future, we'll likely delegate model selection to another LLM rather than choosing manually.</small>
+layout: image
+image: 'images/chooseTheRightLlmModel.png'
+backgroundSize: contain
+---
 
 ---
 layout: center
 ---
 
-
 <Tweet id='1921216202090967237'/>
+
+
+---
+layout: iframe-right
+url: 'https://simonwillison.net/2025/Apr/26/o3-photo-locations/'
+---
+
+# o3 Photo Location Finder - Quick Guide
+
+- **What it does:** The o3 model finds where photos were taken, even without clear landmarks
+- **How it works:** It looks at things like plants, buildings, and small details (like car plates)
+- **Example:** Someone shared a California photo. The model found it was on the Central Coast but not the exact city
+
+
+
 
 ---
 layout: center
@@ -193,6 +200,12 @@ layout: center
 
 ---
 layout: image
+image: 'images/improveLlm.png'
+backgroundSize: contain
+---
+
+---
+layout: image
 image: 'images/learnPromptEngeniering.png'
 backgroundSize: contain
 ---
@@ -203,11 +216,7 @@ image: 'images/systemPrompt.png'
 backgroundSize: contain
 ---
 
----
-layout: image
-image: 'images/promptEngenieringIsReal.png'
-backgroundSize: contain
----
+
 ---
 layout: image-right
 image: '/images/goggelingISDead.png'
@@ -249,27 +258,33 @@ image: 'images/bruceExtractCodebase.png'
    - Generate proof-of-concepts
    - Analyze implementation patterns
 
+
+---
+layout: iframe-right
+url: https://deepwiki.com/alexanderop/vue-vector-search
 ---
 
 # Deepwiki
 
-• Visit [Deepwiki](https://deepwiki.com/)
-• Upload your source project (open-source or private)
-• Let the tool automatically index your codebase
-• Get comprehensive documentation generated
-• Review and refine the generated docs as needed
+1. Visit [Deepwiki](https://deepwiki.com/)
+2. Upload your source project (open-source or private)
+3. Let the tool automatically index your codebase
+4. Get comprehensive documentation generated
+5. Review and refine the generated docs as needed
 
 <small>Note: Created by the Devin AI team, this tool offers free indexing for your projects.</small>
+
+---
+layout: iframe
+url: "https://alexop.dev/posts/how-to-use-ai-for-effective-diagram-creation-a-guide-to-chatgpt-and-mermaid/"
+---
 
 ---
 layout: iframe
 url: "https://mermaid.live/edit#pako:eNpVjs1ugzAQhF_F2lMrkYjwEwcfKjWkzSVSKzWnQg4rcDBKsJExSlPg3WtIW7V7mtV8M7sdZCrnwOB4VpdMoDZkv0klsfOYxEKXjamwOZDZ7KHfckMqJfm1J-u7rSKNUHVdyuL-xq9HiMTdbsQ4MaKUp-FmxVP-RfKebJId1kbVh7_O_qJ68pSUr8LW_3eE5jb1nByRHXGWoSYx6gM4UHFdYZnb17sxkIIRvOIpMCtz1KcUUjlYDluj3q4yA2Z0yx3Qqi0E2LJzY7e2ztHwTYmFxuoHqVG-K_W7Fno8853mMuc6Vq00wBZ0YoF18AHMD4L5Kggiz6cu9axYOnAFFnrzIIoi6kVh4Ef-YhEODnxO9e58RUPXjrd0KXW90Bu-AIZjeo4"
 ---
 
----
-cover: image-right
-image: '/images/bruceLeeMCp'
----
+
 
 ---
 layout: center
@@ -281,11 +296,42 @@ layout: center
 layout: center
 ---
 
-<QuoteCard author="Bruce Lee">
-  Empty your mind, be formless. Shapeless, like water. If you put water into a cup, it becomes the cup. You put water into a bottle and it becomes the bottle. You put it in a teapot, it becomes the teapot. Now, water can flow or it can crash. Be water, my friend.
-</QuoteCard>
+
+# The Future is Agentic
+
+[web development workflow](https://docs.cursor.com/guides/tutorials/web-development)
+
+---
+layout: image
+image: 'https://media.licdn.com/dms/image/v2/C4D12AQEEUZUGltmQog/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1535653358794?e=2147483647&v=beta&t=2j2XltOC8FKIQowEo84ywe_4kbEEIUrxENn6fxlWehU'
+backgroundSize: contain
+---
+
+---
+layout: image
+image: 'images/modularMonlith.png'
+backgroundSize: contain
+---
+
+
+---
+layout: image
+image: 'images/customInstraction.png'
+backgroundSize: contain
+---
+
+---
+layout: image
+image: 'images/keyTakeaways.png'
+backgroundSize: contain
+---
+
 ---
 layout: iframe
 url: 'https://alexop.dev/tags/ai/'
 ---
+
+
+
+
 
