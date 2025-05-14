@@ -39,7 +39,37 @@ icons:
 ---
 
 
-# How to Test Vue Composables
+<div class="relative flex flex-col items-center justify-center min-h-[60vh] bg-gradient-to-br from-blue-700 via-indigo-800 to-purple-900 text-white overflow-hidden">
+  <div class="absolute inset-0 opacity-30 pointer-events-none">
+    <svg width="100%" height="100%">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="80%">
+          <stop offset="0%" stop-color="#a5b4fc" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#6366f1" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <circle cx="50%" cy="50%" r="60%" fill="url(#glow)" />
+    </svg>
+  </div>
+  <div class="z-10 flex flex-col items-center">
+    <div class="mb-6">
+      <svg class="w-24 h-24 drop-shadow-xl" viewBox="0 0 48 48" fill="none">
+        <circle cx="24" cy="24" r="24" fill="#6366f1" />
+        <text x="50%" y="56%" text-anchor="middle" fill="white" font-size="2.2rem" font-family="monospace" dy=".3em">🧪</text>
+      </svg>
+    </div>
+    <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight drop-shadow-lg mb-4 bg-gradient-to-r from-blue-300 via-indigo-200 to-purple-200 bg-clip-text text-transparent">
+      How to Test<br class="hidden md:block"/>Vue Composables
+    </h1>
+    <div class="text-2xl md:text-3xl font-bold text-purple-200 mb-2 mt-2">
+      Vue.js Talks — May Edition!
+    </div>
+    <div class="text-lg md:text-2xl font-mono text-indigo-200 mt-2 flex items-center gap-2">
+      <span class="i-carbon-user text-2xl text-blue-300"></span>
+      <span>@alexop.dev</span>
+    </div>
+  </div>
+</div>
 
 
 ---
@@ -106,17 +136,7 @@ backgroundSize: contain
 
 ---
 
-# What are Composables?
-
-<v-clicks>
-
-- reusable functions
-- they use Vue's reactivity system
-- improve modularity
-- enhance code reuse
-
-</v-clicks>
-
+<WhatIsAComposable/>
 
 ---
 layout: two-cols
