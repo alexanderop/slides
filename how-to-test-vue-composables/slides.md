@@ -255,6 +255,37 @@ describe('useSum', () => {
 
 `useLocalStorage` (Uses `onMounted`, `watch`, and browser `localStorage`)
 
+````md magic-move
+
+```ts
+import { ref, onMounted, watch } from 'vue'
+
+function useLocalStorage<T>(key: string, initialValue: T) {
+  const value = ref<T>(initialValue)
+
+  return { value }
+}
+```
+
+```ts
+import { ref, onMounted, watch } from 'vue'
+
+function useLocalStorage<T>(key: string, initialValue: T) {
+  const value = ref<T>(initialValue)
+
+  function loadFromLocalStorage() {
+    const storedValue = localStorage.getItem(key)
+    if (storedValue !== null) {
+      value.value = JSON.parse(storedValue) // Potential side-effect!
+    }
+  }
+
+  onMounted(loadFromLocalStorage) // Needs component context!
+
+  return { value }
+}
+```
+
 ```ts
 import { ref, onMounted, watch } from 'vue'
 
@@ -278,14 +309,46 @@ function useLocalStorage<T>(key: string, initialValue: T) {
 }
 ```
 
+````
+
 </v-clicks>
 
 ---
 
 # Lets Try to test it
 
-```ts
+````md magic-move
 
+```ts
+describe("useLocalStorage", () => {
+
+});
+```
+
+```ts
+describe("useLocalStorage", () => {
+  it("should load the initialValue", () => {
+    const { value } = useLocalStorage("testKey", "initValue");
+    expect(value.value).toBe("initValue");
+  });
+
+});
+```
+
+```ts
+describe("useLocalStorage", () => {
+  it("should load the initialValue", () => {
+    const { value } = useLocalStorage("testKey", "initValue");
+    expect(value.value).toBe("initValue");
+  });
+
+  // Output in terminal would look like:
+  //   useLocalStorage
+  //     ✓ should load the initialValue
+});
+```
+
+```ts
 describe("useLocalStorage", () => {
   it("should load the initialValue", () => {
     const { value } = useLocalStorage("testKey", "initValue");
@@ -300,9 +363,64 @@ describe("useLocalStorage", () => {
 });
 ```
 
+```ts
+describe("useLocalStorage", () => {
+  it("should load the initialValue", () => {
+    const { value } = useLocalStorage("testKey", "initValue");
+    expect(value.value).toBe("initValue");
+  });
+
+  it("should load from localStorage", async () => {
+    localStorage.setItem("testKey", JSON.stringify("fromStorage"));
+    const { value } = useLocalStorage("testKey", "initialValue");
+    expect(value.value).toBe("fromStorage");
+  });
+
+  // Terminal output:
+  //   useLocalStorage
+  //     ✓ should load the initialValue
+  //     ✕ should load from localStorage
+  //       AssertionError: expected 'initialValue' to be 'fromStorage'
+});
+```
+
+````
+
+---
+layout: image
+image: 'images/compEnv.png'
+backgroundSize: contain
+---
+
 ---
 
 # Improve Testing with the withSetup Helper Function
+
+````md magic-move
+```ts
+import type { App } from "vue";
+import { createApp } from "vue";
+
+export function withSetup<T>(composable: () => T): [T, App] {
+
+}
+```
+
+```ts
+import type { App } from "vue";
+import { createApp } from "vue";
+
+export function withSetup<T>(composable: () => T): [T, App] {
+  let result: T;
+  const app = createApp({
+    setup() {
+      result = composable();
+      return () => {};
+    },
+  });
+
+}
+```
 
 ```ts
 import type { App } from "vue";
@@ -321,6 +439,9 @@ export function withSetup<T>(composable: () => T): [T, App] {
 }
 ```
 
+
+````
+
 ---
 
 # Utilizing `withSetup` in Tests
@@ -338,7 +459,6 @@ it("should load the value from localStorage if it was set before", async () => {
 # Provide Inject
 
 ```ts
-
 import type { InjectionKey } from 'vue'
 import { inject } from 'vue'
 
@@ -366,6 +486,40 @@ export function useMessage() {
 
 # How the test should look
 
+````md magic-move
+
+```ts
+import { describe, expect, it } from 'vitest'
+import { useInjectedSetup } from '../helper'
+import { MessageKey, useMessage } from '../useMessage'
+
+describe('useMessage', () => {
+
+})
+```
+
+```ts {*|6|6-10|*}
+import { describe, expect, it } from 'vitest'
+import { useInjectedSetup } from '../helper'
+import { MessageKey, useMessage } from '../useMessage'
+
+describe('useMessage', () => {
+  it('should handle injected message', () => {
+    const wrapper = useInjectedSetup(
+      () => useMessage(),
+      [{ key: MessageKey, value: 'hello world' }],
+    )
+
+    expect(wrapper.message).toBe('hello world')
+    expect(wrapper.getUpperCase()).toBe('HELLO WORLD')
+    expect(wrapper.getReversed()).toBe('dlrow olleh')
+
+    wrapper.unmount()
+  })
+
+})
+```
+
 ```ts
 import { describe, expect, it } from 'vitest'
 import { useInjectedSetup } from '../helper'
@@ -392,30 +546,13 @@ describe('useMessage', () => {
   })
 })
 ```
+````
 
 ---
-
-# What useInjectedSetup Does
-
-
-When you test Vue composables that use `inject()`, you need a helper that:
-
-<v-clicks>
-
-1. **Adds Test Dependencies**
-   - Works as a parent component
-   - Adds test values
-
-2. **Runs Your Code**
-   - Runs your setup function
-   - Returns the values
-
-3. **Sets Up the Test**
-   - Creates a test Vue app
-   - Places components
-   - Returns results like a real app
-
-</v-clicks>
+layout: image
+image: 'images/provideInject.png'
+backgroundSize: contain
+---
 
 ---
 
@@ -578,6 +715,7 @@ layout: iframe
 url: 'https://play.vuejs.org/#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'
 ---
 
+
 ---
 layout: image
 image: 'images/provideInject2.png'
@@ -589,6 +727,9 @@ layout: image
 image: 'images/anyQuestions.png'
 backgroundSize: contain
 ---
+
+
+
 
 
 
