@@ -5,6 +5,9 @@ date: May 2025
 theme: seriph
 highlight: night-owl
 lang: en
+layout: image
+image: 'images/cover2.png'
+backgroundSize: contain
 icons:
   collections:
     logos:
@@ -32,13 +35,9 @@ icons:
       - logo-twitter
 ---
 
-# How I use llms as a Software Developer
-
-## Alexander Opalic
-
 ---
 layout: image
-image: /images/cover.png
+image: 'images/cover.png'
 backgroundSize: contain
 ---
 
@@ -103,7 +102,7 @@ class: 'pl-30'
 1. <strong>Pre‑training</strong> – The model reads a huge collection of text and code to learn how to predict the next word.
 </div>
 <div v-click="2">
-2. <strong>Fine‑tuning</strong> – We teach the model using specific examples and questions to make it better at certain tasks.
+2. <strong>Supervised Fine‑tuning</strong> – We teach the model using specific examples and questions to make it better at certain tasks.
 </div>
 <div v-click="3">
 3. <strong>Human Feedback</strong> – People rate the model's responses to help it give better answers.
@@ -199,6 +198,16 @@ layout: center
 </SlidevVideo>
 
 ---
+
+<div class="flex flex-col justify-center items-center h-full gap-4">
+  <h1 class="text-5xl font-bold text-center bg-gradient-to-r from-blue-500 to-purple-600 bg-clip-text text-transparent">
+    How can we Improve the Output of a LLM?
+  </h1>
+  <p class="text-xl text-gray-600 animate-pulse">Let's make those responses shine ✨</p>
+</div>
+
+
+---
 layout: image
 image: 'images/improveLlm.png'
 backgroundSize: contain
@@ -284,29 +293,6 @@ layout: iframe
 url: "https://mermaid.live/edit#pako:eNpVjs1ugzAQhF_F2lMrkYjwEwcfKjWkzSVSKzWnQg4rcDBKsJExSlPg3WtIW7V7mtV8M7sdZCrnwOB4VpdMoDZkv0klsfOYxEKXjamwOZDZ7KHfckMqJfm1J-u7rSKNUHVdyuL-xq9HiMTdbsQ4MaKUp-FmxVP-RfKebJId1kbVh7_O_qJ68pSUr8LW_3eE5jb1nByRHXGWoSYx6gM4UHFdYZnb17sxkIIRvOIpMCtz1KcUUjlYDluj3q4yA2Z0yx3Qqi0E2LJzY7e2ztHwTYmFxuoHqVG-K_W7Fno8853mMuc6Vq00wBZ0YoF18AHMD4L5Kggiz6cu9axYOnAFFnrzIIoi6kVh4Ef-YhEODnxO9e58RUPXjrd0KXW90Bu-AIZjeo4"
 ---
 
-
-
----
-layout: center
----
-
-<Tweet id="1617979122625712128"/>
-
----
-layout: center
----
-
-
-# The Future is Agentic
-
-[web development workflow](https://docs.cursor.com/guides/tutorials/web-development)
-
----
-layout: image
-image: 'https://media.licdn.com/dms/image/v2/C4D12AQEEUZUGltmQog/article-cover_image-shrink_600_2000/article-cover_image-shrink_600_2000/0/1535653358794?e=2147483647&v=beta&t=2j2XltOC8FKIQowEo84ywe_4kbEEIUrxENn6fxlWehU'
-backgroundSize: contain
----
-
 ---
 layout: image
 image: 'images/modularMonlith.png'
@@ -317,6 +303,87 @@ backgroundSize: contain
 ---
 layout: image
 image: 'images/customInstraction.png'
+backgroundSize: contain
+---
+
+---
+
+```plaintext
+my-app/
+├── .cursor/
+│   └── rules/
+│       └── project-guidelines.mdc       # General code style, naming, formatting
+├── frontend/
+│   ├── .cursor/
+│   │   └── rules/
+│   │       ├── vue-components.mdc       # Naming + structure for components
+│   │       └── tailwind-usage.mdc       # Utility-first CSS rules
+│   └── src/
+│       └── ...
+├── backend/
+│   ├── .cursor/
+│   │   └── rules/
+│   │       ├── api-structure.mdc        # REST/GraphQL structure conventions
+│   │       └── service-patterns.mdc     # How to organize business logic
+│   └── src/
+│       └── ...
+├── shared/
+│   ├── .cursor/
+│   │   └── rules/
+│   │       └── shared-types.mdc         # How to define + use shared TypeScript types
+│   └── src/
+│       └── ...
+├── README.md
+└── package.json
+```
+
+---
+
+```mdc
+---
+description: Base project guidelines and conventions
+globs:
+  - "**/*.ts"
+  - "**/*.vue"
+alwaysApply: false 
+---
+
+- Use `PascalCase` for component names.
+- Use `camelCase` for variables, functions, and file names (except components).
+- Prefer composition API (`setup()`) over options API.
+- Type everything. Avoid `any` unless absolutely necessary.
+- Keep files under 150 LOC. Split logic into composables or utilities.
+- Use absolute imports from `@/` instead of relative paths.
+- Every module must have tests that reflect the feature's acceptance criteria.
+- Commit messages must follow Conventional Commits format.
+- Use TODO: and FIXME: comments with your initials (e.g., `// TODO(alex): refactor`).
+- Format code with Prettier. Lint with ESLint before committing.
+
+Referenced files:
+@.eslintrc.js  
+@.prettierrc  
+@tsconfig.json
+```
+
+
+---
+
+# Write better Image Prompt
+
+1. Describe what you want
+2. Say give me a midjourney prompt
+3. Now customize it or brainstorm
+
+
+---
+layout: image
+image: 'images/imagePrompt.png'
+backgroundSize: contain
+---
+
+---
+layout: image
+image: 'images/monadTypescript.png'
 backgroundSize: contain
 ---
 
