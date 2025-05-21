@@ -90,40 +90,6 @@ class: 'pl-30'
     color="#3B82F6"
   />
 </div>
----
-
-# How LLMs Learn
-
-### (the *really* short version)
-
-<img src="https://alexop.dev/_astro/monster.DOIJKwqy_2nh7DJ.webp" class="w-80 mx-auto" />
-
-<div v-click="1">
-1. <strong>Pre‑training</strong> – The model reads a huge collection of text and code to learn how to predict the next word.
-</div>
-<div v-click="2">
-2. <strong>Supervised Fine‑tuning</strong> – We teach the model using specific examples and questions to make it better at certain tasks.
-</div>
-<div v-click="3">
-3. <strong>Human Feedback</strong> – People rate the model's responses to help it give better answers.
-</div>
-
-<div v-click="4">
-  <small>Under the hood, they're still just predicting <strong>the next token</strong> given everything so far.</small>
-</div>
-
-
----
-layout: iframe
-url: https://tiktokenizer.vercel.app
----
-
----
-layout: center
----
-
-<img src="https://us1.discourse-cdn.com/openai1/optimized/4X/5/c/0/5c0d5882b9651fab40a71246423bdd0f9781b0e6_2_509x499.jpeg" class="w-80 mx-auto" />
-
 
 ---
 layout: image
@@ -132,41 +98,16 @@ backgroundSize: contain
 ---
 
 ---
-layout: center
+layout: image
+image: 'images/03Mini.jpeg'
+backgroundSize: contain
 ---
 
-<Tweet id='1921216202090967237'/>
-
-
 ---
-layout: iframe-right
-url: 'https://simonwillison.net/2025/Apr/26/o3-photo-locations/'
+layout: image
+image: 'images/geo.png'
+backgroundSize: contain
 ---
-
-# o3 Photo Location Finder - Quick Guide
-
-- **What it does:** The o3 model finds where photos were taken, even without clear landmarks
-- **How it works:** It looks at things like plants, buildings, and small details (like car plates)
-- **Example:** Someone shared a California photo. The model found it was on the Central Coast but not the exact city
-
-
-
-
----
-layout: center
----
-
-```mermaid{scale: 0.5}
----
-title: How I chose which model I need
----
-flowchart TD
-    A(Task) --> B{Need deep reasoning?}
-    B -- Yes --> C[Reasoning model]
-    B -- No --> D{Need external tools?}
-    D -- Yes --> E[Agentic model]
-    D -- No --> F[Base model]
-```
 
 ---
 layout: image
@@ -253,49 +194,21 @@ image: '/images/goggelingISDead.png'
 
 
 ---
-layout: image-right
+layout: image
 image: 'images/bruceExtractCodebase.png'
+backgroundSize: contain
 ---
-
-# Extracting Codebase Content for LLM Analysis
-
-1. Find your target repository (e.g., https://github.com/vueuse/vueuse)
-2. Replace "github" with "uithub" in the URL
-3. This will display the entire codebase as plain text
-4. Copy the content and paste it into your LLM to:
-   - Ask specific questions about the codebase
-   - Generate proof-of-concepts
-   - Analyze implementation patterns
 
 
 ---
-layout: iframe-right
-url: https://deepwiki.com/alexanderop/vue-vector-search
----
-
-# Deepwiki
-
-1. Visit [Deepwiki](https://deepwiki.com/)
-2. Upload your source project (open-source or private)
-3. Let the tool automatically index your codebase
-4. Get comprehensive documentation generated
-5. Review and refine the generated docs as needed
-
-<small>Note: Created by the Devin AI team, this tool offers free indexing for your projects.</small>
-
----
-layout: iframe
-url: "https://alexop.dev/posts/how-to-use-ai-for-effective-diagram-creation-a-guide-to-chatgpt-and-mermaid/"
----
-
----
-layout: iframe
-url: "https://mermaid.live/edit#pako:eNpVjs1ugzAQhF_F2lMrkYjwEwcfKjWkzSVSKzWnQg4rcDBKsJExSlPg3WtIW7V7mtV8M7sdZCrnwOB4VpdMoDZkv0klsfOYxEKXjamwOZDZ7KHfckMqJfm1J-u7rSKNUHVdyuL-xq9HiMTdbsQ4MaKUp-FmxVP-RfKebJId1kbVh7_O_qJ68pSUr8LW_3eE5jb1nByRHXGWoSYx6gM4UHFdYZnb17sxkIIRvOIpMCtz1KcUUjlYDluj3q4yA2Z0yx3Qqi0E2LJzY7e2ztHwTYmFxuoHqVG-K_W7Fno8853mMuc6Vq00wBZ0YoF18AHMD4L5Kggiz6cu9axYOnAFFnrzIIoi6kVh4Ef-YhEODnxO9e58RUPXjrd0KXW90Bu-AIZjeo4"
+layout: image
+image: 'images/deepWiki.png'
+backgroundSize: contain
 ---
 
 ---
 layout: image
-image: 'images/modularMonlith.png'
+image: 'images/mermaid.png'
 backgroundSize: contain
 ---
 
@@ -389,13 +302,14 @@ backgroundSize: contain
 
 ---
 layout: image
-image: 'images/keyTakeaways.png'
+image: 'images/thankYou.png'
 backgroundSize: contain
 ---
 
 ---
-layout: iframe
-url: 'https://alexop.dev/tags/ai/'
+layout: image
+image: 'images/soMuchAi.png'
+backgroundSize: contain
 ---
 
 
