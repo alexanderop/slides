@@ -51,7 +51,7 @@ class: 'pl-30'
 # Alexander Opalic
 
 <div class="absolute top-20 right-30 flex flex-col items-center">
-  <img src="https://avatars.githubusercontent.com/u/33398393?v=4" class="w-40 h-40 rounded-full" />
+  <img src="./images/alex.png" class="w-40 h-40 rounded-full" />
 </div>
 
 <div class="text-xl opacity-80 mb-4 flex items-center gap-2">
