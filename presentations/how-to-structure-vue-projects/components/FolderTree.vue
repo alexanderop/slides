@@ -25,8 +25,12 @@
           @click="ctx.toggle(node.path)"
           :style="{ paddingLeft: (depth * ctx.indentPx) + 'px' }"
         >
-          <span class="tree__caret" :class="{ 'tree__caret--open': ctx.isOpen(node.path) }" aria-hidden="true">▸</span>
-          <span class="tree__icon" aria-hidden="true">📁</span>
+          <div class="tree__caret" :class="{ 'tree__caret--open': ctx.isOpen(node.path) }" aria-hidden="true">
+            <div class="i-carbon:chevron-right" />
+          </div>
+          <div class="tree__icon" aria-hidden="true">
+            <div class="i-carbon:folder" />
+          </div>
           <span class="tree__name">{{ node.name }}</span>
         </button>
 
@@ -36,8 +40,10 @@
           class="tree__label tree__label--file"
           :style="{ paddingLeft: (depth * ctx.indentPx) + 'px' }"
         >
-          <span class="tree__dot" aria-hidden="true">•</span>
-          <span class="tree__icon" aria-hidden="true">📄</span>
+          <div class="tree__dot" aria-hidden="true">
+            <div class="w-1 h-1 bg-current rounded-full opacity-60" />
+          </div>
+          <div class="tree__icon" aria-hidden="true" :class="getFileIconClass(node.name)" />
           <span class="tree__name">{{ node.name }}</span>
         </span>
 
@@ -75,8 +81,12 @@
         @click="ctx.toggle(node.path)"
         :style="{ paddingLeft: (depth * ctx.indentPx) + 'px' }"
       >
-        <span class="tree__caret" :class="{ 'tree__caret--open': ctx.isOpen(node.path) }" aria-hidden="true">▸</span>
-        <span class="tree__icon" aria-hidden="true">📁</span>
+        <div class="tree__caret" :class="{ 'tree__caret--open': ctx.isOpen(node.path) }" aria-hidden="true">
+          <div class="i-carbon:chevron-right" />
+        </div>
+        <div class="tree__icon" aria-hidden="true">
+          <div class="i-carbon:folder" />
+        </div>
         <span class="tree__name">{{ node.name }}</span>
       </button>
 
@@ -85,8 +95,10 @@
         class="tree__label tree__label--file"
         :style="{ paddingLeft: (depth * ctx.indentPx) + 'px' }"
       >
-        <span class="tree__dot" aria-hidden="true">•</span>
-        <span class="tree__icon" aria-hidden="true">📄</span>
+        <div class="tree__dot" aria-hidden="true">
+          <div class="w-1 h-1 bg-current rounded-full opacity-60" />
+        </div>
+        <div class="tree__icon" aria-hidden="true" :class="getFileIconClass(node.name)" />
         <span class="tree__name">{{ node.name }}</span>
       </span>
 
@@ -146,7 +158,31 @@ const ctx: TreeContext = parentCtx ?? (() => {
   const open = reactive<Record<string, boolean>>({})
   const indentPx = props.indentPx
   const isOpen = (path: string) => !!open[path]
-  const toggle = (path: string) => { open[path] = !open[path] }
+  
+  const toggle = (path: string) => { 
+    // Check if this is a direct child of src (format: /src/components, /src/composables, etc.)
+    const isFirstLevelChild = path.match(/^\/src\/[^\/]+$/)
+    
+    if (isFirstLevelChild) {
+      // For first-level children, close all other first-level siblings
+      Object.keys(open).forEach(key => {
+        if (key.match(/^\/src\/[^\/]+$/) && key !== path) {
+          open[key] = false
+          
+          // Also close all children of other first-level nodes
+          Object.keys(open).forEach(childKey => {
+            if (childKey.startsWith(key + '/')) {
+              open[childKey] = false
+            }
+          })
+        }
+      })
+    }
+    
+    // Toggle the clicked item
+    open[path] = !open[path] 
+  }
+  
   const newCtx: TreeContext = { open, indentPx, isOpen, toggle }
   provide(TreeCtxKey, newCtx)
   return newCtx
@@ -218,6 +254,41 @@ function parseStructure(input: string): TreeNode[] {
   return root
 }
 
+// Function to get appropriate icon class for file types
+function getFileIconClass(filename: string): string {
+  const extension = filename.split('.').pop()?.toLowerCase()
+  
+  switch (extension) {
+    case 'vue':
+      return 'i-logos:vue text-green-500'
+    case 'ts':
+      return 'i-logos:typescript-icon text-blue-500'
+    case 'js':
+      return 'i-logos:javascript text-yellow-500'
+    case 'json':
+      return 'i-carbon:settings text-gray-400'
+    case 'md':
+      return 'i-carbon:document text-blue-400'
+    case 'css':
+      return 'i-logos:css-3 text-blue-500'
+    case 'scss':
+    case 'sass':
+      return 'i-logos:sass text-pink-500'
+    case 'html':
+      return 'i-logos:html-5 text-orange-500'
+    case 'png':
+    case 'jpg':
+    case 'jpeg':
+    case 'gif':
+    case 'svg':
+      return 'i-carbon:image text-purple-400'
+    case 'ico':
+      return 'i-vscode-icons:file-type-favicon text-blue-400'
+    default:
+      return 'i-carbon:document text-gray-400'
+  }
+}
+
 // Open-all only once (at the root that provides context)
 if (!parentCtx) {
   let initialized = false
@@ -226,15 +297,20 @@ if (!parentCtx) {
     (tree) => {
       if (initialized) return
       if (props.openAll) {
-        const openAll = (nodes: TreeNode[]) => {
-          for (const n of nodes) {
-            if (n.type === 'folder') {
-              ctx.open[n.path] = true
-              if (n.children?.length) openAll(n.children)
+        // Find the src folder and open it + its first child folder
+        const srcFolder = tree.find(node => node.name === 'src' && node.type === 'folder')
+        if (srcFolder) {
+          // Always open src
+          ctx.open[srcFolder.path] = true
+          
+          // Open ONLY the first child of src (not its nested children initially)
+          if (srcFolder.children && srcFolder.children.length > 0) {
+            const firstChild = srcFolder.children[0]
+            if (firstChild.type === 'folder') {
+              ctx.open[firstChild.path] = true
             }
           }
         }
-        openAll(tree)
       }
       initialized = true
     },
@@ -248,16 +324,20 @@ if (!parentCtx) {
   background: rgb(var(--color-card));
   color: rgb(var(--color-text-base));
   border: 1px solid rgb(var(--color-border));
-  border-radius: 12px;
-  padding: 1rem;
+  border-radius: 8px;
+  padding: 0.75rem;
+  font-size: 0.85rem;
+  max-height: 60vh;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .tree__header {
-  padding-bottom: .5rem;
-  margin-bottom: .75rem;
+  padding-bottom: .25rem;
+  margin-bottom: .5rem;
   border-bottom: 1px solid rgba(var(--color-border), .4);
 }
-.tree__title { margin: 0; font-size: 1.05rem; color: rgb(var(--color-accent)); }
+.tree__title { margin: 0; font-size: 0.9rem; color: rgb(var(--color-accent)); }
 
 .tree__list { list-style: none; margin: 0; padding: 0; }
 .tree__node { margin: 0; }
@@ -265,16 +345,18 @@ if (!parentCtx) {
 .tree__label {
   display: flex;
   align-items: center;
-  gap: .5rem;
-  padding: .25rem .5rem;
+  gap: .35rem;
+  padding: .15rem .35rem;
   width: 100%;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 4px;
   text-align: left;
   font: inherit;
   color: rgb(var(--color-text-base));
   cursor: pointer;
+  font-size: 0.85rem;
+  line-height: 1.2;
 }
 .tree__label--file { cursor: default; }
 .tree__label:hover {
@@ -289,17 +371,65 @@ if (!parentCtx) {
 }
 
 .tree__caret {
-  width: 1rem;
-  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transform: rotate(0deg);
   transition: transform .14s ease;
   opacity: .9;
 }
-.tree__caret--open { transform: rotate(90deg); color: rgb(var(--color-accent)); }
-.tree__icon { width: 1rem; text-align: center; opacity: .9; }
-.tree__dot { width: 1rem; text-align: center; opacity: .6; }
+.tree__caret--open { 
+  transform: rotate(90deg); 
+}
+.tree__caret--open div { 
+  color: rgb(var(--color-accent)); 
+}
+.tree__icon { 
+  width: 0.75rem; 
+  height: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .9; 
+}
+.tree__dot { 
+  width: 0.75rem; 
+  height: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: .6; 
+}
 .tree__name { white-space: nowrap; }
 
-.tree-slide-enter-from, .tree-slide-leave-to { opacity: 0; transform: translateY(-2px); }
-.tree-slide-enter-active, .tree-slide-leave-active { transition: opacity .14s ease, transform .14s ease; }
+.tree-slide-enter-from, .tree-slide-leave-to { opacity: 0; transform: translateY(-1px); }
+.tree-slide-enter-active, .tree-slide-leave-active { transition: opacity .12s ease, transform .12s ease; }
+
+/* Custom scrollbar styling */
+.tree::-webkit-scrollbar {
+  width: 8px;
+}
+
+.tree::-webkit-scrollbar-track {
+  background: rgba(var(--color-card-muted), 0.2);
+  border-radius: 4px;
+}
+
+.tree::-webkit-scrollbar-thumb {
+  background: rgba(var(--color-border), 0.6);
+  border-radius: 4px;
+  transition: background 0.2s ease;
+}
+
+.tree::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--color-accent), 0.8);
+}
+
+/* Firefox scrollbar */
+.tree {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--color-border), 0.6) rgba(var(--color-card-muted), 0.2);
+}
 </style>

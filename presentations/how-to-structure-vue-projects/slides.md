@@ -295,9 +295,6 @@ class: 'text-center'
 layout: default
 ---
 
-# 1. Flat Structure 📁
-<div class="text-lg opacity-80 mb-6">Perfect for small projects and prototypes</div>
-
 <FolderTree
   root
   title="Flat Structure"
@@ -402,9 +399,6 @@ graph TD
 layout: default
 ---
 
-# Atomic Design Structure
-<div class="text-lg opacity-80 mb-6">Complete folder organization</div>
-
 <FolderTree
   root
   title="Atomic Design Structure"
@@ -434,9 +428,6 @@ App.vue`"
 ---
 layout: default
 ---
-
-# 3. Modular Approach 🧩
-<div class="text-lg opacity-80 mb-6">Feature-based organization for larger projects</div>
 
 <FolderTree
   root
@@ -532,9 +523,6 @@ graph TD
 ---
 layout: default
 ---
-
-# FSD Folder Structure
-<div class="text-lg opacity-80 mb-6">Complete hierarchical organization</div>
 
 <FolderTree
   root
