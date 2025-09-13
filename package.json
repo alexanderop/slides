@@ -1,0 +1,23 @@
+{
+  "name": "slides-workspace",
+  "version": "1.0.0",
+  "description": "Slidev presentations workspace",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev.js",
+    "build": "node scripts/build.js",
+    "build:all": "pnpm -r --parallel run build",
+    "export": "node scripts/export.js",
+    "export:all": "pnpm -r --parallel run export",
+    "new": "node scripts/new-slide.js",
+    "list": "node scripts/list-presentations.js",
+    "clean": "pnpm -r exec rm -rf node_modules && rm -rf node_modules",
+    "install:all": "pnpm install"
+  },
+  "packageManager": "pnpm@8.0.0",
+  "dependencies": {
+    "@unocss/preset-mini": "^66.5.1",
+    "@vue/compiler-sfc": "^3.5.21"
+  }
+}

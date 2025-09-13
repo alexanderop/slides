@@ -1,0 +1,13 @@
+{
+  "name": "@slides/shared",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "description": "Shared components and utilities for slide presentations",
+  "exports": {
+    "./components/*": "./components/*",
+    "./themes/*": "./themes/*",
+    "./assets/*": "./assets/*",
+    "./utils/*": "./utils/*"
+  }
+}

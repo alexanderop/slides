@@ -1,5 +1,5 @@
 {
-  "name": "how-i-use-llms",
+  "name": "{{PRESENTATION_NAME}}",
   "type": "module",
   "private": true,
   "scripts": {
@@ -7,7 +7,7 @@
     "dev": "slidev --open",
     "export": "slidev export"
   },
-  "dependencies": {
+  "devDependencies": {
     "@slidev/cli": "^51.6.0",
     "@slidev/theme-default": "latest",
     "@slidev/theme-seriph": "latest",

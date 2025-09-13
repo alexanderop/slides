@@ -49,7 +49,6 @@ class: 'pl-30'
 ---
 
 # Alexander Opalic
-
 <div class="absolute top-20 right-30 flex flex-col items-center">
   <img src="./images/alex.png" class="w-40 h-40 rounded-full" />
 </div>
