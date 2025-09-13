@@ -1,0 +1,62 @@
+:root {
+  --color-fill: 33, 39, 55;
+  --color-text-base: 234, 237, 243;
+  --color-accent: 255, 107, 237;
+  --color-card: 52, 63, 96;
+  --color-card-muted: 138, 51, 123;
+  --color-border: 171, 75, 153;
+}
+
+html {
+  background-color: rgb(var(--color-fill));
+  color: rgb(var(--color-text-base));
+}
+
+.border {
+  border-color: rgb(var(--color-border)) !important;
+}
+
+.text-gray-600 {
+  color: rgba(var(--color-text-base), 0.6) !important;
+}
+
+.rounded-lg {
+  background-color: rgba(var(--color-card), 0.8);
+}
+
+a {
+  color: rgb(var(--color-accent));
+}
+
+.slidev-layout {
+  background-color: rgb(var(--color-fill));
+  color: rgb(var(--color-text-base));
+}
+
+/* Mermaid diagram styles */
+.mermaid .node rect,
+.mermaid .node circle,
+.mermaid .node ellipse,
+.mermaid .node polygon,
+.mermaid .node path {
+  fill: rgb(var(--color-card)) !important;
+  stroke: rgb(var(--color-border)) !important;
+}
+
+.mermaid .edgeLabel {
+  background-color: rgb(var(--color-fill)) !important;
+  color: rgb(var(--color-text-base)) !important;
+}
+
+.mermaid .edge path {
+  stroke: rgb(var(--color-border)) !important;
+}
+
+/* Code block styling */
+pre {
+  background-color: rgb(var(--color-card)) !important;
+}
+
+code {
+  color: rgb(var(--color-accent)) !important;
+} 

@@ -14,6 +14,16 @@ importers:
       '@vue/compiler-sfc':
         specifier: ^3.5.21
         version: 3.5.21
+    devDependencies:
+      '@shikijs/engine-javascript':
+        specifier: ^3.12.2
+        version: 3.12.2
+      '@shikijs/monaco':
+        specifier: ^3.12.2
+        version: 3.12.2
+      shiki:
+        specifier: ^3.12.2
+        version: 3.12.2
 
   presentations/how-i-use-llms:
     devDependencies:
@@ -26,6 +36,27 @@ importers:
       '@slidev/theme-seriph':
         specifier: latest
         version: 0.25.0
+      vue:
+        specifier: ^3.5.13
+        version: 3.5.21(typescript@5.9.2)
+
+  presentations/how-to-structure-vue-projects:
+    devDependencies:
+      '@shikijs/engine-javascript':
+        specifier: ^3.12.2
+        version: 3.12.2
+      '@slidev/cli':
+        specifier: ^51.6.0
+        version: 51.8.2(@babel/parser@7.28.4)(@nuxt/kit@3.19.2)(@types/markdown-it@14.1.2)(@types/node@22.18.3)(@vue/compiler-sfc@3.5.21)(markdown-it-async@2.2.0)(postcss@8.5.6)
+      '@slidev/theme-default':
+        specifier: latest
+        version: 0.25.0
+      '@slidev/theme-seriph':
+        specifier: latest
+        version: 0.25.0
+      shiki:
+        specifier: ^3.12.2
+        version: 3.12.2
       vue:
         specifier: ^3.5.13
         version: 3.5.21(typescript@5.9.2)
