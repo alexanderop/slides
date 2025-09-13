@@ -1,122 +1,37 @@
 <template>
-  <!-- Root: card + headline -->
+  <!-- Root container with title -->
   <section v-if="root" class="tree">
     <header class="tree__header">
       <h1 class="tree__title">{{ title }}</h1>
     </header>
-
-    <ul class="tree__list" v-if="nodesToRender.length">
-      <li
+    <div class="tree__content">
+      <FolderNode
         v-for="node in nodesToRender"
         :key="node.path"
-        class="tree__node"
-        :class="{
-          'tree__node--folder': node.type === 'folder',
-          'tree__node--file': node.type === 'file',
-          'tree__node--open': ctx.isOpen(node.path)
-        }"
-      >
-        <!-- Folder row -->
-        <button
-          v-if="node.type === 'folder'"
-          class="tree__label"
-          type="button"
-          :aria-expanded="ctx.isOpen(node.path)"
-          @click="ctx.toggle(node.path)"
-          :style="{ paddingLeft: (depth * ctx.indentPx) + 'px' }"
-        >
-          <div class="tree__caret" :class="{ 'tree__caret--open': ctx.isOpen(node.path) }" aria-hidden="true">
-            <div class="i-carbon:chevron-right" />
-          </div>
-          <div class="tree__icon" aria-hidden="true">
-            <div class="i-carbon:folder" />
-          </div>
-          <span class="tree__name">{{ node.name }}</span>
-        </button>
-
-        <!-- File row -->
-        <span
-          v-else
-          class="tree__label tree__label--file"
-          :style="{ paddingLeft: (depth * ctx.indentPx) + 'px' }"
-        >
-          <div class="tree__dot" aria-hidden="true">
-            <div class="w-1 h-1 bg-current rounded-full opacity-60" />
-          </div>
-          <div class="tree__icon" aria-hidden="true" :class="getFileIconClass(node.name)" />
-          <span class="tree__name">{{ node.name }}</span>
-        </span>
-
-        <!-- Children: render child instance WITHOUT header -->
-        <transition name="tree-slide">
-          <FolderTree
-            v-if="node.type === 'folder' && ctx.isOpen(node.path)"
-            :nodes="node.children"
-            :depth="depth + 1"
-            :indent-px="ctx.indentPx"
-            :open-all="openAll"
-          />
-        </transition>
-      </li>
-    </ul>
+        :node="node"
+        :path="node.path"
+        :depth="0"
+      />
+    </div>
   </section>
 
-  <!-- Children: plain list only -->
-  <ul v-else class="tree__list" v-if="nodesToRender.length">
-    <li
+  <!-- Child nodes (rendered recursively) -->
+  <div v-else class="tree__children">
+    <FolderNode
       v-for="node in nodesToRender"
       :key="node.path"
-      class="tree__node"
-      :class="{
-        'tree__node--folder': node.type === 'folder',
-        'tree__node--file': node.type === 'file',
-        'tree__node--open': ctx.isOpen(node.path)
-      }"
-    >
-      <button
-        v-if="node.type === 'folder'"
-        class="tree__label"
-        type="button"
-        :aria-expanded="ctx.isOpen(node.path)"
-        @click="ctx.toggle(node.path)"
-        :style="{ paddingLeft: (depth * ctx.indentPx) + 'px' }"
-      >
-        <div class="tree__caret" :class="{ 'tree__caret--open': ctx.isOpen(node.path) }" aria-hidden="true">
-          <div class="i-carbon:chevron-right" />
-        </div>
-        <div class="tree__icon" aria-hidden="true">
-          <div class="i-carbon:folder" />
-        </div>
-        <span class="tree__name">{{ node.name }}</span>
-      </button>
-
-      <span
-        v-else
-        class="tree__label tree__label--file"
-        :style="{ paddingLeft: (depth * ctx.indentPx) + 'px' }"
-      >
-        <div class="tree__dot" aria-hidden="true">
-          <div class="w-1 h-1 bg-current rounded-full opacity-60" />
-        </div>
-        <div class="tree__icon" aria-hidden="true" :class="getFileIconClass(node.name)" />
-        <span class="tree__name">{{ node.name }}</span>
-      </span>
-
-      <transition name="tree-slide">
-        <FolderTree
-          v-if="node.type === 'folder' && ctx.isOpen(node.path)"
-          :nodes="node.children"
-          :depth="depth + 1"
-          :indent-px="ctx.indentPx"
-          :open-all="openAll"
-        />
-      </transition>
-    </li>
-  </ul>
+      :node="node"
+      :path="node.path"
+      :depth="depth"
+    />
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed, inject, provide, reactive, watch } from 'vue'
+import { computed, provide, reactive, watch } from 'vue'
+import { useNav } from '@slidev/client'
+import FolderNode from './FolderNode.vue'
+import { folderTreeKey } from './folderTreeKey'
 
 type NodeType = 'file' | 'folder'
 interface TreeNode {
@@ -126,68 +41,73 @@ interface TreeNode {
   children?: TreeNode[]
 }
 
-interface TreeContext {
-  open: Record<string, boolean>
-  indentPx: number
-  isOpen: (path: string) => boolean
-  toggle: (path: string) => void
-}
-
-const TreeCtxKey: unique symbol = Symbol('FolderTreeCtx')
 defineOptions({ name: 'FolderTree' })
 
 const props = withDefaults(defineProps<{
-  root?: boolean            // <-- only true at the top-level
+  root?: boolean
   title?: string
   structure?: string
   nodes?: TreeNode[]
   depth?: number
-  indentPx?: number
   openAll?: boolean
+  openOnClicks?: string[]
 }>(), {
   root: false,
   title: 'Project Files',
   depth: 0,
-  indentPx: 16,
-  openAll: true
+  openAll: true,
+  openOnClicks: () => []
 })
 
-const parentCtx = inject<TreeContext | null>(TreeCtxKey, null)
-const ctx: TreeContext = parentCtx ?? (() => {
-  // Root provides the shared state
-  const open = reactive<Record<string, boolean>>({})
-  const indentPx = props.indentPx
-  const isOpen = (path: string) => !!open[path]
+// Only root component manages the expanded state
+const expandedNodes = reactive(new Set<string>())
+const nav = useNav()
+
+// Toggle node expansion
+function toggleNode(path: string) {
+  const isFirstLevelChild = path.match(/^\/src\/[^\/]+$/)
   
-  const toggle = (path: string) => { 
-    // Check if this is a direct child of src (format: /src/components, /src/composables, etc.)
-    const isFirstLevelChild = path.match(/^\/src\/[^\/]+$/)
-    
-    if (isFirstLevelChild) {
-      // For first-level children, close all other first-level siblings
-      Object.keys(open).forEach(key => {
-        if (key.match(/^\/src\/[^\/]+$/) && key !== path) {
-          open[key] = false
-          
-          // Also close all children of other first-level nodes
-          Object.keys(open).forEach(childKey => {
-            if (childKey.startsWith(key + '/')) {
-              open[childKey] = false
-            }
-          })
-        }
-      })
-    }
-    
-    // Toggle the clicked item
-    open[path] = !open[path] 
+  // Only apply sibling-closing logic if we're NOT using click-based opening
+  if (isFirstLevelChild && props.openOnClicks.length === 0) {
+    // Close all other first-level siblings
+    Array.from(expandedNodes).forEach(expandedPath => {
+      if (expandedPath.match(/^\/src\/[^\/]+$/) && expandedPath !== path) {
+        expandedNodes.delete(expandedPath)
+        // Also close children
+        Array.from(expandedNodes).forEach(childPath => {
+          if (childPath.startsWith(expandedPath + '/')) {
+            expandedNodes.delete(childPath)
+          }
+        })
+      }
+    })
   }
   
-  const newCtx: TreeContext = { open, indentPx, isOpen, toggle }
-  provide(TreeCtxKey, newCtx)
-  return newCtx
-})()
+  // Toggle the clicked item
+  if (expandedNodes.has(path)) {
+    expandedNodes.delete(path)
+  } else {
+    expandedNodes.add(path)
+  }
+}
 
+// Check if node is expanded
+function isExpanded(path: string): boolean {
+  return expandedNodes.has(path)
+}
+
+// Provide context to child components (only if root)
+if (props.root) {
+  provide(folderTreeKey, {
+    withinFolderTree: true,
+    toggleNode,
+    isExpanded,
+    openOnClicks: props.openOnClicks,
+    currentClick: nav.clicks.value
+  })
+}
+
+// Parse structure into tree nodes
 const nodesToRender = computed<TreeNode[]>(() => {
   if (props.nodes) return props.nodes
   const input = (props.structure ?? '')
@@ -254,65 +174,53 @@ function parseStructure(input: string): TreeNode[] {
   return root
 }
 
-// Function to get appropriate icon class for file types
-function getFileIconClass(filename: string): string {
-  const extension = filename.split('.').pop()?.toLowerCase()
-  
-  switch (extension) {
-    case 'vue':
-      return 'i-logos:vue text-green-500'
-    case 'ts':
-      return 'i-logos:typescript-icon text-blue-500'
-    case 'js':
-      return 'i-logos:javascript text-yellow-500'
-    case 'json':
-      return 'i-carbon:settings text-gray-400'
-    case 'md':
-      return 'i-carbon:document text-blue-400'
-    case 'css':
-      return 'i-logos:css-3 text-blue-500'
-    case 'scss':
-    case 'sass':
-      return 'i-logos:sass text-pink-500'
-    case 'html':
-      return 'i-logos:html-5 text-orange-500'
-    case 'png':
-    case 'jpg':
-    case 'jpeg':
-    case 'gif':
-    case 'svg':
-      return 'i-carbon:image text-purple-400'
-    case 'ico':
-      return 'i-vscode-icons:file-type-favicon text-blue-400'
-    default:
-      return 'i-carbon:document text-gray-400'
+// Handle click-based opening (only for root component)
+if (props.root && props.openOnClicks.length > 0) {
+  function applyClickBasedOpening(clickCount: number) {
+    // Clear all expanded nodes
+    expandedNodes.clear()
+    
+    // Always expand /src first
+    expandedNodes.add('/src')
+    
+    // Only show the CURRENT click target, not all previous ones
+    const targetPath = props.openOnClicks[clickCount]
+    if (targetPath) {
+      // Expand this path and all its ancestors
+      const parts = targetPath.split('/').filter(Boolean)
+      let currentPath = ''
+      for (const part of parts) {
+        currentPath += '/' + part
+        expandedNodes.add(currentPath)
+      }
+    }
   }
+
+  // Watch for click changes
+  watch(
+    () => nav.clicks.value,
+    (clickCount) => {
+      applyClickBasedOpening(clickCount)
+    },
+    { immediate: true }
+  )
 }
 
-// Open-all only once (at the root that provides context)
-if (!parentCtx) {
-  let initialized = false
+// Handle openAll logic (only for root component without click-based opening)
+if (props.root && props.openOnClicks.length === 0 && props.openAll) {
   watch(
     () => nodesToRender.value,
     (tree) => {
-      if (initialized) return
-      if (props.openAll) {
-        // Find the src folder and open it + its first child folder
-        const srcFolder = tree.find(node => node.name === 'src' && node.type === 'folder')
-        if (srcFolder) {
-          // Always open src
-          ctx.open[srcFolder.path] = true
-          
-          // Open ONLY the first child of src (not its nested children initially)
-          if (srcFolder.children && srcFolder.children.length > 0) {
-            const firstChild = srcFolder.children[0]
-            if (firstChild.type === 'folder') {
-              ctx.open[firstChild.path] = true
-            }
+      const srcFolder = tree.find(node => node.name === 'src' && node.type === 'folder')
+      if (srcFolder) {
+        expandedNodes.add(srcFolder.path)
+        if (srcFolder.children && srcFolder.children.length > 0) {
+          const firstChild = srcFolder.children[0]
+          if (firstChild.type === 'folder') {
+            expandedNodes.add(firstChild.path)
           }
         }
       }
-      initialized = true
     },
     { immediate: true }
   )

@@ -293,6 +293,7 @@ class: 'text-center'
 
 ---
 layout: default
+clicks: 9
 ---
 
 <FolderTree
@@ -319,30 +320,19 @@ layout: default
   assets/
 App.vue
 main.js`"
-  :open-all="true"
+  :open-on-clicks="[
+    '/src',
+    '/src/components',
+    '/src/composables', 
+    '/src/utils',
+    '/src/layout',
+    '/src/views',
+    '/src/router',
+    '/src/store',
+    '/src/assets'
+  ]"
 />
 
-<div class="mt-8 grid grid-cols-2 gap-8">
-  <div v-click="1">
-    <div class="text-green-400 font-bold mb-2">✅ Advantages</div>
-    <ul class="space-y-1 text-sm">
-      <li>• Easy to implement and understand</li>
-      <li>• Minimal setup required</li>
-      <li>• Fast development for small teams</li>
-      <li>• Great for prototypes and MVPs</li>
-    </ul>
-  </div>
-  
-  <div v-click="2">
-    <div class="text-red-400 font-bold mb-2">❌ Disadvantages</div>
-    <ul class="space-y-1 text-sm">
-      <li>• Not scalable for large projects</li>
-      <li>• Becomes cluttered quickly</li>
-      <li>• Hard to find components as it grows</li>
-      <li>• Lacks clear separation of concerns</li>
-    </ul>
-  </div>
-</div>
 
 ---
 layout: default
