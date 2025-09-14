@@ -194,32 +194,26 @@ layout: center
 class: 'text-center'
 ---
 
-# 4 Vue Project Structures
+# 3 Vue Project Structures
 
 <div class="text-xl opacity-80 mb-8">From simple to enterprise-scale solutions</div>
 
-<div class="grid grid-cols-4 gap-6 mt-8">
+<div class="grid grid-cols-3 gap-8 mt-8">
   <div v-click="1" class="text-center">
-    <div class="text-4xl mb-2">📁</div>
-    <div class="font-bold">Flat</div>
+    <div class="text-5xl mb-3">📁</div>
+    <div class="font-bold text-xl">Flat</div>
     <div class="text-sm opacity-70">Small projects</div>
   </div>
   
   <div v-click="2" class="text-center">
-    <div class="text-4xl mb-2">⚛️</div>
-    <div class="font-bold">Atomic</div>
-    <div class="text-sm opacity-70">Scalable apps</div>
-  </div>
-  
-  <div v-click="3" class="text-center">
-    <div class="text-4xl mb-2">🧩</div>
-    <div class="font-bold">Modular</div>
+    <div class="text-5xl mb-3">🧩</div>
+    <div class="font-bold text-xl">Modular</div>
     <div class="text-sm opacity-70">Feature-based</div>
   </div>
   
-  <div v-click="4" class="text-center">
-    <div class="text-4xl mb-2">🏢</div>
-    <div class="font-bold">Micro</div>
+  <div v-click="3" class="text-center">
+    <div class="text-5xl mb-3">🏢</div>
+    <div class="font-bold text-xl">Micro</div>
     <div class="text-sm opacity-70">Enterprise</div>
   </div>
 </div>
@@ -235,7 +229,7 @@ clicks: 4
     title="Flat"
     :structure="`src/
   App.vue
-  Main.ts
+  main.ts
   routes.ts
   components/
     Button.vue
@@ -244,18 +238,22 @@ clicks: 4
     mycomponent.vue
     Todo.vue
     todoItem.vue
+    addTodo.vue
+    edit-todo.vue
+    TodoStats.vue
+    completed-todos.vue
   views/
     Home.vue
   pages/
     HomePage.vue
+    todoPage.vue
   composables/
     useUser.ts
     formatDate.ts
     mathHelpers.ts
-  store/
-    index.js
   stores/
-    user.js`"
+    useTodoStore.ts
+    useUserStore.ts`"
     :open-on-clicks="[
       '/src',
       '/src/components',
@@ -271,6 +269,51 @@ image: 'images/styleGuide.png'
 backgroundSize: contain
 ---
 
+---
+layout: center
+---
+
+# Vue Component Naming Rules
+
+<div class="text-lg opacity-80 mb-8">Key principles from the Vue Style Guide</div>
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">✅ Good Naming</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• **PascalCase**: `TodoList.vue`, `BaseButton.vue`</div>
+      <div>• **Descriptive**: `SearchButtonClear.vue`</div>
+      <div>• **Hierarchical**: `TodoListItem.vue`</div>
+      <div>• **Base prefix**: `BaseCard.vue`, `BaseInput.vue`</div>
+    </div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">❌ Poor Naming</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• **Inconsistent case**: `todolist.vue`, `Todo-Item.vue`</div>
+      <div>• **Abbreviations**: `Btn.vue`, `Nav.vue`</div>
+      <div>• **Generic**: `Component.vue`, `Item.vue`</div>
+      <div>• **Lowercase**: `button.vue`, `card.vue`</div>
+    </div>
+  </div>
+</div>
+
+<div v-click="3" class="mt-8 grid grid-cols-2 gap-8">
+  <div class="p-4 bg-card rounded-lg">
+    <div class="text-lg font-bold text-primary mb-2">🎯 Hierarchy Pattern</div>
+    <div class="opacity-80 text-sm">
+      <div>• `TodoList.vue`</div>
+      <div>• `TodoListItem.vue`</div>
+      <div>• `TodoListItemButton.vue`</div>
+    </div>
+  </div>
+  
+  <div class="p-4 bg-card rounded-lg">
+    <div class="text-lg font-bold text-primary mb-2">💡 Word Order</div>
+    <div class="opacity-80 text-sm">Start with the most general word, end with specific descriptors</div>
+  </div>
+</div>
 
 ---
 layout: default
@@ -284,20 +327,43 @@ clicks: 9
   components/
     BaseButton.vue
     BaseCard.vue
-    PokemonCard.vue
+    BaseInput.vue
+    TodoList.vue
+    TodoListItem.vue
+    TodoFilter.vue
+    TodoHeader.vue
+    TodoAddForm.vue
+    TodoEditModal.vue
+    TodoStats.vue
+    TodoCompletedList.vue
+    SearchBar.vue
+    LoadingSpinner.vue
+    EmptyState.vue
   composables/
-    usePokemon.js
+    useTodos.js
+    useLocalStorage.js
+    useKeyboard.js
   utils/
     validators.js
+    dateHelpers.js
+    todoHelpers.js
+  plugins/
+    api.js
+    auth.js
+    toast.js
+    i18n.js
   layout/
     DefaultLayout.vue
     AdminLayout.vue
   views/
     Home.vue
+    TodosPage.vue
+    CompletedPage.vue
   router/
     index.js
   store/
     index.js
+    todosStore.js
   assets/
 App.vue
 main.js`"
@@ -306,6 +372,7 @@ main.js`"
     '/src/components',
     '/src/composables', 
     '/src/utils',
+    '/src/plugins',
     '/src/layout',
     '/src/views',
     '/src/router',
@@ -315,88 +382,6 @@ main.js`"
 />
 
 
----
-layout: image
-image: 'images/atomic.svg'
-backgroundSize: contain
----
-
----
-layout: center
----
-
-# Atomic Design Cheatsheet
-
-<div class="grid grid-cols-2 gap-8 mt-8">
-  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">⚛️ Atoms</div>
-    <div class="text-sm opacity-80 mb-2">Basic building blocks that can't be broken down further</div>
-    <div class="text-xs opacity-70">Examples: Button, Input, Icon, Label</div>
-  </div>
-  
-  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🧬 Molecules</div>
-    <div class="text-sm opacity-80 mb-2">Groups of atoms bonded together</div>
-    <div class="text-xs opacity-70">Examples: SearchBox (Input + Button), Form Field (Label + Input)</div>
-  </div>
-  
-  <div v-click="3" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🦠 Organisms</div>
-    <div class="text-sm opacity-80 mb-2">Groups of molecules joined together to form distinct sections</div>
-    <div class="text-xs opacity-70">Examples: Header, Footer, Product List, Navigation</div>
-  </div>
-  
-  <div v-click="4" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📄 Templates</div>
-    <div class="text-sm opacity-80 mb-2">Page-level objects that place components into a layout</div>
-    <div class="text-xs opacity-70">Examples: Homepage Layout, Article Layout, Dashboard Layout</div>
-  </div>
-</div>
-
-<div v-click="5" class="mt-8 p-4 bg-card rounded-lg text-center">
-  <div class="text-lg font-bold text-primary mb-2">🎯 Key Principle</div>
-  <div class="opacity-80">Build from small to large - each level combines elements from the level below</div>
-</div>
-
----
-layout: default
-clicks: 7
----
-
-<FolderTree
-  root
-  title="Atomic Design Structure"
-  :structure="`src/
-  components/
-    atoms/
-      AtomButton.vue
-      AtomIcon.vue
-    molecules/
-      MoleculeSearchInput.vue
-      MoleculePokemonCard.vue
-    organisms/
-      OrganismHeader.vue
-      OrganismPokemonList.vue
-    templates/
-      TemplateHomePage.vue
-      TemplateDetailPage.vue
-  pages/
-    PageHome.vue
-    PagePokemonDetail.vue
-  composables/
-  utils/
-  store/
-App.vue`"
-  :open-on-clicks="[
-    '/src',
-    '/src/components',
-    '/src/components/atoms',
-    '/src/components/molecules',
-    '/src/components/organisms',
-    '/src/components/templates',
-    '/src/pages',
-  ]"
-/>
 ---
 layout: center
 ---
@@ -670,54 +655,6 @@ clicks: 4
 layout: default
 ---
 
-# Module Federation: Key Implementation
-
-<div class="grid grid-cols-2 gap-8 mt-8">
-  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🛣️ Host Router</div>
-    <div class="text-sm opacity-80 space-y-2">
-      <div>• Uses <code>remote()</code> utility to load components</div>
-      <div>• Routes to <code>explore/HomePage</code></div>
-      <div>• Routes to <code>decide/ProductPage</code></div>
-      <div>• Routes to <code>checkout/CartPage</code></div>
-    </div>
-  </div>
-  
-  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🔄 Remote Loader</div>
-    <div class="text-sm opacity-80 space-y-2">
-      <div>• Uses Vue's <code>defineAsyncComponent</code></div>
-      <div>• Shows loading spinner while fetching</div>
-      <div>• Falls back to error component on fail</div>
-      <div>• Retries once before giving up</div>
-    </div>
-  </div>
-  
-  <div v-click="3" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📡 Navigation Events</div>
-    <div class="text-sm opacity-80 space-y-2">
-      <div>• Host listens for <code>mf:navigate</code> events</div>
-      <div>• Remotes dispatch with <code>detail: { to }</code></div>
-      <div>• Enables cross-app navigation</div>
-      <div>• No direct coupling between apps</div>
-    </div>
-  </div>
-  
-  <div v-click="4" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🛒 Cart Synchronization</div>
-    <div class="text-sm opacity-80 space-y-2">
-      <div>• Checkout owns cart state</div>
-      <div>• Listens for <code>add-to-cart</code> events</div>
-      <div>• Syncs via localStorage + events</div>
-      <div>• Broadcasts <code>updated-cart</code> changes</div>
-    </div>
-  </div>
-</div>
-
----
-layout: default
----
-
 # Micro Frontends: Trade-offs
 
 <div class="grid grid-cols-2 gap-8 mt-8">
@@ -770,7 +707,6 @@ class: 'text-center'
 | Structure | Team Size | Complexity | Best For |
 |-----------|-----------|------------|----------|
 | **Flat** 📁 | Solo - Small | Low | Prototypes, MVPs, Simple apps |
-| **Atomic** ⚛️ | Small - Medium | Medium | Design systems, Scalable apps |
 | **Modular** 🧩 | Medium | Medium-High | Feature-rich applications |
 | **Micro** 🏢 | Enterprise | Very High | Multi-team organizations |
 
@@ -779,49 +715,6 @@ class: 'text-center'
   <div class="opacity-80">Start simple and evolve your structure as your team and project grow</div>
 </div>
 
----
-layout: center
----
-
-# Best Practices
-
-<div class="grid grid-cols-2 gap-8 mt-8">
-  <div v-click="1">
-    <div class="text-primary font-bold text-lg mb-4">📝 Naming Conventions</div>
-    <div class="space-y-2 text-sm">
-      <div>• **Base components**: `BaseButton.vue`, `BaseIcon.vue`</div>
-      <div>• **Related components**: `TodoList.vue`, `TodoListItem.vue`</div>
-      <div>• **High-level first**: `SearchButtonClear.vue`</div>
-    </div>
-  </div>
-
-  <div v-click="2">
-    <div class="text-primary font-bold text-lg mb-4">🧪 Test Organization</div>
-    <div class="space-y-2 text-sm">
-      <div>• **Option 1**: Separate `/tests` folder</div>
-      <div>• **Option 2**: Inline `.spec.js` files</div>
-      <div>• **Key**: Be consistent across project</div>
-    </div>
-  </div>
-
-  <div v-click="3">
-    <div class="text-primary font-bold text-lg mb-4">📁 Folder Structure</div>
-    <div class="space-y-2 text-sm">
-      <div>• Keep related files together</div>
-      <div>• Use clear, descriptive names</div>
-      <div>• Group by feature, not by file type</div>
-    </div>
-  </div>
-
-  <div v-click="4">
-    <div class="text-primary font-bold text-lg mb-4">🔄 Evolution</div>
-    <div class="space-y-2 text-sm">
-      <div>• Start simple, refactor as needed</div>
-      <div>• Document your decisions</div>
-      <div>• Get team buy-in before big changes</div>
-    </div>
-  </div>
-</div>
 ---
 layout: center
 class: 'text-center'
@@ -844,7 +737,7 @@ class: 'text-center'
         <span class="i-carbon-growth text-xl" style="color: rgb(255, 107, 237);" />
         <div>
           <div class="font-bold">Growing Teams</div>
-          <div class="text-sm opacity-70">Move to Atomic Design</div>
+          <div class="text-sm opacity-70">Move to Modular approach</div>
         </div>
       </li>
       <li class="flex items-center gap-2">
