@@ -383,6 +383,192 @@ main.js`"
 
 
 ---
+layout: default
+---
+
+# pnpm Workspace: The Foundation
+
+<div class="text-lg opacity-80 mb-8">How modular apps work without publishing to npm</div>
+
+<div class="grid grid-cols-2 gap-8">
+  <div v-click="1">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📁 Workspace Structure</div>
+    
+```yaml
+# pnpm-workspace.yaml
+packages:
+  - 'apps/*'
+  - 'packages/*'
+```
+
+```
+my-app/
+├── apps/
+│   └── web/           # Main Vue app
+└── packages/
+    ├── ui/            # Component library
+    ├── utils/         # Shared utilities
+    └── auth/          # Auth module
+```
+  </div>
+
+  <div v-click="2">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📦 Package Definition</div>
+    
+```json
+// packages/ui/package.json
+{
+  "name": "@myapp/ui",
+  "version": "1.0.0",
+  "main": "./dist/index.js",
+  "exports": {
+    ".": "./src/index.ts",
+    "./Button": "./src/Button.vue"
+  }
+}
+```
+  </div>
+</div>
+
+---
+layout: center
+---
+
+# pnpm Workspace: Usage
+
+<div class="text-lg opacity-80 mb-8">Import and use packages seamlessly</div>
+
+<div class="max-w-4xl mx-auto">
+  <div v-click="1">
+    <div class="text-xl font-bold mb-4 text-center" style="color: rgb(255, 107, 237);">🔗 Import Anywhere</div>
+    
+```vue
+<!-- apps/web/src/App.vue -->
+<script setup>
+import { Button } from '@myapp/ui'
+import { formatDate } from '@myapp/utils'
+import { useAuth } from '@myapp/auth'
+
+const { login } = useAuth()
+</script>
+
+<template>
+  <Button @click="login">
+    Login {{ formatDate(new Date()) }}
+  </Button>
+</template>
+```
+  </div>
+</div>
+
+---
+layout: default
+---
+
+# Modular: With or Without Workspaces
+
+<div class="text-lg opacity-80 mb-8">Two approaches to organize modular Vue applications</div>
+
+<div class="grid grid-cols-2 gap-8">
+  <div v-click="1">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📁 Simple Folder-based</div>
+    
+```
+my-app/
+├── src/
+│   ├── modules/
+│   │   ├── explore/
+│   │   │   ├── components/
+│   │   │   └── composables/
+│   │   ├── decide/
+│   │   └── checkout/
+│   ├── shared/
+│   │   └── components/
+│   └── App.vue
+```
+
+```vue
+<!-- Import with relative paths -->
+<script setup>
+import ProductGrid from '../modules/explore/components/ProductGrid.vue'
+import { useCart } from '../modules/checkout/composables/useCart.js'
+</script>
+```
+
+<div class="text-sm opacity-80 mt-4">
+  ✅ Simple setup<br>
+  ❌ Long relative paths<br>
+  ❌ Hard to refactor
+</div>
+  </div>
+
+  <div v-click="2">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📦 Workspace-based</div>
+    
+```
+my-app/
+├── apps/
+│   └── main/
+├── modules/
+│   ├── explore/
+│   │   └── package.json
+│   ├── decide/
+│   └── checkout/
+└── pnpm-workspace.yaml
+```
+
+```vue
+<!-- Import with package names -->
+<script setup>
+import ProductGrid from '@myapp/explore/components/ProductGrid'
+import { useCart } from '@myapp/checkout/composables/useCart'
+</script>
+```
+
+<div class="text-sm opacity-80 mt-4">
+  ✅ Clean imports<br>
+  ✅ Independent modules<br>
+  ⚠️ More initial setup
+</div>
+  </div>
+</div>
+
+---
+layout: center
+---
+
+# Why Workspaces for Modular?
+
+<div class="text-lg opacity-80 mb-8">Benefits that scale with your team and project</div>
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🎯 Clean Architecture</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Package names instead of relative paths</div>
+      <div>• Better IDE support and autocomplete</div>
+      <div>• Clear module boundaries</div>
+      <div>• Easier refactoring and moving files</div>
+    </div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">👥 Team Scalability</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Independent versioning per module</div>
+      <div>• Teams can own specific packages</div>
+      <div>• Shared dependencies managed centrally</div>
+      <div>• Can extract modules to separate repos later</div>
+    </div>
+  </div>
+</div>
+
+<div v-click="3" class="mt-8 p-4 bg-card rounded-lg">
+  <div class="text-lg font-bold text-primary mb-2">💡 Start Simple, Evolve</div>
+  <div class="opacity-80">Begin with folder-based modules, then upgrade to workspaces when your team or complexity grows</div>
+</div>
+
+---
 layout: center
 ---
 
@@ -420,7 +606,7 @@ layout: center
   <div class="flex justify-center gap-8 mt-4">
     <div class="flex items-center gap-2">
       <div class="text-2xl">🧩</div>
-      <div class="font-bold">Modular (Build-time)</div>
+      <div class="font-bold">Modular (Build-time, with workspaces)</div>
     </div>
     <div class="flex items-center gap-2">
       <div class="text-2xl">🏢</div>
