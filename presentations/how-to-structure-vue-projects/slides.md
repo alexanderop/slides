@@ -30,7 +30,9 @@ mermaid:
     secondaryColor: '#344060'
     tertiaryColor: '#8A337B'
 mdc: true
-layout: center
+layout: image
+image: images/pragVue.png
+backgroundSize: contain
 glowSeed: 4
 lang: en
 icons:
@@ -59,35 +61,24 @@ icons:
       - email
       - logo-twitter
 ---
-# Prag Vue 2025
 
 ---
-layout: intro
-class: 'flex flex-col items-center justify-center text-center'
-background: 'linear-gradient(180deg, #212733 0%, #1a1f2c 100%)'
+layout: image
+image: images/howToStructure.png
+backgroundSize: contain
 ---
 
-<div class="mb-4 text-primary opacity-70 font-mono tracking-widest">
-BUILDING SCALABLE VUE APPLICATIONS
-</div>
+---
+layout: image
+image: images/reddit.png
+backgroundSize: contain
+---
 
-# How to Structure Vue Projects<br>From Simple to Enterprise
-
-<div class="flex items-center justify-center gap-4 mt-6">
-  <div class="i-logos-vue text-4xl animate-pulse" />
-  <div class="i-carbon-folder text-4xl text-primary animate-bounce-slow" />
-  <div class="i-carbon-analytics text-4xl animate-pulse" />
-</div>
-
-<div class="mt-8 text-lg opacity-70">
-by Alexander Opalic
-</div>
-
-<style>
-.animate-bounce-slow {
-  animation: bounce 2s infinite;
-}
-</style>
+---
+layout: image
+image: images/chatgpt.png
+backgroundSize: contain
+---
 
 ---
 layout: intro
@@ -95,6 +86,7 @@ glowSeed: 15
 glowOpacity: 0.3
 class: 'pl-30'
 ---
+
 
 # Alexander Opalic
 
@@ -143,9 +135,8 @@ layout: center
 class: 'text-center'
 ---
 
-# Why Structure Matters
+# Why Structure  Matters
 
-<div class="text-xl opacity-80 mb-8">The foundation of maintainable Vue applications</div>
 ---
 layout: quote
 class: 'text-center'
@@ -159,69 +150,18 @@ class: 'text-center'
   Known as <span class="text-primary font-bold">Conway's Law</span>
 </div>
 
-# Conway's Law in Practice
 
-```mermaid{scale: 0.6}
-graph LR
-    subgraph org[" "]
-        team1["👥 Frontend<br>Team"]:::team
-        team2["👥 Backend<br>Team"]:::team
-        team3["👥 Mobile<br>Team"]:::team
-    end
-    
-    subgraph code[" "]
-        fe["🖥️ Vue App"]:::frontend
-        be["🔧 API"]:::backend
-        mobile["📱 iOS/Android"]:::mobile
-    end
-    
-    team1 --> fe
-    team2 --> be  
-    team3 --> mobile
-    
-    fe -.-> be
-    mobile -.-> be
-    
-    classDef team fill:#344060,stroke:#AB4B99,stroke-width:2px
-    classDef frontend fill:#212733,stroke:#FF6BED,stroke-width:2px
-    classDef backend fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
-    classDef mobile fill:#344060,stroke:#AB4B99,stroke-width:2px
-    
-    style org fill:none,stroke:#FF6BED,stroke-width:1px
-    style code fill:none,stroke:#AB4B99,stroke-width:1px
-```
+---
+layout: image
+image: images/largeColocated.png
+backgroundSize: contain
+---
 
-<div class="grid grid-cols-2 gap-8 mt-6">
-  <div v-click="1" class="text-center">
-    <div class="text-lg font-bold text-primary mb-2">Organization Structure</div>
-    <div class="text-sm opacity-70">How teams are organized</div>
-  </div>
-  <div v-click="2" class="text-center">
-    <div class="text-lg font-bold text-primary mb-2">Code Architecture</div>
-    <div class="text-sm opacity-70">Reflects team boundaries</div>
-  </div>
-</div>
-
-<div v-click="3" class="mt-4 text-center text-lg opacity-80">
-  Your Vue project structure should match your team structure and project complexity
-</div>
-
-<style>
-@keyframes slide-in {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-slide-in {
-  animation: slide-in 0.6s ease-out forwards;
-}
-</style>
+---
+layout: image
+image: images/smallTeams.png
+backgroundSize: contain
+---
 
 ---
 layout: center
@@ -254,11 +194,11 @@ layout: center
 class: 'text-center'
 ---
 
-# 5 Vue Project Structures
+# 4 Vue Project Structures
 
 <div class="text-xl opacity-80 mb-8">From simple to enterprise-scale solutions</div>
 
-<div class="grid grid-cols-5 gap-4 mt-8">
+<div class="grid grid-cols-4 gap-6 mt-8">
   <div v-click="1" class="text-center">
     <div class="text-4xl mb-2">📁</div>
     <div class="font-bold">Flat</div>
@@ -278,17 +218,58 @@ class: 'text-center'
   </div>
   
   <div v-click="4" class="text-center">
-    <div class="text-4xl mb-2">🍰</div>
-    <div class="font-bold">FSD</div>
-    <div class="text-sm opacity-70">Complex apps</div>
-  </div>
-  
-  <div v-click="5" class="text-center">
     <div class="text-4xl mb-2">🏢</div>
     <div class="font-bold">Micro</div>
     <div class="text-sm opacity-70">Enterprise</div>
   </div>
 </div>
+
+
+---
+layout: default
+clicks: 4
+---
+
+  <FolderTree
+    root
+    title="Flat"
+    :structure="`src/
+  App.vue
+  Main.ts
+  routes.ts
+  components/
+    Button.vue
+    baseButton.vue
+    Btn.vue
+    mycomponent.vue
+    Todo.vue
+    todoItem.vue
+  views/
+    Home.vue
+  pages/
+    HomePage.vue
+  composables/
+    useUser.ts
+    formatDate.ts
+    mathHelpers.ts
+  store/
+    index.js
+  stores/
+    user.js`"
+    :open-on-clicks="[
+      '/src',
+      '/src/components',
+      '/src/views',
+      '/src/pages',
+      '/src/composables',
+      '/src/stores'
+    ]"
+  />
+---
+layout: image
+image: 'images/styleGuide.png'
+backgroundSize: contain
+---
 
 
 ---
@@ -335,58 +316,51 @@ main.js`"
 
 
 ---
-layout: default
+layout: image
+image: 'images/atomic.svg'
+backgroundSize: contain
 ---
 
-# 2. Atomic Design ⚛️
-<div class="text-lg opacity-80 mb-6">Hierarchical component organization for scalable applications</div>
-
-```mermaid{scale: 0.9}
 ---
-title: Atomic Design Hierarchy
+layout: center
 ---
-graph TD
-    A[Atoms<br>Button, Icon, Input]:::atom
-    M[Molecules<br>Search Bar, Card Header]:::molecule
-    O[Organisms<br>Navigation, Product List]:::organism
-    T[Templates<br>Page Layout, Grid]:::template
-    P[Pages<br>Home, Product Detail]:::page
-    
-    A --> M
-    M --> O
-    O --> T
-    T --> P
-    
-    classDef atom fill:#FF6BED,stroke:#AB4B99,stroke-width:2px,color:#000
-    classDef molecule fill:#344060,stroke:#AB4B99,stroke-width:2px
-    classDef organism fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
-    classDef template fill:#212733,stroke:#FF6BED,stroke-width:2px
-    classDef page fill:#1a1f2c,stroke:#8A337B,stroke-width:2px
-```
 
-<div class="mt-4 grid grid-cols-2 gap-8">
-  <div v-click="1">
-    <div class="text-green-400 font-bold mb-2">✅ Advantages</div>
-    <ul class="space-y-1 text-sm">
-      <li>• Highly scalable structure</li>
-      <li>• Clear component hierarchy</li>
-      <li>• Maximum reusability</li>
-      <li>• Great for design systems</li>
-    </ul>
+# Atomic Design Cheatsheet
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">⚛️ Atoms</div>
+    <div class="text-sm opacity-80 mb-2">Basic building blocks that can't be broken down further</div>
+    <div class="text-xs opacity-70">Examples: Button, Input, Icon, Label</div>
   </div>
   
-  <div v-click="2">
-    <div class="text-red-400 font-bold mb-2">❌ Disadvantages</div>
-    <ul class="space-y-1 text-sm">
-      <li>• Initial complexity to set up</li>
-      <li>• Can be overkill for small projects</li>
-      <li>• Requires discipline to maintain</li>
-      <li>• Overhead in managing layers</li>
-    </ul>
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🧬 Molecules</div>
+    <div class="text-sm opacity-80 mb-2">Groups of atoms bonded together</div>
+    <div class="text-xs opacity-70">Examples: SearchBox (Input + Button), Form Field (Label + Input)</div>
+  </div>
+  
+  <div v-click="3" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🦠 Organisms</div>
+    <div class="text-sm opacity-80 mb-2">Groups of molecules joined together to form distinct sections</div>
+    <div class="text-xs opacity-70">Examples: Header, Footer, Product List, Navigation</div>
+  </div>
+  
+  <div v-click="4" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📄 Templates</div>
+    <div class="text-sm opacity-80 mb-2">Page-level objects that place components into a layout</div>
+    <div class="text-xs opacity-70">Examples: Homepage Layout, Article Layout, Dashboard Layout</div>
   </div>
 </div>
+
+<div v-click="5" class="mt-8 p-4 bg-card rounded-lg text-center">
+  <div class="text-lg font-bold text-primary mb-2">🎯 Key Principle</div>
+  <div class="opacity-80">Build from small to large - each level combines elements from the level below</div>
+</div>
+
 ---
 layout: default
+clicks: 7
 ---
 
 <FolderTree
@@ -413,65 +387,330 @@ layout: default
   utils/
   store/
 App.vue`"
-  :open-all="true"
+  :open-on-clicks="[
+    '/src',
+    '/src/components',
+    '/src/components/atoms',
+    '/src/components/molecules',
+    '/src/components/organisms',
+    '/src/components/templates',
+    '/src/pages',
+  ]"
 />
 ---
+layout: center
+---
+
+# The Tractor Store Exercise 🚜
+
+<div class="text-lg opacity-80 mb-6">A real-world example to compare architectural approaches</div>
+
+<div class="grid grid-cols-3 gap-6 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">🔍</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Explore</div>
+    <div class="text-sm opacity-80">Browse tractors by category, search, filter products</div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">📋</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Decide</div>
+    <div class="text-sm opacity-80">Product details, specifications, recommendations</div>
+  </div>
+  
+  <div v-click="3" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">🛒</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Checkout</div>
+    <div class="text-sm opacity-80">Shopping cart, order process, payment</div>
+  </div>
+</div>
+
+<div v-click="4" class="mt-8 p-4 bg-card rounded-lg">
+  <div class="text-lg font-bold text-primary mb-2">🎯 The Challenge</div>
+  <div class="opacity-80">How do we split this into independent parts while maintaining a seamless user experience?</div>
+</div>
+
+<div v-click="5" class="mt-6 text-center">
+  <div class="text-lg opacity-90">Let's explore two approaches:</div>
+  <div class="flex justify-center gap-8 mt-4">
+    <div class="flex items-center gap-2">
+      <div class="text-2xl">🧩</div>
+      <div class="font-bold">Modular (Build-time)</div>
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="text-2xl">🏢</div>
+      <div class="font-bold">Micro Frontends (Runtime)</div>
+    </div>
+  </div>
+</div>
+
+---
 layout: default
+clicks: 6
 ---
 
 <FolderTree
   root
-  title="Modular Approach Structure"
-  :structure="`src/
-  core/
-    components/
-      BaseButton.vue
-      BaseIcon.vue
-    utils/
-    services/
+  title="Modular: Tractor Store with pnpm Workspace"
+  :structure="`tractor-store/
+  apps/
+    main/
+      src/
+        App.vue
+        main.js
+        router/
+          index.js
+        views/
+          HomePage.vue
+      package.json
   modules/
-    pokemon/
+    explore/
       components/
-        PokemonCard.vue
-        PokemonList.vue
+        ProductGrid.vue
+        CategoryFilter.vue
       composables/
-        usePokemon.js
+        useProductSearch.js
       store/
-        pokemonStore.js
-      views/
-        PokemonPage.vue
-    search/
+        exploreStore.js
+      package.json
+    decide/
       components/
-        SearchInput.vue
+        ProductDetail.vue
+        RecommendationList.vue
       composables/
-        useSearch.js
+        useProductDetail.js
+      package.json
+    checkout/
+      components/
+        CartSummary.vue
+        CheckoutForm.vue
+      composables/
+        useCart.js
       store/
-        searchStore.js
-  assets/
-App.vue
-main.js`"
-  :open-all="true"
+        cartStore.js
+      package.json
+  packages/
+    shared/
+      components/
+        Button.vue
+        Input.vue
+      tokens/
+        colors.js
+      package.json
+  pnpm-workspace.yaml
+  package.json`"
+  :open-on-clicks="[
+    '/tractor-store',
+    '/tractor-store/apps',
+    '/tractor-store/apps/main',
+    '/tractor-store/modules',
+    '/tractor-store/modules/explore',
+    '/tractor-store/modules/decide', 
+    '/tractor-store/modules/checkout',
+    '/tractor-store/packages',
+    '/tractor-store/packages/shared'
+  ]"
 />
 
-<div class="mt-8 grid grid-cols-2 gap-8">
-  <div v-click="1">
-    <div class="text-green-400 font-bold mb-2">✅ Advantages</div>
-    <ul class="space-y-1 text-sm">
-      <li>• Clear feature boundaries</li>
-      <li>• Scalable for large projects</li>
-      <li>• Easy to find related code</li>
-      <li>• Teams can own modules</li>
-    </ul>
+---
+layout: center
+---
+
+# Modular Approach: Key Concepts
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🔧 Build-time Composition</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Modules imported as regular dependencies</div>
+      <div>• Single build process and deployment</div>
+      <div>• Shared code through workspace packages</div>
+    </div>
   </div>
   
-  <div v-click="2">
-    <div class="text-red-400 font-bold mb-2">❌ Disadvantages</div>
-    <ul class="space-y-1 text-sm">
-      <li>• Potential code duplication</li>
-      <li>• Requires discipline to maintain</li>
-      <li>• Module dependencies can get complex</li>
-      <li>• Not suitable for small projects</li>
-    </ul>
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">👥 Team Boundaries</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Clear ownership per module</div>
+      <div>• Independent development</div>
+      <div>• Coordinated releases</div>
+    </div>
+  </div>
+  
+  <div v-click="3" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">✅ Benefits</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Simple deployment model</div>
+      <div>• No runtime complexity</div>
+      <div>• Strong TypeScript support</div>
+      <div>• Easy local development</div>
+    </div>
+  </div>
+  
+  <div v-click="4" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">⚠️ Trade-offs</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Coordinated deployments required</div>
+      <div>• Shared technology stack</div>
+      <div>• Build-time coupling</div>
+    </div>
+  </div>
+</div>
+
+<div v-click="5" class="mt-8 p-4 bg-card rounded-lg text-center">
+  <div class="text-lg font-bold text-primary mb-2">💡 Perfect For</div>
+  <div class="opacity-80">Teams that want clear boundaries without deployment complexity</div>
+</div>
+
+---
+layout: default
+---
+
+# 4. Micro Frontends: Tractor Store with Module Federation 🏢
+<div class="text-lg opacity-80 mb-6">Runtime composition with independent deployments</div>
+
+```mermaid{scale: 0.8}
+---
+title: Tractor Store Micro Frontend Architecture
+---
+graph TB
+    subgraph host["Host App (Rspack)"]
+        Router["Router & Shell"]:::host
+    end
+    
+    subgraph explore["Explore MF (Rspack)"]
+        ExploreApp["Product Discovery<br>localhost:3004"]:::explore
+    end
+    
+    subgraph decide["Decide MF (Vite)"]
+        DecideApp["Product Details<br>localhost:5175"]:::decide
+    end
+    
+    subgraph checkout["Checkout MF (Rspack)"]
+        CheckoutApp["Cart & Orders<br>localhost:3003"]:::checkout
+    end
+    
+    Router -.->|"mf:navigate events"| ExploreApp
+    Router -.->|"remote loading"| DecideApp
+    Router -.->|"cart sync"| CheckoutApp
+    
+    ExploreApp -.->|"add-to-cart"| CheckoutApp
+    DecideApp -.->|"add-to-cart"| CheckoutApp
+    CheckoutApp -.->|"updated-cart"| ExploreApp
+    
+    classDef host fill:#FF6BED,stroke:#AB4B99,stroke-width:2px,color:#000
+    classDef explore fill:#344060,stroke:#AB4B99,stroke-width:2px
+    classDef decide fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
+    classDef checkout fill:#212733,stroke:#FF6BED,stroke-width:2px
+```
+
+---
+layout: default
+clicks: 4
+---
+
+<FolderTree
+  root
+  title="Micro Frontends: Tractor Store Structure"
+  :structure="`tractor-store-mf/
+  apps/
+    host/
+      src/
+        App.vue
+        router.ts
+        utils/
+          remote.ts
+        mf.ts
+      package.json
+    explore/
+      src/
+        components/
+          ProductGrid.vue
+          CategoryFilter.vue
+        App.vue
+        main.ts
+        mf.config.ts
+      package.json
+    decide/
+      src/
+        components/
+          ProductDetail.vue
+        App.vue
+        main.ts
+        vite.config.ts
+      package.json
+    checkout/
+      src/
+        components/
+          CartSummary.vue
+        stores/
+          cartStore.ts
+        App.vue
+        main.ts
+      package.json
+  packages/
+    shared/
+      components/
+        Button.vue
+        Input.vue
+      package.json
+  pnpm-workspace.yaml`"
+  :open-on-clicks="[
+    '/tractor-store-mf',
+    '/tractor-store-mf/apps',
+    '/tractor-store-mf/apps/host',
+    '/tractor-store-mf/apps/explore',
+    '/tractor-store-mf/apps/decide',
+    '/tractor-store-mf/apps/checkout',
+    '/tractor-store-mf/packages'
+  ]"
+/>
+
+---
+layout: default
+---
+
+# Module Federation: Key Implementation
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🛣️ Host Router</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Uses <code>remote()</code> utility to load components</div>
+      <div>• Routes to <code>explore/HomePage</code></div>
+      <div>• Routes to <code>decide/ProductPage</code></div>
+      <div>• Routes to <code>checkout/CartPage</code></div>
+    </div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🔄 Remote Loader</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Uses Vue's <code>defineAsyncComponent</code></div>
+      <div>• Shows loading spinner while fetching</div>
+      <div>• Falls back to error component on fail</div>
+      <div>• Retries once before giving up</div>
+    </div>
+  </div>
+  
+  <div v-click="3" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📡 Navigation Events</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Host listens for <code>mf:navigate</code> events</div>
+      <div>• Remotes dispatch with <code>detail: { to }</code></div>
+      <div>• Enables cross-app navigation</div>
+      <div>• No direct coupling between apps</div>
+    </div>
+  </div>
+  
+  <div v-click="4" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🛒 Cart Synchronization</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Checkout owns cart state</div>
+      <div>• Listens for <code>add-to-cart</code> events</div>
+      <div>• Syncs via localStorage + events</div>
+      <div>• Broadcasts <code>updated-cart</code> changes</div>
+    </div>
   </div>
 </div>
 
@@ -479,136 +718,43 @@ main.js`"
 layout: default
 ---
 
-# 4. Feature-Sliced Design 🍰
-<div class="text-lg opacity-80 mb-6">Layered architecture for complex applications</div>
+# Micro Frontends: Trade-offs
 
-```mermaid{scale: 0.8}
----
-title: Feature-Sliced Design Layers
----
-graph TD
-    App[App<br>Global settings, providers]:::app
-    Processes[Processes<br>Global business processes]:::processes
-    Pages[Pages<br>Full pages using widgets]:::pages
-    Widgets[Widgets<br>UI blocks combining features]:::widgets
-    Features[Features<br>User interactions]:::features
-    Entities[Entities<br>Business models]:::entities
-    Shared[Shared<br>Reusable utilities]:::shared
-    
-    App --> Processes
-    Processes --> Pages
-    Pages --> Widgets
-    Widgets --> Features
-    Features --> Entities
-    Entities --> Shared
-    
-    classDef app fill:#FF6BED,stroke:#AB4B99,stroke-width:2px,color:#000
-    classDef processes fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
-    classDef pages fill:#344060,stroke:#AB4B99,stroke-width:2px
-    classDef widgets fill:#212733,stroke:#FF6BED,stroke-width:2px
-    classDef features fill:#1a1f2c,stroke:#8A337B,stroke-width:2px
-    classDef entities fill:#2a2a3e,stroke:#AB4B99,stroke-width:2px
-    classDef shared fill:#1a1a2e,stroke:#FF6BED,stroke-width:2px
-```
----
-layout: default
----
-
-<FolderTree
-  root
-  title="Feature-Sliced Design Structure"
-  :structure="`src/
-  app/
-    App.vue
-    main.js
-  processes/
-    auth/
-      AuthProcess.vue
-  pages/
-    HomePage.vue
-    ProductPage.vue
-  widgets/
-    UserProfile.vue
-    ProductStats.vue
-  features/
-    pokemon/
-      CatchPokemon.vue
-      PokemonList.vue
-  entities/
-    user/
-      userService.js
-      userModel.js
-  shared/
-    ui/
-      BaseButton.vue
-      BaseInput.vue
-    lib/
-      helpers.js`"
-  :open-all="true"
-/>
-
----
-layout: default
----
-
-# 5. Micro Frontends 🏢
-<div class="text-lg opacity-80 mb-6">Enterprise-level independent deployments</div>
-
-```mermaid{scale: 0.9}
----
-title: Micro Frontend Architecture
----
-graph TB
-    subgraph shell["Application Shell"]
-        Router["Router & Layout"]:::shell
-    end
-    
-    subgraph mf1["Product MF"]
-        ProductApp["Vue 3<br>Product Catalog"]:::product
-    end
-    
-    subgraph mf2["Cart MF"]
-        CartApp["Vue 2<br>Shopping Cart"]:::cart
-    end
-    
-    subgraph mf3["User MF"]
-        UserApp["React<br>User Profile"]:::user
-    end
-    
-    Router --> ProductApp
-    Router --> CartApp
-    Router --> UserApp
-    
-    classDef shell fill:#FF6BED,stroke:#AB4B99,stroke-width:2px,color:#000
-    classDef product fill:#344060,stroke:#AB4B99,stroke-width:2px
-    classDef cart fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
-    classDef user fill:#212733,stroke:#FF6BED,stroke-width:2px
-    
-    style shell fill:none,stroke:#FF6BED,stroke-width:2px
-    style mf1 fill:none,stroke:#AB4B99,stroke-width:2px
-    style mf2 fill:none,stroke:#8A337B,stroke-width:2px
-    style mf3 fill:none,stroke:#212733,stroke-width:2px
-```
-
-<div class="mt-4 grid grid-cols-2 gap-8">
-  <div v-click="1">
-    <div class="text-green-400 font-bold mb-2">✅ Advantages</div>
-    <ul class="space-y-1 text-sm">
-      <li>• Independent deployments</li>
-      <li>• Technology agnostic</li>
-      <li>• Team autonomy</li>
-      <li>• Scalable for large organizations</li>
-    </ul>
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-green-400 font-bold text-lg mb-4">✅ Advantages</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• <strong>Independent deployments</strong> - Teams deploy when ready</div>
+      <div>• <strong>Technology flexibility</strong> - Mix Vue 2, Vue 3, even React</div>
+      <div>• <strong>Team autonomy</strong> - Own the full stack per domain</div>
+      <div>• <strong>Failure isolation</strong> - One remote fails, others work</div>
+    </div>
   </div>
   
-  <div v-click="2">
-    <div class="text-red-400 font-bold mb-2">❌ Disadvantages</div>
-    <ul class="space-y-1 text-sm">
-      <li>• High infrastructure complexity</li>
-      <li>• Bundle size overhead</li>
-      <li>• Potential UX inconsistencies</li>
-      <li>• Not suitable for small teams</li>
-    </ul>
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-red-400 font-bold text-lg mb-4">❌ Disadvantages</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• <strong>Runtime complexity</strong> - Network requests, loading states</div>
+      <div>• <strong>Bundle overhead</strong> - Duplicate dependencies possible</div>
+      <div>• <strong>Testing complexity</strong> - Integration tests across remotes</div>
+      <div>• <strong>DevOps burden</strong> - Multiple deployment pipelines</div>
+    </div>
+  </div>
+</div>
+
+<div v-click="3" class="mt-8 grid grid-cols-2 gap-8">
+  <div class="p-4 bg-card rounded-lg">
+    <div class="text-lg font-bold text-primary mb-2">🎯 Perfect For</div>
+    <div class="opacity-80 text-sm">Large organizations with multiple teams building complex domains that need independent deployment cycles</div>
+  </div>
+  
+  <div class="p-4 bg-card rounded-lg">
+    <div class="text-lg font-bold text-primary mb-2">📚 Learn More</div>
+    <div class="opacity-80 text-sm">
+      <a href="https://alexop.dev/posts/microfrontends-module-federation-vue/" class="hover:text-primary transition-colors">
+        Full implementation guide →
+      </a>
+    </div>
   </div>
 </div>
 
@@ -626,7 +772,6 @@ class: 'text-center'
 | **Flat** 📁 | Solo - Small | Low | Prototypes, MVPs, Simple apps |
 | **Atomic** ⚛️ | Small - Medium | Medium | Design systems, Scalable apps |
 | **Modular** 🧩 | Medium | Medium-High | Feature-rich applications |
-| **FSD** 🍰 | Large | High | Complex, long-term projects |
 | **Micro** 🏢 | Enterprise | Very High | Multi-team organizations |
 
 <div v-click="1" class="mt-8 p-4 bg-card rounded-lg">
@@ -706,7 +851,7 @@ class: 'text-center'
         <span class="i-carbon-enterprise text-xl" style="color: rgb(255, 107, 237);" />
         <div>
           <div class="font-bold">Large Projects</div>
-          <div class="text-sm opacity-70">Consider Modular or FSD</div>
+          <div class="text-sm opacity-70">Consider Modular approach</div>
         </div>
       </li>
     </ul>
@@ -744,61 +889,176 @@ class: 'text-center'
 layout: center
 ---
 
-# Resources & References
+# Bonus: Why Every Project Should Use Modular Structure
+
+<div class="text-lg opacity-80 mb-8 text-center">My strong opinion: Start modular from day one</div>
 
 <div class="grid grid-cols-2 gap-8 mt-8">
-  <div class="p-6 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <h3 class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📚 Learn More</h3>
-    <ul class="space-y-3" style="color: rgb(234, 237, 243);">
-      <li>
-        <a href="https://alexop.dev/posts/how-to-structure-vue-projects/" class="hover:text-primary transition-colors">
-          📖 Complete Blog Post
-        </a>
-      </li>
-      <li>
-        <a href="https://alexop.dev/posts/atomic-architecture-vue-nuxt/" class="hover:text-primary transition-colors">
-          ⚛️ Atomic Design Guide
-        </a>
-      </li>
-      <li>
-        <a href="https://feature-sliced.design/" class="hover:text-primary transition-colors">
-          🍰 Feature-Sliced Design Docs
-        </a>
-      </li>
-      <li>
-        <a href="https://alexop.dev/posts/microfrontends-module-federation-vue/" class="hover:text-primary transition-colors">
-          🏢 Micro Frontends with Vue
-        </a>
-      </li>
-    </ul>
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🚀 Future-Proof Growth</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Easy transition to microfrontends when team scales</div>
+      <div>• Clear boundaries from the start</div>
+      <div>• No painful refactoring later</div>
+    </div>
   </div>
-
-  <div class="p-6 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <h3 class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🛠️ Tools & Templates</h3>
-    <ul class="space-y-3" style="color: rgb(234, 237, 243);">
-      <li>
-        <a href="https://vue.new" class="hover:text-primary transition-colors">
-          🚀 Vue Starter Templates
-        </a>
-      </li>
-      <li>
-        <a href="https://vuejs.org/style-guide/" class="hover:text-primary transition-colors">
-          📏 Vue Style Guide
-        </a>
-      </li>
-      <li>
-        <a href="https://github.com/alexanderop" class="hover:text-primary transition-colors">
-          💻 Example Projects
-        </a>
-      </li>
-      <li>
-        <a href="https://alexop.dev" class="hover:text-primary transition-colors">
-          ✍️ More Articles & Tutorials
-        </a>
-      </li>
-    </ul>
+  
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🧪 Better Testing</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Run tests only for changed modules</div>
+      <div>• Faster CI/CD pipelines</div>
+      <div>• Isolated test failures</div>
+    </div>
+  </div>
+  
+  <div v-click="3" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🤖 LLM-Friendly</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Send entire checkout module to AI</div>
+      <div>• Context stays focused on one domain</div>
+      <div>• Better code suggestions</div>
+    </div>
+  </div>
+  
+  <div v-click="4" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📚 Documentation</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Module-specific dev docs with VitePress</div>
+      <div>• Each team owns their documentation</div>
+      <div>• Clear API contracts between modules</div>
+    </div>
   </div>
 </div>
+
+<div v-click="5" class="mt-8 p-4 bg-card rounded-lg">
+  <div class="text-lg font-bold text-primary mb-3">🎯 The Composable Analogy</div>
+  <div class="opacity-80 text-sm">
+    Just like <code>useCheckout()</code> combines related <code>ref</code>, <code>watch</code>, and <code>computed</code> for a business domain, 
+    modular structure combines related <strong>components</strong>, <strong>stores</strong>, and <strong>composables</strong> in folders by business domain.
+  </div>
+</div>
+
+---
+layout: center
+---
+
+# My Modular Setup Essentials
+
+<div class="grid grid-cols-3 gap-6 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-3xl mb-3">📦</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Separate UI Module</div>
+    <div class="text-xs opacity-80">All reusable components in their own workspace package</div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-3xl mb-3">📖</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">VitePress Docs</div>
+    <div class="text-xs opacity-80">Dev documentation for each module and component library</div>
+  </div>
+  
+  <div v-click="3" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-3xl mb-3">🧠</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Think Modular</div>
+    <div class="text-xs opacity-80">Domain-driven from day one, even for personal projects</div>
+  </div>
+</div>
+
+<div v-click="4" class="mt-8 p-4 bg-card rounded-lg">
+  <div class="text-lg font-bold text-primary mb-2">💪 Personal Experience</div>
+  <div class="opacity-80">I use modular structure even for solo projects. The mental model of "business domains as folders" 
+  makes code organization intuitive and prepares for any future growth.</div>
+</div>
+
+<div v-click="5" class="mt-6 text-center">
+  <div class="text-lg font-bold text-primary">Start modular. Scale confidently. 🚀</div>
+</div>
+
+---
+layout: default
+clicks: 6
+---
+
+<FolderTree
+  root
+  title="My Go-To Vue Project Structure"
+  :structure="`my-vue-project/
+  apps/
+    web/
+      src/
+        App.vue
+        main.ts
+        router/
+          index.ts
+        views/
+          HomePage.vue
+      package.json
+  modules/
+    auth/
+      components/
+        LoginForm.vue
+        UserProfile.vue
+      composables/
+        useAuth.ts
+      stores/
+        authStore.ts
+      services/
+        authApi.ts
+        authService.ts
+      package.json
+    products/
+      components/
+        ProductCard.vue
+        ProductList.vue
+      composables/
+        useProducts.ts
+      stores/
+        productsStore.ts
+      services/
+        productsApi.ts
+        pricingService.ts
+      package.json
+  packages/
+    ui/
+      components/
+        BaseButton.vue
+        BaseInput.vue
+        BaseModal.vue
+      tokens/
+        colors.ts
+        spacing.ts
+      package.json
+    shared/
+      utils/
+        formatters.ts
+        validators.ts
+      types/
+        api.ts
+      package.json
+  docs/
+    .vitepress/
+      config.ts
+    modules/
+      auth.md
+      products.md
+    components.md
+  pnpm-workspace.yaml`"
+  :open-on-clicks="[
+    '/my-vue-project',
+    '/my-vue-project/apps',
+    '/my-vue-project/apps/web',
+    '/my-vue-project/modules',
+    '/my-vue-project/modules/auth',
+    '/my-vue-project/modules/auth/services',
+    '/my-vue-project/modules/products',
+    '/my-vue-project/modules/products/services',
+    '/my-vue-project/packages',
+    '/my-vue-project/packages/ui',
+    '/my-vue-project/packages/shared',
+    '/my-vue-project/docs'
+  ]"
+/>
 
 ---
 ---
