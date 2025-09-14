@@ -206,15 +206,15 @@ class: 'text-center'
   </div>
   
   <div v-click="2" class="text-center">
-    <div class="text-5xl mb-3">🧩</div>
-    <div class="font-bold text-xl">Modular</div>
-    <div class="text-sm opacity-70">Feature-based</div>
-  </div>
-  
-  <div v-click="3" class="text-center">
     <div class="text-5xl mb-3">🏢</div>
     <div class="font-bold text-xl">Micro</div>
     <div class="text-sm opacity-70">Enterprise</div>
+  </div>
+  
+  <div v-click="3" class="text-center">
+    <div class="text-5xl mb-3">🧩</div>
+    <div class="font-bold text-xl">Modular</div>
+    <div class="text-sm opacity-70">Feature-based</div>
   </div>
 </div>
 
@@ -275,44 +275,31 @@ layout: center
 
 # Vue Component Naming Rules
 
-<div class="text-lg opacity-80 mb-8">Key principles from the Vue Style Guide</div>
-
 <div class="grid grid-cols-2 gap-8 mt-8">
   <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">✅ Good Naming</div>
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">✅ Good</div>
     <div class="text-sm opacity-80 space-y-2">
-      <div>• **PascalCase**: `TodoList.vue`, `BaseButton.vue`</div>
-      <div>• **Descriptive**: `SearchButtonClear.vue`</div>
-      <div>• **Hierarchical**: `TodoListItem.vue`</div>
-      <div>• **Base prefix**: `BaseCard.vue`, `BaseInput.vue`</div>
+      <div>• `TodoList.vue`</div>
+      <div>• `BaseButton.vue`</div>
+      <div>• `TodoListItem.vue`</div>
+      <div>• `SearchButtonClear.vue`</div>
     </div>
   </div>
   
   <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">❌ Poor Naming</div>
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">❌ Avoid</div>
     <div class="text-sm opacity-80 space-y-2">
-      <div>• **Inconsistent case**: `todolist.vue`, `Todo-Item.vue`</div>
-      <div>• **Abbreviations**: `Btn.vue`, `Nav.vue`</div>
-      <div>• **Generic**: `Component.vue`, `Item.vue`</div>
-      <div>• **Lowercase**: `button.vue`, `card.vue`</div>
+      <div>• `todolist.vue`</div>
+      <div>• `Btn.vue`</div>
+      <div>• `Todo-Item.vue`</div>
+      <div>• `Component.vue`</div>
     </div>
   </div>
 </div>
 
-<div v-click="3" class="mt-8 grid grid-cols-2 gap-8">
-  <div class="p-4 bg-card rounded-lg">
-    <div class="text-lg font-bold text-primary mb-2">🎯 Hierarchy Pattern</div>
-    <div class="opacity-80 text-sm">
-      <div>• `TodoList.vue`</div>
-      <div>• `TodoListItem.vue`</div>
-      <div>• `TodoListItemButton.vue`</div>
-    </div>
-  </div>
-  
-  <div class="p-4 bg-card rounded-lg">
-    <div class="text-lg font-bold text-primary mb-2">💡 Word Order</div>
-    <div class="opacity-80 text-sm">Start with the most general word, end with specific descriptors</div>
-  </div>
+<div v-click="3" class="mt-8 p-4 bg-card rounded-lg text-center">
+  <div class="text-lg font-bold text-primary mb-2">📝 Simple Rules</div>
+  <div class="opacity-80">PascalCase • Descriptive names • General → Specific • Base prefix for reusable</div>
 </div>
 
 ---
@@ -383,10 +370,442 @@ main.js`"
 
 
 ---
+layout: center
+---
+
+# The Tractor Store Exercise 🚜
+
+<div class="text-lg opacity-80 mb-6">A real-world example to compare architectural approaches</div>
+
+<div class="grid grid-cols-3 gap-6 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">🔍</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Explore</div>
+    <div class="text-sm opacity-80">Browse tractors by category, search, filter products</div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">📋</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Decide</div>
+    <div class="text-sm opacity-80">Product details, specifications, recommendations</div>
+  </div>
+  
+  <div v-click="3" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">🛒</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Checkout</div>
+    <div class="text-sm opacity-80">Shopping cart, order process, payment</div>
+  </div>
+</div>
+
+<div v-click="4" class="mt-8 p-4 bg-card rounded-lg">
+  <div class="text-lg font-bold text-primary mb-2">🎯 The Challenge</div>
+  <div class="opacity-80">How do we split this into independent parts while maintaining a seamless user experience?</div>
+</div>
+
+<div v-click="5" class="mt-6 text-center">
+  <div class="text-lg opacity-90">Let's start with the most complex approach:</div>
+  <div class="flex justify-center gap-8 mt-4">
+    <div class="flex items-center gap-2">
+      <div class="text-2xl">🏢</div>
+      <div class="font-bold">Micro Frontends (Runtime)</div>
+    </div>
+  </div>
+</div>
+
+---
+layout: center
+---
+
+# 2. Micro Frontends: Architecture Decisions
+
+<div class="text-lg opacity-80 mb-8">Key choices for our Tractor Store implementation</div>
+
+| **Decision** | **Choice** | **Why** |
+|--------------|------------|---------|
+| **Repository** | Monorepo with pnpm | Shared configs, atomic refactors, simple local dev |
+| **Composition** | Client-side with Module Federation | Fast iteration, simple hosting |
+| **Routing** | Host owns routing | One place for guards, links, and errors |
+| **Teams** | Explore, Decide, Checkout + Host | Map to clear user flows |
+| **Communication** | Events + localStorage | Low coupling, no shared global store |
+| **UI Consistency** | Shared component library | Buttons, inputs, design tokens |
+| **Failures** | Loading and error fallbacks | Keep the shell usable |
+
+---
 layout: default
 ---
 
-# pnpm Workspace: The Foundation
+# 2. Micro Frontends: Tractor Store with Module Federation 🏢
+<div class="text-lg opacity-80 mb-6">Runtime composition with independent deployments</div>
+
+```mermaid{scale: 0.8}
+---
+title: Tractor Store Micro Frontend Architecture
+---
+graph TB
+    subgraph host["Host App (Rspack)"]
+        Router["Router & Shell"]:::host
+    end
+    
+    subgraph explore["Explore MF (Rspack)"]
+        ExploreApp["Product Discovery<br>localhost:3004"]:::explore
+    end
+    
+    subgraph decide["Decide MF (Vite)"]
+        DecideApp["Product Details<br>localhost:5175"]:::decide
+    end
+    
+    subgraph checkout["Checkout MF (Rspack)"]
+        CheckoutApp["Cart & Orders<br>localhost:3003"]:::checkout
+    end
+    
+    Router -.->|"mf:navigate events"| ExploreApp
+    Router -.->|"remote loading"| DecideApp
+    Router -.->|"cart sync"| CheckoutApp
+    
+    ExploreApp -.->|"add-to-cart"| CheckoutApp
+    DecideApp -.->|"add-to-cart"| CheckoutApp
+    CheckoutApp -.->|"updated-cart"| ExploreApp
+    
+    classDef host fill:#FF6BED,stroke:#AB4B99,stroke-width:2px,color:#000
+    classDef explore fill:#344060,stroke:#AB4B99,stroke-width:2px
+    classDef decide fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
+    classDef checkout fill:#212733,stroke:#FF6BED,stroke-width:2px
+```
+
+---
+layout: default
+clicks: 4
+---
+
+<FolderTree
+  root
+  title="Micro Frontends: Tractor Store Structure"
+  :structure="`tractor-store-mf/
+  apps/
+    host/
+      src/
+        App.vue
+        router.ts
+        utils/
+          remote.ts
+        mf.ts
+      package.json
+    explore/
+      src/
+        components/
+          ProductGrid.vue
+          CategoryFilter.vue
+        App.vue
+        main.ts
+        mf.config.ts
+      package.json
+    decide/
+      src/
+        components/
+          ProductDetail.vue
+        App.vue
+        main.ts
+        vite.config.ts
+      package.json
+    checkout/
+      src/
+        components/
+          CartSummary.vue
+        stores/
+          cartStore.ts
+        App.vue
+        main.ts
+      package.json
+  packages/
+    shared/
+      components/
+        Button.vue
+        Input.vue
+      package.json
+  pnpm-workspace.yaml`"
+  :open-on-clicks="[
+    '/tractor-store-mf',
+    '/tractor-store-mf/apps',
+    '/tractor-store-mf/apps/host',
+    '/tractor-store-mf/apps/explore',
+    '/tractor-store-mf/apps/decide',
+    '/tractor-store-mf/apps/checkout',
+    '/tractor-store-mf/packages'
+  ]"
+/>
+
+---
+layout: default
+---
+
+# Module Federation Runtime Setup
+
+<div class="text-lg opacity-80 mb-6">Host bootstraps Module Federation and connects remotes</div>
+
+```typescript
+// apps/host/src/mf.ts
+import { createInstance, loadRemote } from '@module-federation/enhanced/runtime'
+
+createInstance({
+  name: 'host',
+  remotes: [
+    { name: 'decide',   entry: 'http://localhost:5175/mf-manifest.json' },
+    { name: 'explore',  entry: 'http://localhost:3004/mf-manifest.json' },
+    { name: 'checkout', entry: 'http://localhost:3003/mf-manifest.json' }
+  ],
+  plugins: [{
+    name: 'fallback-plugin',
+    errorLoadRemote(args) {
+      return {
+        default: {
+          template: `<div class="mf-error">Remote ${args.id} unavailable</div>`
+        }
+      }
+    }
+  }]
+})
+
+window.getComponent = (id: string) => {
+  return async () => {
+    const mod = await loadRemote(id) as any
+    return mod.default || mod
+  }
+}
+```
+
+---
+layout: default
+---
+
+# Host Router with Remote Components
+
+<div class="text-lg opacity-80 mb-6">Router loads remote components dynamically</div>
+
+```typescript
+// apps/host/src/router.ts
+import { createRouter, createWebHistory } from 'vue-router'
+import { remote } from '../utils/remote'
+
+export const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    { path: '/', component: remote('explore/HomePage') },
+    { path: '/products/:category?', component: remote('explore/CategoryPage') },
+    { path: '/product/:id', component: remote('decide/ProductPage') },
+    { path: '/checkout/cart', component: remote('checkout/CartPage') }
+  ]
+})
+```
+
+<div v-click="1" class="mt-6 p-4 bg-card rounded-lg">
+  <div class="text-lg font-bold text-primary mb-2">💡 Key Insight</div>
+  <div class="opacity-80">The host owns routing but delegates rendering to remote microfrontends</div>
+</div>
+
+---
+layout: default
+---
+
+# Remote Utility with Fallbacks
+
+<div class="text-lg opacity-80 mb-6">Wrapper around Vue's defineAsyncComponent for robust loading</div>
+
+```typescript
+// apps/host/src/utils/remote.ts
+import { defineAsyncComponent, h } from 'vue'
+
+export function remote(id: string, delay = 150) {
+  return defineAsyncComponent({
+    loader: async () => {
+      const loader = (window as any).getComponent?.(id)
+      if (!loader) throw new Error(`Missing loader for ${id}`)
+      return await loader()
+    },
+    delay,
+    loadingComponent: { 
+      render: () => h('div', { class: 'mf-loading' }, 'Loading...') 
+    },
+    errorComponent: { 
+      render: () => h('div', { class: 'mf-error' }, 'Failed to load.') 
+    },
+    onError(error, retry, fail, attempts) {
+      if (attempts <= 1) setTimeout(retry, 200)
+      else fail()
+    }
+  })
+}
+```
+
+---
+layout: default
+---
+
+# Communication: Events + localStorage
+
+<div class="text-lg opacity-80 mb-6">Low coupling without shared global state</div>
+
+<div class="grid grid-cols-2 gap-8">
+<div>
+
+**Navigation Events**
+```typescript
+// Host listens for navigation
+window.addEventListener('mf:navigate', (e) => {
+  const to = e.detail?.to
+  if (to) router.push(to)
+})
+
+// Remotes dispatch navigation
+window.dispatchEvent(
+  new CustomEvent('mf:navigate', {
+    detail: { to: '/product/123' }
+  })
+)
+```
+
+</div>
+<div>
+
+**Cart Synchronization**
+```typescript
+// Checkout owns cart logic
+window.addEventListener('add-to-cart', (e) => {
+  const { sku } = e.detail
+  updateCart(sku)
+  localStorage.setItem('cart', JSON.stringify(cart))
+  window.dispatchEvent(
+    new CustomEvent('updated-cart')
+  )
+})
+
+// Other apps listen for cart changes
+window.addEventListener('updated-cart', () => {
+  const cart = JSON.parse(
+    localStorage.getItem('cart') || '[]'
+  )
+  updateCartUI(cart)
+})
+```
+
+</div>
+</div>
+
+---
+layout: default
+---
+
+# Why Not Pinia? 🤔
+
+<div class="text-lg opacity-80 mb-6">Shared global stores create tight coupling in microfrontends</div>
+
+<div class="grid grid-cols-2 gap-8">
+  <div class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-red-400 font-bold text-lg mb-4">❌ Problems with Shared Store</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• **Lockstep releases** - One store change breaks other teams</div>
+      <div>• **Hidden contracts** - Store shape is an API that drifts</div>
+      <div>• **Boot order traps** - Who creates the store and plugins?</div>
+      <div>• **Bigger blast radius** - Store error breaks whole app</div>
+      <div>• **Harder tests** - Cross-team mocks and brittle fixtures</div>
+    </div>
+  </div>
+  
+  <div class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-green-400 font-bold text-lg mb-4">✅ Do This Instead</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Each microfrontend owns its state</div>
+      <div>• Communicate with explicit custom events</div>
+      <div>• Use URL and localStorage for shared reads</div>
+      <div>• Share code not state (tokens, UI, utils)</div>
+      <div>• If shared state grows, revisit boundaries</div>
+    </div>
+  </div>
+</div>
+
+---
+layout: default
+---
+
+# Practical Tips
+
+<div class="text-lg opacity-80 mb-6">Keep your microfrontends maintainable and consistent</div>
+
+<div class="grid grid-cols-2 gap-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🎨 Styling</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• **Team prefixes**: `e_ProductGrid`, `d_ProductDetail`, `c_CartSummary`</div>
+      <div>• **Vue scoped styles**: Automatic isolation</div>
+      <div>• **Design tokens**: CSS variables in shared package</div>
+      <div>• **Shared UI library**: Buttons, inputs, cards</div>
+    </div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">⚙️ Development</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• **Different ports**: Host:3000, Explore:3004, Decide:5175</div>
+      <div>• **Global fallback styles**: `.mf-loading`, `.mf-error`</div>
+      <div>• **Error boundaries**: Keep shell usable when remotes fail</div>
+      <div>• **Monorepo**: pnpm workspaces for shared tooling</div>
+    </div>
+  </div>
+</div>
+
+<div v-click="3" class="mt-6 p-4 bg-card rounded-lg text-center">
+  <div class="text-lg font-bold text-primary mb-2">🚀 Pro Tip</div>
+  <div class="opacity-80">Start with one domain as a microfrontend, then extract others as needed</div>
+</div>
+
+---
+layout: default
+---
+
+# Micro Frontends: Trade-offs
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-green-400 font-bold text-lg mb-4">✅ Advantages</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• <strong>Independent deployments</strong> - Teams deploy when ready</div>
+      <div>• <strong>Technology flexibility</strong> - Mix Vue 2, Vue 3, even React</div>
+      <div>• <strong>Team autonomy</strong> - Own the full stack per domain</div>
+      <div>• <strong>Failure isolation</strong> - One remote fails, others work</div>
+    </div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-red-400 font-bold text-lg mb-4">❌ Disadvantages</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• <strong>Runtime complexity</strong> - Network requests, loading states</div>
+      <div>• <strong>Bundle overhead</strong> - Duplicate dependencies possible</div>
+      <div>• <strong>Testing complexity</strong> - Integration tests across remotes</div>
+      <div>• <strong>DevOps burden</strong> - Multiple deployment pipelines</div>
+    </div>
+  </div>
+</div>
+
+<div v-click="3" class="mt-8 grid grid-cols-2 gap-8">
+  <div class="p-4 bg-card rounded-lg">
+    <div class="text-lg font-bold text-primary mb-2">🎯 Perfect For</div>
+    <div class="opacity-80 text-sm">Large organizations with multiple teams building complex domains that need independent deployment cycles</div>
+  </div>
+  
+  <div class="p-4 bg-card rounded-lg">
+    <div class="text-lg font-bold text-primary mb-2">📚 Learn More</div>
+    <div class="opacity-80 text-sm">
+      <a href="https://alexop.dev/posts/microfrontends-module-federation-vue/" class="hover:text-primary transition-colors">
+        Full implementation guide →
+      </a>
+    </div>
+  </div>
+</div>
+
+---
+layout: default
+---
+
+# 3. Modular: pnpm Workspace Foundation
 
 <div class="text-lg opacity-80 mb-8">How modular apps work without publishing to npm</div>
 
@@ -572,48 +991,6 @@ layout: center
 layout: center
 ---
 
-# The Tractor Store Exercise 🚜
-
-<div class="text-lg opacity-80 mb-6">A real-world example to compare architectural approaches</div>
-
-<div class="grid grid-cols-3 gap-6 mt-8">
-  <div v-click="1" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-4xl mb-3">🔍</div>
-    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Explore</div>
-    <div class="text-sm opacity-80">Browse tractors by category, search, filter products</div>
-  </div>
-  
-  <div v-click="2" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-4xl mb-3">📋</div>
-    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Decide</div>
-    <div class="text-sm opacity-80">Product details, specifications, recommendations</div>
-  </div>
-  
-  <div v-click="3" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-4xl mb-3">🛒</div>
-    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Checkout</div>
-    <div class="text-sm opacity-80">Shopping cart, order process, payment</div>
-  </div>
-</div>
-
-<div v-click="4" class="mt-8 p-4 bg-card rounded-lg">
-  <div class="text-lg font-bold text-primary mb-2">🎯 The Challenge</div>
-  <div class="opacity-80">How do we split this into independent parts while maintaining a seamless user experience?</div>
-</div>
-
-<div v-click="5" class="mt-6 text-center">
-  <div class="text-lg opacity-90">Let's explore two approaches:</div>
-  <div class="flex justify-center gap-8 mt-4">
-    <div class="flex items-center gap-2">
-      <div class="text-2xl">🧩</div>
-      <div class="font-bold">Modular (Build-time, with workspaces)</div>
-    </div>
-    <div class="flex items-center gap-2">
-      <div class="text-2xl">🏢</div>
-      <div class="font-bold">Micro Frontends (Runtime)</div>
-    </div>
-  </div>
-</div>
 
 ---
 layout: default
@@ -737,149 +1114,6 @@ layout: center
 layout: default
 ---
 
-# 4. Micro Frontends: Tractor Store with Module Federation 🏢
-<div class="text-lg opacity-80 mb-6">Runtime composition with independent deployments</div>
-
-```mermaid{scale: 0.8}
----
-title: Tractor Store Micro Frontend Architecture
----
-graph TB
-    subgraph host["Host App (Rspack)"]
-        Router["Router & Shell"]:::host
-    end
-    
-    subgraph explore["Explore MF (Rspack)"]
-        ExploreApp["Product Discovery<br>localhost:3004"]:::explore
-    end
-    
-    subgraph decide["Decide MF (Vite)"]
-        DecideApp["Product Details<br>localhost:5175"]:::decide
-    end
-    
-    subgraph checkout["Checkout MF (Rspack)"]
-        CheckoutApp["Cart & Orders<br>localhost:3003"]:::checkout
-    end
-    
-    Router -.->|"mf:navigate events"| ExploreApp
-    Router -.->|"remote loading"| DecideApp
-    Router -.->|"cart sync"| CheckoutApp
-    
-    ExploreApp -.->|"add-to-cart"| CheckoutApp
-    DecideApp -.->|"add-to-cart"| CheckoutApp
-    CheckoutApp -.->|"updated-cart"| ExploreApp
-    
-    classDef host fill:#FF6BED,stroke:#AB4B99,stroke-width:2px,color:#000
-    classDef explore fill:#344060,stroke:#AB4B99,stroke-width:2px
-    classDef decide fill:#8A337B,stroke:#EAEDF3,stroke-width:2px
-    classDef checkout fill:#212733,stroke:#FF6BED,stroke-width:2px
-```
-
----
-layout: default
-clicks: 4
----
-
-<FolderTree
-  root
-  title="Micro Frontends: Tractor Store Structure"
-  :structure="`tractor-store-mf/
-  apps/
-    host/
-      src/
-        App.vue
-        router.ts
-        utils/
-          remote.ts
-        mf.ts
-      package.json
-    explore/
-      src/
-        components/
-          ProductGrid.vue
-          CategoryFilter.vue
-        App.vue
-        main.ts
-        mf.config.ts
-      package.json
-    decide/
-      src/
-        components/
-          ProductDetail.vue
-        App.vue
-        main.ts
-        vite.config.ts
-      package.json
-    checkout/
-      src/
-        components/
-          CartSummary.vue
-        stores/
-          cartStore.ts
-        App.vue
-        main.ts
-      package.json
-  packages/
-    shared/
-      components/
-        Button.vue
-        Input.vue
-      package.json
-  pnpm-workspace.yaml`"
-  :open-on-clicks="[
-    '/tractor-store-mf',
-    '/tractor-store-mf/apps',
-    '/tractor-store-mf/apps/host',
-    '/tractor-store-mf/apps/explore',
-    '/tractor-store-mf/apps/decide',
-    '/tractor-store-mf/apps/checkout',
-    '/tractor-store-mf/packages'
-  ]"
-/>
-
----
-layout: default
----
-
-# Micro Frontends: Trade-offs
-
-<div class="grid grid-cols-2 gap-8 mt-8">
-  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-green-400 font-bold text-lg mb-4">✅ Advantages</div>
-    <div class="text-sm opacity-80 space-y-2">
-      <div>• <strong>Independent deployments</strong> - Teams deploy when ready</div>
-      <div>• <strong>Technology flexibility</strong> - Mix Vue 2, Vue 3, even React</div>
-      <div>• <strong>Team autonomy</strong> - Own the full stack per domain</div>
-      <div>• <strong>Failure isolation</strong> - One remote fails, others work</div>
-    </div>
-  </div>
-  
-  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-red-400 font-bold text-lg mb-4">❌ Disadvantages</div>
-    <div class="text-sm opacity-80 space-y-2">
-      <div>• <strong>Runtime complexity</strong> - Network requests, loading states</div>
-      <div>• <strong>Bundle overhead</strong> - Duplicate dependencies possible</div>
-      <div>• <strong>Testing complexity</strong> - Integration tests across remotes</div>
-      <div>• <strong>DevOps burden</strong> - Multiple deployment pipelines</div>
-    </div>
-  </div>
-</div>
-
-<div v-click="3" class="mt-8 grid grid-cols-2 gap-8">
-  <div class="p-4 bg-card rounded-lg">
-    <div class="text-lg font-bold text-primary mb-2">🎯 Perfect For</div>
-    <div class="opacity-80 text-sm">Large organizations with multiple teams building complex domains that need independent deployment cycles</div>
-  </div>
-  
-  <div class="p-4 bg-card rounded-lg">
-    <div class="text-lg font-bold text-primary mb-2">📚 Learn More</div>
-    <div class="opacity-80 text-sm">
-      <a href="https://alexop.dev/posts/microfrontends-module-federation-vue/" class="hover:text-primary transition-colors">
-        Full implementation guide →
-      </a>
-    </div>
-  </div>
-</div>
 
 ---
 layout: center
