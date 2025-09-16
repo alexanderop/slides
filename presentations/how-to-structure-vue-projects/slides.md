@@ -391,48 +391,18 @@ class: 'text-center'
   "Microfrontends are the <span v-mark.underline.red="1">technical representation of a business subdomain</span>. They allow <span v-mark.underline.red="2">independent implementations</span> with <span v-mark.underline.red="3">minimal shared code</span> and single team ownership."
 </QuoteCard>
 
+
 ---
-layout: center
+layout: image
+image: 'images/tractorStoreOverview.png'
+backgroundSize: contain
 ---
 
-# The Tractor Store Exercise 🚜
-
-<div class="text-lg opacity-80 mb-6">A real-world example to compare architectural approaches</div>
-
-<div class="grid grid-cols-3 gap-6 mt-8">
-  <div v-click="1" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-4xl mb-3">🔍</div>
-    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Explore</div>
-    <div class="text-sm opacity-80">Browse tractors by category, search, filter products</div>
-  </div>
-  
-  <div v-click="2" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-4xl mb-3">📋</div>
-    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Decide</div>
-    <div class="text-sm opacity-80">Product details, specifications, recommendations</div>
-  </div>
-  
-  <div v-click="3" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-4xl mb-3">🛒</div>
-    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Checkout</div>
-    <div class="text-sm opacity-80">Shopping cart, order process, payment</div>
-  </div>
-</div>
-
-<div v-click="4" class="mt-8 p-4 bg-card rounded-lg">
-  <div class="text-lg font-bold text-primary mb-2">🎯 The Challenge</div>
-  <div class="opacity-80">How do we split this into independent parts while maintaining a seamless user experience?</div>
-</div>
-
-<div v-click="5" class="mt-6 text-center">
-  <div class="text-lg opacity-90">Let's start with the most complex approach:</div>
-  <div class="flex justify-center gap-8 mt-4">
-    <div class="flex items-center gap-2">
-      <div class="text-2xl">🏢</div>
-      <div class="font-bold">Micro Frontends (Runtime)</div>
-    </div>
-  </div>
-</div>
+---
+layout: image
+image: 'images/tractorDetail.png'
+backgroundSize: contain
+---
 
 ---
 layout: center
@@ -640,6 +610,12 @@ class: 'text-center'
 /> 
 
 ---
+layout: image
+image: 'images/modularMonolith.png'
+backgroundSize: contain
+---
+
+---
 layout: default
 ---
 
@@ -788,41 +764,6 @@ import { useCart } from '@myapp/checkout/composables/useCart'
 layout: center
 ---
 
-# Why Workspaces for Modular?
-
-<div class="text-lg opacity-80 mb-8">Benefits that scale with your team and project</div>
-
-<div class="grid grid-cols-2 gap-8 mt-8">
-  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🎯 Clean Architecture</div>
-    <div class="text-sm opacity-80 space-y-2">
-      <div>• Package names instead of relative paths</div>
-      <div>• Better IDE support and autocomplete</div>
-      <div>• Clear module boundaries</div>
-      <div>• Easier refactoring and moving files</div>
-    </div>
-  </div>
-  
-  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
-    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">👥 Team Scalability</div>
-    <div class="text-sm opacity-80 space-y-2">
-      <div>• Independent versioning per module</div>
-      <div>• Teams can own specific packages</div>
-      <div>• Shared dependencies managed centrally</div>
-      <div>• Can extract modules to separate repos later</div>
-    </div>
-  </div>
-</div>
-
-<div v-click="3" class="mt-8 p-4 bg-card rounded-lg">
-  <div class="text-lg font-bold text-primary mb-2">💡 Start Simple, Evolve</div>
-  <div class="opacity-80">Begin with folder-based modules, then upgrade to workspaces when your team or complexity grows</div>
-</div>
-
----
-layout: center
----
-
 
 ---
 layout: default
@@ -894,9 +835,286 @@ clicks: 6
 
 ---
 layout: center
+class: 'text-center'
 ---
 
-# Modular Approach: Key Concepts
+<ChapterCard 
+  chapterNumber="Chapter 6" 
+  title="Why AI Loves Modular"
+  subtitle="Better context for AI assistants"
+/>
+
+---
+layout: center
+---
+
+# AI + Modular Architecture = 💝
+
+<div class="text-lg opacity-80 mb-8">When features are organized together, AI can better understand your intent</div>
 
 <div class="grid grid-cols-2 gap-8 mt-8">
-  <div v-click="1" class="p-4 border rounded-lg" style="background
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🎯 Focused Context</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• All related files in one place</div>
+      <div>• AI sees the complete feature scope</div>
+      <div>• Better suggestions for feature changes</div>
+      <div>• Understands component relationships</div>
+    </div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📝 Smart Documentation</div>
+    <div class="text-sm opacity-80 space-y-2">
+      <div>• Module-specific CLAUDE.md files</div>
+      <div>• Copilot instructions per feature</div>
+      <div>• Context-aware code generation</div>
+      <div>• Domain-specific conventions</div>
+    </div>
+  </div>
+</div>
+
+---
+layout: default
+clicks: 3
+---
+
+<FolderTree
+  root
+  title="AI-Friendly Checkout Module"
+  :structure="`.github/
+  copilot-instructions.md
+  instructions/
+    checkout.instructions.md
+modules/checkout/
+  components/
+    CartSummary.vue
+    CartItem.vue
+    CheckoutForm.vue
+    PaymentSelector.vue
+    ShippingForm.vue
+    OrderSummary.vue
+  composables/
+    useCart.js
+    useCheckout.js
+    usePayment.js
+    useShipping.js
+  stores/
+    cartStore.js
+    checkoutStore.js
+  types/
+    cart.ts
+    checkout.ts
+    payment.ts
+  utils/
+    cartHelpers.js
+    priceCalculations.js
+    validations.js
+  __tests__/
+    cart.test.js
+    checkout.test.js
+  CLAUDE.md
+  package.json`"
+  :open-on-clicks="[
+    '/.github',
+    '/.github/instructions',
+    '/modules/checkout',
+    '/modules/checkout/components',
+    '/modules/checkout/composables', 
+    '/modules/checkout/stores'
+  ]"
+/>
+
+---
+layout: default
+---
+
+# Module-Specific AI Instructions
+
+<div class="grid grid-cols-2 gap-6">
+  <div v-click="1">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">📄 CLAUDE.md</div>
+    
+```markdown
+# Tech Stack
+- Framework: Vue 3 + Vite
+- State: Pinia stores  
+- Types: TypeScript
+- Testing: Vitest + Testing Library
+
+# Project Structure
+- `modules/checkout/`: Shopping cart & orders
+- `modules/checkout/stores/`: Cart state management
+- `modules/checkout/types/`: TypeScript interfaces
+
+# Commands
+- `pnpm test checkout`: Run checkout tests
+- `pnpm dev`: Start development server
+
+# Code Style
+- All prices in cents (integer)
+- Use CartItem interface for cart data
+- Validate with Zod before submission
+```
+  </div>
+
+  <div v-click="2">
+    <div class="text-xl font-bold mb-4" style="color: rgb(255, 107, 237);">🤖 VS Code Scoped Instructions</div>
+    
+```markdown
+---
+applyTo: "modules/checkout/**/*"
+description: "E-commerce checkout rules"
+---
+# Checkout Module Instructions
+
+## Data Handling
+- Store prices as integers (cents)
+- Use CartItem interface consistently
+- Validate all forms with Zod schemas
+
+## State Management  
+- Use Pinia stores for cart state
+- Implement optimistic updates
+- Handle payment failures gracefully
+
+## Testing
+- Test all payment flows
+- Mock payment providers
+- Verify cart persistence
+```
+  </div>
+</div>
+
+---
+layout: center
+---
+
+# AI Benefits in Practice
+
+<div class="grid grid-cols-3 gap-6 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">🔍</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Better Search</div>
+    <div class="text-sm opacity-80">"Show me all checkout validation logic" finds everything in one module</div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">⚡</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Faster Generation</div>
+    <div class="text-sm opacity-80">AI sees related components and suggests consistent patterns</div>
+  </div>
+  
+  <div v-click="3" class="p-4 border rounded-lg text-center" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">🎯</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Smarter Refactoring</div>
+    <div class="text-sm opacity-80">Understands feature boundaries when suggesting changes</div>
+  </div>
+</div>
+
+<div v-click="4" class="mt-8 p-4 bg-card rounded-lg">
+  <div class="text-lg font-bold text-primary mb-2">💡 Pro Tip</div>
+  <div class="opacity-80">Add module-specific instructions to help AI understand your domain logic and coding patterns</div>
+</div>
+
+---
+layout: center
+---
+
+# More Modular Benefits
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">🔄</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Easy Replacement</div>
+    <div class="text-sm opacity-80">Replace entire features without touching other modules. Upgrade payment systems independently from product catalog.</div>
+  </div>
+  
+  <div v-click="2" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">⚡</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Targeted Testing</div>
+    <div class="text-sm opacity-80">Run only tests for changed modules in CI pipeline. TypeScript business logic modules enable focused test execution.</div>
+  </div>
+</div>
+
+<div class="grid grid-cols-2 gap-8 mt-6">
+  <div v-click="3" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">📸</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Specialized Testing</div>
+    <div class="text-sm opacity-80">Add screenshot tests to UI component libraries. Visual regression testing becomes manageable and isolated.</div>
+  </div>
+  
+  <div v-click="4" class="p-4 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-4xl mb-3">🎯</div>
+    <div class="font-bold text-lg mb-2" style="color: rgb(255, 107, 237);">Core Business Logic</div>
+    <div class="text-sm opacity-80">Separate TypeScript modules for business rules. Pure functions that are easy to test and reuse across features.</div>
+  </div>
+</div>
+
+---
+layout: center
+class: 'text-center'
+---
+
+# My Recommendation 🎯
+
+<div class="text-xl opacity-80 mb-8">Choose the right architecture for your team</div>
+
+<div class="grid grid-cols-2 gap-8 mt-8">
+  <div v-click="1" class="p-6 border-2 rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(255, 107, 237);">
+    <div class="text-5xl mb-4">✅</div>
+    <div class="font-bold text-2xl mb-4" style="color: rgb(255, 107, 237);">Modular Monolith</div>
+    <div class="text-lg opacity-90 mb-4">Default choice for most projects</div>
+    <div class="text-sm opacity-80 space-y-1">
+      <div>• Works for all team sizes</div>
+      <div>• Easier to maintain and refactor</div>
+      <div>• Better developer experience</div>
+      <div>• AI-friendly structure</div>
+      <div>• Faster iteration cycles</div>
+    </div>
+  </div>
+  
+  <div v-click="2" class="p-6 border rounded-lg" style="background-color: rgb(52, 63, 96); border-color: rgb(171, 75, 153);">
+    <div class="text-5xl mb-4">⚠️</div>
+    <div class="font-bold text-2xl mb-4" style="color: rgb(255, 107, 237);">Micro Frontends</div>
+    <div class="text-lg opacity-90 mb-4">Only with organizational need</div>
+    <div class="text-sm opacity-80 space-y-1">
+      <div>• Multiple independent teams</div>
+      <div>• Different deployment cycles</div>
+      <div>• Technology diversity required</div>
+      <div>• Complex domain boundaries</div>
+      <div>• High operational maturity</div>
+    </div>
+  </div>
+</div>
+
+<div v-click="3" class="mt-8 p-4 bg-card rounded-lg">
+  <div class="text-lg font-bold text-primary mb-2">💡 Start Simple, Evolve When Needed</div>
+  <div class="opacity-80">Begin with modular monolith. You can always extract modules into micro frontends later when organizational complexity demands it.</div>
+</div>
+
+---
+layout: center
+class: 'text-center'
+---
+
+# Thank You! 🎉
+
+
+<div class="flex justify-center gap-8 mt-8">
+  <ContactItem
+    iconClass="i-carbon-user"
+    text="alexop.dev"
+    color="#60A5FA"
+  />
+  <ContactItem
+    iconClass="i-carbon-logo-github"
+    text="alexanderop"
+    color="#A78BFA"
+  />
+  <ContactItem
+    iconClass="i-carbon-logo-x"
+    text="@alexanderopalic"
+    color="#3B82F6"
+  />
+</div>
