@@ -1,0 +1,67 @@
+---
+layout: default
+clicks: 6
+---
+
+<FolderTree
+  root
+  title="Modular: Tractor Store with pnpm Workspace"
+  :structure="`tractor-store/
+  apps/
+    main/
+      src/
+        App.vue
+        main.js
+        router/
+          index.js
+        views/
+          HomePage.vue
+      package.json
+  modules/
+    explore/
+      components/
+        ProductGrid.vue
+        CategoryFilter.vue
+      composables/
+        useProductSearch.js
+      store/
+        exploreStore.js
+      package.json
+    decide/
+      components/
+        ProductDetail.vue
+        RecommendationList.vue
+      composables/
+        useProductDetail.js
+      package.json
+    checkout/
+      components/
+        CartSummary.vue
+        CheckoutForm.vue
+      composables/
+        useCart.js
+      store/
+        cartStore.js
+      package.json
+  packages/
+    shared/
+      components/
+        Button.vue
+        Input.vue
+      tokens/
+        colors.js
+      package.json
+  pnpm-workspace.yaml
+  package.json`"
+  :open-on-clicks="[
+    '/tractor-store',
+    '/tractor-store/apps',
+    '/tractor-store/apps/main',
+    '/tractor-store/modules',
+    '/tractor-store/modules/explore',
+    '/tractor-store/modules/decide', 
+    '/tractor-store/modules/checkout',
+    '/tractor-store/packages',
+    '/tractor-store/packages/shared'
+  ]"
+/>

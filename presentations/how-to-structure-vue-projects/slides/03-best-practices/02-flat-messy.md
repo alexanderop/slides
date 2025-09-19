@@ -1,0 +1,44 @@
+---
+layout: default
+clicks: 4
+---
+
+  <FolderTree
+    root
+    title="Flat"
+    :structure="`src/
+  App.vue
+  main.ts
+  routes.ts
+  components/
+    Button.vue
+    baseButton.vue
+    Btn.vue
+    mycomponent.vue
+    Todo.vue
+    todoItem.vue
+    addTodo.vue
+    edit-todo.vue
+    TodoStats.vue
+    completed-todos.vue
+  views/
+    Home.vue
+  pages/
+    HomePage.vue
+    todoPage.vue
+  composables/
+    useUser.ts
+    formatDate.ts
+    mathHelpers.ts
+  stores/
+    useTodoStore.ts
+    useUserStore.ts`"
+    :open-on-clicks="[
+      '/src',
+      '/src/components',
+      '/src/views',
+      '/src/pages',
+      '/src/composables',
+      '/src/stores'
+    ]"
+  />

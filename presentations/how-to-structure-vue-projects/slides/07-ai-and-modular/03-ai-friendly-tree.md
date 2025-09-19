@@ -1,0 +1,50 @@
+---
+layout: default
+clicks: 3
+---
+
+<FolderTree
+  root
+  title="AI-Friendly Checkout Module"
+  :structure="`.github/
+  copilot-instructions.md
+  instructions/
+    checkout.instructions.md
+modules/checkout/
+  components/
+    CartSummary.vue
+    CartItem.vue
+    CheckoutForm.vue
+    PaymentSelector.vue
+    ShippingForm.vue
+    OrderSummary.vue
+  composables/
+    useCart.js
+    useCheckout.js
+    usePayment.js
+    useShipping.js
+  stores/
+    cartStore.js
+    checkoutStore.js
+  types/
+    cart.ts
+    checkout.ts
+    payment.ts
+  utils/
+    cartHelpers.js
+    priceCalculations.js
+    validations.js
+  __tests__/
+    cart.test.js
+    checkout.test.js
+  CLAUDE.md
+  package.json`"
+  :open-on-clicks="[
+    '/.github',
+    '/.github/instructions',
+    '/modules/checkout',
+    '/modules/checkout/components',
+    '/modules/checkout/composables', 
+    '/modules/checkout/stores'
+  ]"
+/>

@@ -1,0 +1,63 @@
+---
+layout: default
+clicks: 8
+---
+
+<FolderTree
+  root
+  title="Flat Structure"
+  :structure="`src/
+  components/
+    BaseButton.vue
+    BaseCard.vue
+    BaseInput.vue
+    TodoList.vue
+    TodoListItem.vue
+    TodoFilter.vue
+    TodoHeader.vue
+    TodoAddForm.vue
+    TodoEditModal.vue
+    TodoStats.vue
+    TodoCompletedList.vue
+    SearchBar.vue
+    LoadingSpinner.vue
+    EmptyState.vue
+  composables/
+    useTodos.js
+    useLocalStorage.js
+    useKeyboard.js
+  utils/
+    validators.ts
+    dateHelpers.ts
+    todoHelpers.ts
+  plugins/
+    api.ts
+    auth.ts
+    toast.ts
+    i18n.ts
+  layout/
+    DefaultLayout.vue
+    AdminLayout.vue
+  views/
+    Home.vue
+    TodosPage.vue
+    CompletedPage.vue
+  router/
+    index.ts
+  store/
+    useTodosStore.ts
+  assets/
+App.vue
+main.js`"
+  :open-on-clicks="[
+    '/src',
+    '/src/components',
+    '/src/composables', 
+    '/src/utils',
+    '/src/plugins',
+    '/src/layout',
+    '/src/views',
+    '/src/router',
+    '/src/store',
+  ]"
+/>

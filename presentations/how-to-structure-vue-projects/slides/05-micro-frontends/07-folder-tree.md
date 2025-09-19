@@ -1,0 +1,58 @@
+---
+layout: default
+clicks: 3
+---
+
+<FolderTree
+  root
+  title="Micro Frontends: Tractor Store Structure"
+  :structure="`tractor-store-mf/
+  apps/
+    host/
+      src/
+        App.vue
+        router.ts
+        utils/
+          remote.ts
+        mf.ts
+      package.json
+    explore/
+      src/
+        components/
+          ProductGrid.vue
+          CategoryFilter.vue
+        App.vue
+        main.ts
+        mf.config.ts
+      package.json
+    decide/
+      src/
+        components/
+          ProductDetail.vue
+        App.vue
+        main.ts
+        vite.config.ts
+      package.json
+    checkout/
+      src/
+        components/
+          CartSummary.vue
+        stores/
+          cartStore.ts
+        App.vue
+        main.ts
+      package.json
+  packages/
+    shared/
+      components/
+        Button.vue
+        Input.vue
+      package.json
+  pnpm-workspace.yaml`"
+  :open-on-clicks="[
+    '/tractor-store-mf',
+    '/tractor-store-mf/apps',
+    '/tractor-store-mf/packages',
+    '/tractor-store-mf/packages/shared'
+  ]"
+/>
