@@ -451,9 +451,6 @@ layout: center
 ---
 
 ```mermaid{scale: 0.9}
----
-title: Tractor Store Micro Frontend Architecture
----
 graph TB
     subgraph host["Host App (Rspack)"]
         Router["Router & Shell"]:::host
@@ -545,13 +542,10 @@ clicks: 3
 />
 
 ---
-layout: default
+layout: image
+image: 'images/blogMicrofrontends.png'
+backgroundSize: contain
 ---
-
-# Module Federation Runtime Setup
-
-read more at
--> https://alexop.dev/posts/how-to-build-microfrontends-with-module-federation-and-vue/
 
 
 ---
@@ -582,19 +576,10 @@ layout: default
   </div>
 </div>
 
-<div v-click="3" class="mt-8 grid grid-cols-2 gap-8">
-  <div class="p-4 bg-card rounded-lg">
-    <div class="text-lg font-bold text-primary mb-2">🎯 Perfect For</div>
-    <div class="opacity-80 text-sm">Large organizations with multiple teams building complex domains that need independent deployment cycles</div>
-  </div>
-  
-  <div class="p-4 bg-card rounded-lg">
-    <div class="text-lg font-bold text-primary mb-2">📚 Learn More</div>
-    <div class="opacity-80 text-sm">
-      <a href="https://alexop.dev/posts/microfrontends-module-federation-vue/" class="hover:text-primary transition-colors">
-        Full implementation guide →
-      </a>
-    </div>
+<div v-click="3" class="mt-8 flex justify-center">
+  <div class="p-6 bg-card rounded-lg max-w-2xl">
+    <div class="text-lg font-bold text-primary mb-2 text-center">🎯 Perfect For</div>
+    <div class="opacity-80 text-center">Large organizations with multiple teams building complex domains that need independent deployment cycles</div>
   </div>
 </div>
 
